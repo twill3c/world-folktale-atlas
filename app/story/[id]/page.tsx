@@ -43,8 +43,13 @@ function LabelRow({ items, kind }: { items: Labelled[]; kind: "estimate" | "coun
   );
 }
 
-function paragraphs(text: string) {
-  return text.split(/\n{2,}/).map((p) => p.replace(/\n/g, " ").trim()).filter(Boolean);
+/** `_強調_` を斜体にする(Project Gutenberg の平文で使われる記法)。 */
+function emphasise(s: string) {
+  const parts = s.split(/(_[^_]+_)/g);
+  return parts.map((p, i) =>
+    p.startsWith("_") && p.endsWith("_") && p.length > 2
+      ? <em key={i}>{p.slice(1, -1)}</em>
+      : <span key={i}>{p}</span>);
 }
 
 export default async function StoryPage({ params }: { params: Promise<{ id: string }> }) {
@@ -102,14 +107,39 @@ export default async function StoryPage({ params }: { params: Promise<{ id: stri
 
       <div className="grid" style={{ gridTemplateColumns: "minmax(0, 2fr) minmax(280px, 1fr)" }}>
         <div>
-          <h2>本文</h2>
+          <h2>本文{s.translation && <span className="muted" style={{ fontSize: ".7em", fontWeight: 400 }}> ・ 和訳対照</span>}</h2>
           <p className="muted small">
-            Project Gutenberg の本文から、PG のヘッダ・フッタ・商標文言を除いたもの。
-            改行と段落は原文のままである。
+            Project Gutenberg の本文から、PG のヘッダ・フッタ・商標文言を除いたもの。段落は原文のままである。
           </p>
-          <div className="tale">
-            {paragraphs(s.text).map((p, i) => <p key={i}>{p}</p>)}
-          </div>
+
+          {s.translation ? (
+            <>
+              <p className="legend-note" style={{ marginBottom: ".8rem" }}>
+                <span className="tag tag--source">左＝原文(原資料)</span>
+                <span className="tag tag--estimate">右＝和訳(AI が作ったもの)</span>
+              </p>
+              <div className="bitext">
+                {s.paragraphs.map((p, i) => (
+                  <div className="bitext__row" key={i}>
+                    <p className="bitext__src">{emphasise(p)}</p>
+                    <p className="bitext__ja">{emphasise(s.translation!.paragraphs[i] ?? "")}</p>
+                  </div>
+                ))}
+              </div>
+              <p className="muted small" style={{ marginTop: "1rem" }}>
+                和訳は <code>{s.translation.model}</code> がこのために作ったもので、
+                <strong>原資料ではない</strong>(<code>translation_type: {s.translation.translation_type}</code>)。
+                既存の published 訳を写したものではなく、学術的な定訳でもない。
+                段落は原文と一対一に対応させてあり、段落数の一致は機械で検査している。
+                <strong>和訳は Embedding に入れていない</strong> —— 入れると
+                <a href="/gates/">測ったこと</a>の数字が汚れるためである。
+              </p>
+            </>
+          ) : (
+            <div className="tale">
+              {s.paragraphs.map((p, i) => <p key={i}>{emphasise(p)}</p>)}
+            </div>
+          )}
           {s.notes && (
             <>
               <h3>本に付いていた註</h3>

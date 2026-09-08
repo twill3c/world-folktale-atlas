@@ -92,6 +92,12 @@ def find_toc_blocks(lines: list[str], min_entries: int = 5) -> list[TocBlock]:
     return blocks
 
 
+#: 見出しの塊が何行あるか。start 行 → 塊の最後の行。
+#: 塊の 1 行目しか飛ばさないと、副題(『A STORY OF OLD JAPAN』)や
+#: 折り返しの続き(『HOUSE TO DEATH』)が本文の先頭に残る(実測 L5、20 話)
+HEADING_SPAN: dict[int, int] = {}
+
+
 def heading_positions(lines: list[str], exclude: list[tuple[int, int]]) -> dict[str, list[int]]:
     """見出しの形をした「空行で挟まれた塊」を正規形で索引する。
 
@@ -136,6 +142,7 @@ def heading_positions(lines: list[str], exclude: list[tuple[int, int]]) -> dict[
             continue
         if joined.endswith((".", "!", "?")) and len(joined) > 60 and not joined.isupper():
             continue
+        HEADING_SPAN[start] = start + len(group) - 1
         for text in {joined, group[0].strip("\"“”«»'")}:
             key = nkey(text)
             if key:
@@ -295,7 +302,9 @@ def split_book(body: str, cfg: dict | None = None) -> tuple[list[Section], dict]
     sections, short = [], []
     for n, (k, title) in enumerate(chosen):
         stop = bounds[n + 1] if n + 1 < len(bounds) else len(lines)
-        text = "\n".join(lines[k + 1:stop]).strip("\n")
+        # **見出しの塊ごと飛ばす。** 1 行だけ飛ばすと、副題や折り返しの続きが
+        # 本文の先頭に残る(『A STORY OF OLD JAPAN』『HOUSE TO DEATH』— 実測 20 話)
+        text = "\n".join(lines[HEADING_SPAN.get(k, k) + 1:stop]).strip("\n")
         text = re.sub(r"\n{3,}", "\n\n", text).strip()
         if len(text.split()) < min_words:
             short.append(title)

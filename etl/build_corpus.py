@@ -41,6 +41,31 @@ BACKMATTER_ANY = re.compile(
 TRAILING_NOTES = re.compile(r"(?:^\s*\[\d+\][^\n]*\n?)+\Z", re.M)
 
 
+#: 段落まるごとが番号だけの行(『XLIX』『12.』)
+BARE_NUMERAL = re.compile(r"\A\s*(?:[IVXLCDM]{1,8}|\d{1,3})\.?\s*\Z")
+
+
+def trim_stray_numerals(text: str) -> str:
+    """先頭・末尾に落ちている「番号だけの段落」を落とす。
+
+    実測(L5): 709 話中 **137 話**の末尾に、次の話の番号が残っていた。
+    その本では見出しが
+
+        XLIX
+
+        THE 'OLD BUDDHA'
+
+    のように番号と題名が空行で隔てられており、目次の項目は題名の側に当たる。
+    番号の行は前の話の末尾に取り残される。**一語なので語数の下限では捕まらない。**
+    """
+    paras = [p for p in re.split(r"\n{2,}", text) if p.strip()]
+    while paras and BARE_NUMERAL.match(paras[-1]):
+        paras.pop()
+    while paras and BARE_NUMERAL.match(paras[0]):
+        paras.pop(0)
+    return "\n\n".join(paras)
+
+
 def trim_backmatter(text: str, is_last: bool) -> tuple[str, str]:
     """本文から後付けを切り落とし、(本文, 註) を返す。
 
@@ -60,6 +85,7 @@ def trim_backmatter(text: str, is_last: bool) -> tuple[str, str]:
         text = _trim_trailing_nonprose(text)
     text, notes = _split_trailing_notes(text)
     text = re.sub(r"\n\s*(?:NOTES?|FOOTNOTES?|Anmerkungen)\s*$", "", text.rstrip())
+    text = trim_stray_numerals(text)
     return text.strip(), notes
 
 

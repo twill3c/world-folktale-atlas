@@ -11,6 +11,7 @@ const ITEMS: [string, string][] = [
   ["/network/", "つながり"],
   ["/compare/", "並べて読む"],
   ["/regions/", "文化圏くらべ"],
+  ["/translations/", "和訳のすすみ"],
   ["/gates/", "測ったこと"],
   ["/about/", "このアトラスについて"],
 ];

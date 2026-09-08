@@ -173,6 +173,24 @@ button[aria-pressed="true"] { background: var(--accent); border-color: var(--acc
 }
 .tale p { margin: 0 0 1.1em; }
 
+/* --- 対訳 ----------------------------------------------------------- */
+.bitext__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 1.6rem;
+  padding: .5rem 0 .7rem;
+  border-bottom: 1px solid var(--rule);
+}
+.bitext__row:last-child { border-bottom: none; }
+.bitext p { margin: 0; font-family: var(--serif); line-height: 1.95; }
+.bitext__src { color: var(--ink-2); }
+.bitext__ja { color: var(--ink); }
+/* 画面が狭いときは縦に積む。原文の上に和訳が来ないよう順序を保つ */
+@media (max-width: 720px) {
+  .bitext__row { grid-template-columns: 1fr; gap: .35rem; }
+  .bitext__ja { padding-left: .7rem; border-left: 2px dashed var(--estimate); }
+}
+
 /* --- 図 ------------------------------------------------------------- */
 svg { display: block; max-width: 100%; }
 .axis { stroke: var(--rule-2); }

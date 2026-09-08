@@ -14,10 +14,13 @@
 from __future__ import annotations
 
 import json
-import shutil
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
+
+from etl.paragraphs import split_paragraphs  # noqa: E402
 STORIES = ROOT / "data" / "processed" / "stories.jsonl"
 ANALYSIS = ROOT / "data" / "analysis"
 BOOKS = ROOT / "data" / "metadata" / "books.json"
@@ -57,6 +60,20 @@ def build_search_index(stories: list[dict]) -> None:
     print(f"   search.json {p.stat().st_size/1024/1024:.2f} MB / 語 {len(trimmed)}")
 
 
+def load_translations() -> tuple[dict[str, dict], dict]:
+    """和訳と進捗を読む。無ければ空で返す(和訳は任意の層である)。"""
+    store: dict[str, dict] = {}
+    p = ROOT / "data" / "translations" / "ja.jsonl"
+    if p.exists():
+        for line in p.read_text(encoding="utf-8").splitlines():
+            if line:
+                d = json.loads(line)
+                store[d["story_id"]] = d
+    prog_p = ROOT / "data" / "translations" / "progress.json"
+    prog = json.loads(prog_p.read_text(encoding="utf-8")) if prog_p.exists() else {}
+    return store, prog
+
+
 def main() -> int:
     stories = [json.loads(l) for l in STORIES.read_text(encoding="utf-8").splitlines() if l]
     by_id = {s["story_id"]: s for s in stories}
@@ -68,6 +85,7 @@ def main() -> int:
     gates = json.loads((ANALYSIS / "gates.json").read_text(encoding="utf-8"))
     books = json.loads(BOOKS.read_text(encoding="utf-8"))
 
+    translations, translation_progress = load_translations()
     cluster_of = {p["story_id"]: p["cluster"] for p in space["points"]}
     xy = {p["story_id"]: [p["x"], p["y"]] for p in space["points"]}
 
@@ -97,6 +115,7 @@ def main() -> int:
             "themes": [t["label"] for t in a["themes"]],
             "motifs": [m["label"] for m in a["motifs"]],
             "animals": [x["label"] for x in a["animals"][:4]],
+            "ja": s["story_id"] in translations,
         })
     (PUB / "index.json").write_text(
         json.dumps({
@@ -104,6 +123,7 @@ def main() -> int:
             "n_stories": len(index),
             "analysis_version": next(iter(analysis.values()))["analysis_version"],
             "embedding_model": gates["model_id"],
+            "translation": translation_progress,
             "stories": index,
         }, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
 
@@ -127,6 +147,9 @@ def main() -> int:
                 "redistribution_allowed", "commercial_use", "derivative_use",
                 "ml_processing_status", "verification_date", "word_count", "text")},
             "cluster": cluster_of.get(s["story_id"], -1),
+            # 段落は ETL 側で割る。画面が割り直すと、対訳の対応が黙ってずれる
+            "paragraphs": split_paragraphs(s["text"]),
+            "translation": translations.get(s["story_id"]),
             "analysis": {k: a[k] for k in
                          ("analysis_version", "embedding_model", "themes", "motifs",
                           "animals", "nature", "events", "tension", "characters")},

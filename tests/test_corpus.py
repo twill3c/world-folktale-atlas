@@ -203,6 +203,44 @@ def test_publication_year_has_evidence(ledger):
 
 # ---------------------------------------------------------------- 規模のゲート
 
+def test_no_story_begins_or_ends_with_a_bare_numeral(stories):
+    """抽出物の端に、隣の項目の番号が残っていない(HC-244)。
+
+    出所: 実測 2026-09-09。709 話中 **137 話**の末尾に次の話の番号(`XLIX`)が残っていた。
+    見出しが番号と題名を空行で隔てる本では、目次の項目は題名の側に当たるので、
+    番号の行が前の話に取り残される。**一語なので語数の下限では捕まらない。**
+    """
+    from etl.paragraphs import split_paragraphs
+
+    bare = re.compile(r"\A\s*(?:[IVXLCDM]{1,8}|\d{1,3})[.)]?\s*\Z")
+    for s in stories:
+        ps = split_paragraphs(s["text"])
+        assert ps, f"{s['story_id']}: 段落が無い"
+        assert not bare.match(ps[0]), f"{s['story_id']}: 先頭が番号だけ {ps[0]!r}"
+        assert not bare.match(ps[-1]), f"{s['story_id']}: 末尾が番号だけ {ps[-1]!r}"
+
+
+def test_edge_report_stays_within_the_recorded_count(stories):
+    """端が怪しい話の数が、目で通して認めた数を超えない(HC-244)。
+
+    出所: 2026-09-09 に 25 件を一件ずつ目で通し、いずれも本文の一部
+    (叫び声で終わる話・諺・ト書き・副題)であることを確かめた。
+    これを超えたら、新しい種類の混入が入ったということである。
+    """
+    from etl.paragraphs import split_paragraphs
+    from etl.report_edges import STRUCTURAL_HEAD, suspicious
+
+    flagged = []
+    for s in stories:
+        ps = split_paragraphs(s["text"])
+        if not ps:
+            continue
+        head = [] if STRUCTURAL_HEAD.match(ps[0]) else suspicious(ps[0], is_last=False)
+        if head or suspicious(ps[-1], is_last=True):
+            flagged.append(s["story_id"])
+    assert len(flagged) <= 25, f"端が怪しい話が {len(flagged)} 件({flagged[:5]})"
+
+
 def test_corpus_stamp_matches_current_corpus():
     """検印が現在のコーパスと一致する(HC-233)。
 

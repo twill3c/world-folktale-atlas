@@ -29,6 +29,7 @@ export default function StoryBrowser({
   const [lang, setLang] = useState("");
   const [theme, setTheme] = useState("");
   const [motif, setMotif] = useState("");
+  const [jaOnly, setJaOnly] = useState(false);
   const [sort, setSort] = useState<"region" | "title" | "words">("region");
   const [index, setIndex] = useState<SearchIndex | null>(null);
   const [loading, setLoading] = useState(false);
@@ -64,6 +65,7 @@ export default function StoryBrowser({
   const filtered = useMemo(() => {
     const needle = q.trim().toLowerCase();
     let rows = stories.filter((s) => {
+      if (jaOnly && !s.ja) return false;
       if (region && s.region !== region) return false;
       if (lang && s.lang !== lang) return false;
       if (theme && !s.themes.includes(theme)) return false;
@@ -84,7 +86,9 @@ export default function StoryBrowser({
       return a.region.localeCompare(b.region, "ja") || a.title.localeCompare(b.title, "en");
     });
     return rows;
-  }, [stories, q, fullText, hitIds, region, lang, theme, motif, sort]);
+  }, [stories, q, fullText, hitIds, region, lang, theme, motif, sort, jaOnly]);
+
+  const jaCount = useMemo(() => stories.filter((s) => s.ja).length, [stories]);
 
   return (
     <>
@@ -143,9 +147,15 @@ export default function StoryBrowser({
               <option value="words">長い順</option>
             </select>
           </label>
-          {(q || region || lang || theme || motif) && (
+          {jaCount > 0 && (
+            <button type="button" aria-pressed={jaOnly} onClick={() => setJaOnly((v) => !v)}
+                    title={`和訳のある話だけを見る(${jaCount} 話)`}>
+              和訳あり
+            </button>
+          )}
+          {(q || region || lang || theme || motif || jaOnly) && (
             <button type="button" onClick={() => {
-              setQ(""); setRegion(""); setLang(""); setTheme(""); setMotif("");
+              setQ(""); setRegion(""); setLang(""); setTheme(""); setMotif(""); setJaOnly(false);
             }}>絞り込みを外す</button>
           )}
         </div>
@@ -169,7 +179,13 @@ export default function StoryBrowser({
           <tbody>
             {filtered.map((s) => (
               <tr key={s.id}>
-                <td><Link href={`/story/${s.id}/`}>{s.title}</Link></td>
+                <td>
+                  <Link href={`/story/${s.id}/`}>{s.title}</Link>
+                  {s.ja && (
+                    <span className="tag tag--estimate" style={{ marginLeft: ".35rem", fontSize: ".7rem" }}
+                          title="和訳あり(AI が作ったもの)">和訳</span>
+                  )}
+                </td>
                 <td>{s.region}</td>
                 <td>{LANG_LABEL[s.lang] ?? s.lang}</td>
                 <td className="small">{s.book_title}</td>

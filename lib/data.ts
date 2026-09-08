@@ -34,6 +34,20 @@ export type IndexStory = {
   themes: string[];
   motifs: string[];
   animals: string[];
+  /** 和訳があるか */
+  ja?: boolean;
+};
+
+export type TranslationProgress = {
+  translated: number;
+  total: number;
+  fraction: number;
+  translated_words: number;
+  total_words: number;
+  word_fraction: number;
+  translation_type: string;
+  model: string;
+  by_region: Record<string, { total: number; done: number }>;
 };
 
 export type IndexFile = {
@@ -41,6 +55,7 @@ export type IndexFile = {
   n_stories: number;
   analysis_version: string;
   embedding_model: string;
+  translation?: TranslationProgress;
   stories: IndexStory[];
 };
 
@@ -87,6 +102,16 @@ export type Story = {
   verification_date: string;
   word_count: number;
   text: string;
+  /** 段落は ETL 側で割ってある。画面が割り直すと対訳の対応がずれる */
+  paragraphs: string[];
+  /** 和訳。**AI が作ったもの**であり、原資料ではない(設計書 §41) */
+  translation: {
+    translation_type: "AI_GENERATED";
+    language: string;
+    model: string;
+    source_paragraphs: number;
+    paragraphs: string[];
+  } | null;
   cluster: number;
   analysis: {
     analysis_version: string;
