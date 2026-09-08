@@ -106,6 +106,56 @@ const run = async () => {
     await page.close();
   }
 
+  // 暗色テーマ。色を定義し忘れた要素は、明色では見えていても暗色で消える
+  {
+    const dark = await browser.newPage({
+      viewport: { width: 1280, height: 900 }, colorScheme: "dark",
+    });
+    await dark.goto(`http://127.0.0.1:${PORT}/`, { waitUntil: "networkidle" });
+    const contrast = await dark.evaluate(() => {
+      const lum = (c) => {
+        const [r, g, b] = c.match(/\d+/g).map((v) => {
+          const s = Number(v) / 255;
+          return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+        });
+        return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+      };
+      const bodyBg = getComputedStyle(document.body).backgroundColor;
+      // **その要素の背後にある色**を取る。body と比べてはならない —
+      // 反転した札(現在地のタブ)は body に対しては低く出るが、実際は読める
+      const backdrop = (el) => {
+        for (let n = el; n; n = n.parentElement) {
+          const bg = getComputedStyle(n).backgroundColor;
+          if (bg && !/rgba\(0, 0, 0, 0\)|transparent/.test(bg)) return bg;
+        }
+        return bodyBg;
+      };
+      const worst = [];
+      for (const el of document.querySelectorAll("p, td, th, li, h1, h2, h3, a")) {
+        if (!el.textContent.trim()) continue;
+        const st = getComputedStyle(el);
+        const a = lum(st.color) + 0.05;
+        const b = lum(backdrop(el)) + 0.05;
+        const ratio = a > b ? a / b : b / a;
+        if (ratio < 3.5) {
+          worst.push([el.tagName, st.color, backdrop(el), Number(ratio.toFixed(2))]);
+        }
+      }
+      return { bodyBg, worst: worst.slice(0, 5), n: worst.length };
+    });
+    if (contrast.bodyBg === "rgba(0, 0, 0, 0)") {
+      errors.push("暗色: body に背景色が無い(閲覧環境の地色が透ける)");
+    }
+    if (contrast.n > 0) {
+      errors.push(`暗色: コントラスト 3.5 未満の要素が ${contrast.n} 件 `
+        + JSON.stringify(contrast.worst));
+    }
+    console.log(`  ${contrast.n === 0 ? "✓" : "✗"} 暗色テーマ            `
+      + `body=${contrast.bodyBg} / 低コントラスト ${contrast.n} 件`);
+    if (SHOT) await dark.screenshot({ path: "screenshots/dark_地図.png" });
+    await dark.close();
+  }
+
   // 動きのある部分を触る
   const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
   page.on("pageerror", (e) => errors.push(`操作: pageerror ${e.message}`));
