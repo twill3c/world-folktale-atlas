@@ -283,6 +283,61 @@ def zero_shot_labels(vecs, labels: dict[str, str], embedder, groups: list[str],
     return out
 
 
+def label_distribution(stories: list[dict], per_story: dict) -> dict:
+    """付与の分布を群ごとに数える(HC-227)。
+
+    分類器の出力は、壊れていても well-formed である。JSON は正しく、型検査も通り、
+    一件ずつ見ればもっともらしい。**壊れているのは分布だけ**である。
+    実際にこのプロジェクトで二度起きた。
+
+      - テーマ推定が**ドイツ語 62 話すべてで 0 件**(ラベル説明文が英語で、基準線が言語と交絡)
+      - 出来事推定が **Family に 4,332 区画中 996 区画**(生の頻度で最大を採っていた)
+
+    最低限、群ごとの無付与率と、付与ラベルの頻度集中を出してログに残す。
+    """
+    report: dict = {}
+    for field in ("themes", "motifs"):
+        by_lang: dict[str, list[int]] = {}
+        counts: Counter = Counter()
+        for s in stories:
+            n = len(per_story[s["story_id"]][field])
+            by_lang.setdefault(s["language"], []).append(n)
+            for x in per_story[s["story_id"]][field]:
+                counts[x["label"]] += 1
+        top = counts.most_common(1)
+        report[field] = {
+            "群ごとの無付与率": {
+                lang: round(sum(1 for n in ns if n == 0) / len(ns), 3)
+                for lang, ns in sorted(by_lang.items())
+            },
+            "群ごとの平均付与数": {
+                lang: round(sum(ns) / len(ns), 2) for lang, ns in sorted(by_lang.items())
+            },
+            "最頻ラベル": top[0][0] if top else None,
+            "最頻ラベルの占有率": round(top[0][1] / max(1, sum(counts.values())), 3) if top else 0.0,
+        }
+    ev: Counter = Counter()
+    for a in per_story.values():
+        for e in a["events"]:
+            ev[e["label"]] += 1
+    total = sum(ev.values())
+    labelled = total - ev[None]
+    top_ev = [(k, v) for k, v in ev.most_common() if k is not None][:1]
+    report["events"] = {
+        "該当なしの割合": round(ev[None] / max(1, total), 3),
+        "最頻イベント": top_ev[0][0] if top_ev else None,
+        "最頻イベントの占有率(該当ありの中で)":
+            round(top_ev[0][1] / max(1, labelled), 3) if top_ev else 0.0,
+        "出たイベントの種類": len([k for k in ev if k is not None]),
+    }
+    (OUT / "label_distribution.json").write_text(
+        json.dumps(report, ensure_ascii=False, indent=1), encoding="utf-8")
+    print("  付与分布:")
+    for k, v in report.items():
+        print(f"    {k}: {json.dumps(v, ensure_ascii=False)}")
+    return report
+
+
 def main() -> int:
     stories, vecs, meta = load()
     OUT.mkdir(parents=True, exist_ok=True)
@@ -327,6 +382,8 @@ def main() -> int:
         }
     (OUT / "story_analysis.json").write_text(
         json.dumps(per_story, ensure_ascii=False), encoding="utf-8")
+
+    label_distribution(stories, per_story)
 
     # 地域ごとの集計(設計書 §17 の「同一モチーフの地域別コンテキスト」)
     agg: dict[str, Counter] = {}
