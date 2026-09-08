@@ -1,4 +1,4 @@
-import { getClusters, getGates, getIndex } from "@/lib/data";
+import { getBooks, getClusters, getGates, getIndex } from "@/lib/data";
 
 export const metadata = { title: "測ったこと ｜ 世界民話AIアトラス" };
 
@@ -6,6 +6,9 @@ export default function GatesPage() {
   const g = getGates();
   const c = getClusters();
   const index = getIndex();
+  const { books } = getBooks();
+  const nPairs = Object.values(g["H-01_交差言語検索"])[0]?.n_pairs ?? 0;
+  const nGerman = index.stories.filter((s) => s.lang === "de").length;
   const cl = g["H-01_交差言語検索"];
   const g05 = g["G-05_判定"];
   const g07 = g["G-07_本内と本間"];
@@ -31,7 +34,7 @@ export default function GatesPage() {
 
       <h2>{g05.通過 ? "✓ 通過" : "✗ 不通過"} — H-01 多言語 Embedding は言語ではなく物語を見ているか</h2>
       <p style={{ maxWidth: "72ch" }}>
-        同じ物語のドイツ語版と英語版を 26 組つくり、片方から相手を探させた。
+        同じ物語のドイツ語版と英語版を {nPairs} 組つくり、片方から相手を探させた。
         <strong>対応づけの根拠はそれぞれの本の目次の題名</strong>であって、
         モデルの出力ではない。だからこの検査は循環しない。
       </p>
@@ -79,7 +82,7 @@ export default function GatesPage() {
         言語をまたぐと平均類似度が系統的に下がる。
         <strong>類似度の絶対値は言語を測り、順位は物語を測る。</strong>
         だからこのアトラスは、類似度の数字そのものではなく順位で見せている。
-        テーマ推定も、この効果のせいで全話まとめて標準化するとドイツ語 62 話すべてが
+        テーマ推定も、この効果のせいで全話まとめて標準化するとドイツ語 {nGerman} 話すべてが
         空になった。いまは言語ごとに標準化している。
       </p>
 
@@ -155,7 +158,7 @@ export default function GatesPage() {
       <h2>✓ G-03 — 分割は、その本自身の目次と一致した</h2>
       <p style={{ maxWidth: "72ch" }}>
         民話集を一話ずつに割るとき、期待件数は<strong>その本の目次が挙げる題名の数</strong>から取った。
-        採録した 12 冊すべてが一致している。一致しなかった 6 冊は
+        採録した {books.length} 冊すべてが一致している。一致しなかった本は
         <strong>コーパスに入れていない</strong>。取れた分だけ採ると、その本だけ話の切れ目が
         違うことになり、以後の類似度がその差を測ってしまうからである。
       </p>
@@ -165,7 +168,7 @@ export default function GatesPage() {
         {c.method}。{c.n_clusters} 群 ／ 未分類 {c.n_noise} 話 ／
         シルエット係数 <strong>{c.silhouette?.toFixed(3) ?? "—"}</strong>。
         この値は 1 に近いほどくっきり分かれていることを意味する。
-        <strong>0.06 は「ほとんど分かれていない」</strong>。
+        <strong>{(c.silhouette ?? 0) < 0.15 ? "この値は「ほとんど分かれていない」" : ""}</strong>。
         群は探索の入口として使えるが、境目に意味を読み込んではいけない。
       </p>
 

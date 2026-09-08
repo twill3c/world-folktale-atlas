@@ -57,7 +57,12 @@ export default function AboutPage() {
             {books.map((b) => (
               <tr key={b.book_id}>
                 <td>{b.title}</td>
-                <td>{b.culture_region}</td>
+                <td>
+                  {b.culture_region}
+                  {b.location_precision === "unknown" && (
+                    <span className="muted small"> (座標なし)</span>
+                  )}
+                </td>
                 <td>{b.language === "de" ? "独" : "英"}
                   <span className="muted small"> ← {b.original_language}</span></td>
                 <td className="num">{b.publication_year ?? <span className="muted">刻みなし</span>}</td>

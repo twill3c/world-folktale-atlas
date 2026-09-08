@@ -18,11 +18,12 @@ export type IndexStory = {
   title: string;
   book_id: string;
   book_title: string;
-  country: string;
+  /** 単一の土地に置けない伝承がある(ユダヤのディアスポラ)。その本は null を持つ */
+  country: string | null;
   country_code: string;
   region: string;
-  lat: number;
-  lon: number;
+  lat: number | null;
+  lon: number | null;
   precision: string;
   lang: string;
   orig_lang: string;
@@ -59,11 +60,11 @@ export type Story = {
   notes: string;
   language: string;
   original_language: string;
-  country: string;
+  country: string | null;
   country_code: string;
   culture_region: string;
-  latitude: number;
-  longitude: number;
+  latitude: number | null;
+  longitude: number | null;
   location_precision: string;
   map_location_type: string;
   collector: string;
@@ -151,10 +152,11 @@ export type Book = {
   publication_year: number | null;
   year_evidence: string;
   culture_region: string;
-  country: string;
+  country: string | null;
   country_code: string;
-  latitude: number;
-  longitude: number;
+  latitude: number | null;
+  longitude: number | null;
+  location_precision: string;
   verification_date: string;
 };
 

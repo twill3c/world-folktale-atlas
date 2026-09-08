@@ -1,12 +1,17 @@
 import type { Metadata } from "next";
 
+import { getBooks, getIndex } from "@/lib/data";
 import "./globals.css";
 import Nav from "./Nav";
+
+// 数はデータから取る。手で書くと、コーパスが増えたときに黙って古い数が残る
+const N_STORIES = getIndex().n_stories;
+const N_BOOKS = getBooks().books.length;
 
 export const metadata: Metadata = {
   title: "世界民話AIアトラス",
   description:
-    "権利を一件ずつ確かめた世界の民話 361 話を、多言語 Embedding で横断して眺めるアトラス。" +
+    `権利を一件ずつ確かめた世界の民話 ${N_STORIES} 話を、多言語 Embedding で横断して眺めるアトラス。` +
     "出典と権利は全話に付いており、AI の推定は原資料と見た目で区別している。",
 };
 
@@ -28,7 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div className="masthead__inner">
               <a className="masthead__title" href="/">世界民話AIアトラス</a>
               <span className="masthead__sub">
-                World Folktale Atlas AI ｜ 12 冊 361 話 ｜ 出典と権利を一件ずつ確かめた
+                World Folktale Atlas AI ｜ {N_BOOKS} 冊 {N_STORIES} 話 ｜ 出典と権利を一件ずつ確かめた
               </span>
             </div>
             <Nav />

@@ -30,6 +30,7 @@ PG_TRADEMARK = re.compile(r"Project Gutenberg", re.I)
 #: 巻末の後付けの始まり。**最後の話にだけ**当てる(星の区切りは本文中にも出る — 29021 で 3 件)
 BACKMATTER_LAST = re.compile(
     r"^\s*(?:(?:\*\s*){3,}\*?|THE END\.?|FINIS\.?|Inhalt|INHALT|Printed by .*|"
+    r"NOTES AND REFERENCES|NOTES?|FOOTNOTES?|APPENDIX|GLOSSARY|BIBLIOGRAPHY|INDEX|"
     r"_?Uniform with this Volume_?|BY THE SAME AUTHOR.*)\s*$", re.M)
 #: どの話に出ても後付け。翻刻者の註と PG の文言は本文ではない
 BACKMATTER_ANY = re.compile(

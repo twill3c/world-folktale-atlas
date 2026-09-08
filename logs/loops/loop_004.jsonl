@@ -1,0 +1,1 @@
+{"v": "1.2", "ts": "2026-09-08T18:15:14+09:00", "project": "world-folktale-atlas", "loop_id": "loop_004", "event": "loop_start", "data": {"goal": "落とした地域を拾い直してコーパスを増やし、本番に公開する", "spec_refs": ["F-01", "G-01", "G-03"], "scaffold_version": "1.30.0", "agent": "claude-code", "model": "claude-opus-5"}}

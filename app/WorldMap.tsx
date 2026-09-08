@@ -12,7 +12,7 @@ type Basemap = {
 
 export type MapPoint = {
   region: string;
-  country: string;
+  country: string | null;
   lat: number;
   lon: number;
   count: number;

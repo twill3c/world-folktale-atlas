@@ -175,5 +175,211 @@
   "missing": [],
   "ambiguous": [],
   "oracle_match": true
+ },
+ {
+  "book_id": "PG-7439",
+  "gutenberg_id": 7439,
+  "toc_entries": 17,
+  "toc_titles": 43,
+  "skipped": [],
+  "expected_tales": 43,
+  "extracted": 43,
+  "short": [],
+  "missing": [],
+  "ambiguous": [
+   "I. TOM TIT TOT",
+   "II. THE THREE SILLIES",
+   "III. THE ROSE-TREE",
+   "VI. MR. VINEGAR",
+   "VII. NIX NOUGHT NOTHING",
+   "VIII. JACK HANNAFORD",
+   "IX. BINNORIE",
+   "X. MOUSE AND MOUSER",
+   "XI. CAP O' RUSHES",
+   "XII. TEENY-TINY",
+   "XIII. JACK AND THE BEANSTALK",
+   "XIX. JACK THE GIANT-KILLER",
+   "XX. HENNY-PENNY",
+   "XXI. CHILDE ROWLAND",
+   "XXII. MOLLY WHUPPIE",
+   "XXVI. MR. FOX",
+   "XXVII. LAZY JACK",
+   "XXVIII. JOHNNY-CAKE",
+   "XXIX. EARL MAR'S DAUGHTER",
+   "XXX. MR. MIACCA",
+   "XXXII. THE STRANGE VISITOR",
+   "XXXV. THE FISH AND THE RING.",
+   "XXXVI. THE MAGPIE'S NEST",
+   "XXXVII. KATE CRACKERNUTS",
+   "XXXVIII. THE CAULD LAD OF HILTON",
+   "XL. FAIRY OINTMENT",
+   "XLI. THE WELL OF THE WORLD'S END.",
+   "XLII. MASTER OF ALL MASTERS.",
+   "XLIII. THE THREE HEADS OF THE WELL"
+  ],
+  "oracle_match": true
+ },
+ {
+  "book_id": "PG-8933",
+  "gutenberg_id": 8933,
+  "toc_entries": 84,
+  "toc_titles": 84,
+  "skipped": [
+   "INTRODUCTION",
+   "TALES",
+   "APPENDIX"
+  ],
+  "expected_tales": 81,
+  "extracted": 79,
+  "short": [
+   "XV. THE COCK AND HEN",
+   "1. WHY THE JACK SPANIARD’S WAIST IS SMALL"
+  ],
+  "missing": [],
+  "ambiguous": [],
+  "oracle_match": true
+ },
+ {
+  "book_id": "PG-36668",
+  "gutenberg_id": 36668,
+  "toc_entries": 8,
+  "toc_titles": 8,
+  "skipped": [
+   "APPENDIX"
+  ],
+  "expected_tales": 7,
+  "extracted": 7,
+  "short": [],
+  "missing": [],
+  "ambiguous": [
+   "THE FROG PRINCESS",
+   "PRINCESS MIRANDA AND PRINCE HERO",
+   "THE WHIRLWIND",
+   "THE PRINCESS OF THE BRAZEN MOUNTAIN"
+  ],
+  "oracle_match": true
+ },
+ {
+  "book_id": "PG-20552",
+  "gutenberg_id": 20552,
+  "toc_entries": 18,
+  "toc_titles": 18,
+  "skipped": [],
+  "expected_tales": 18,
+  "extracted": 18,
+  "short": [],
+  "missing": [],
+  "ambiguous": [],
+  "oracle_match": true
+ },
+ {
+  "book_id": "PG-9368",
+  "gutenberg_id": 9368,
+  "toc_entries": 24,
+  "toc_titles": 24,
+  "skipped": [],
+  "expected_tales": 24,
+  "extracted": 24,
+  "short": [],
+  "missing": [],
+  "ambiguous": [],
+  "oracle_match": true
+ },
+ {
+  "book_id": "PG-31481",
+  "gutenberg_id": 31481,
+  "toc_entries": 21,
+  "toc_titles": 21,
+  "skipped": [],
+  "expected_tales": 21,
+  "extracted": 21,
+  "short": [],
+  "missing": [],
+  "ambiguous": [],
+  "oracle_match": true
+ },
+ {
+  "book_id": "PG-58816",
+  "gutenberg_id": 58816,
+  "toc_entries": 57,
+  "toc_titles": 57,
+  "skipped": [],
+  "expected_tales": 57,
+  "extracted": 53,
+  "short": [
+   "THE CAUSE OF A LAWSUIT BETWEEN THE OWL AND THE KITE",
+   "A MONKEY OBJECTS TO CRITICISM",
+   "THE ORIGIN OF DEATH",
+   "SHEIK CHILLI"
+  ],
+  "missing": [],
+  "ambiguous": [
+   "SHEIK CHILLI",
+   "SHEIK CHILLI"
+  ],
+  "oracle_match": true
+ },
+ {
+  "book_id": "PG-35557",
+  "gutenberg_id": 35557,
+  "toc_entries": 15,
+  "toc_titles": 15,
+  "skipped": [],
+  "expected_tales": 15,
+  "extracted": 15,
+  "short": [],
+  "missing": [],
+  "ambiguous": [],
+  "oracle_match": true
+ },
+ {
+  "book_id": "PG-34431",
+  "gutenberg_id": 34431,
+  "toc_entries": 34,
+  "toc_titles": 34,
+  "skipped": [],
+  "expected_tales": 34,
+  "extracted": 33,
+  "short": [
+   "Why the Codorniz Bird Received a Curse"
+  ],
+  "missing": [],
+  "ambiguous": [],
+  "oracle_match": true
+ },
+ {
+  "book_id": "PG-28932",
+  "gutenberg_id": 28932,
+  "toc_entries": 55,
+  "toc_titles": 54,
+  "skipped": [
+   "Introduction",
+   "The sources of the various legends"
+  ],
+  "expected_tales": 52,
+  "extracted": 51,
+  "short": [
+   "When the Ravens could speak"
+  ],
+  "missing": [],
+  "ambiguous": [],
+  "oracle_match": true
+ },
+ {
+  "book_id": "PG-26711",
+  "gutenberg_id": 26711,
+  "toc_entries": 28,
+  "toc_titles": 28,
+  "skipped": [
+   "a. THE VISION OF VICTORY",
+   "b. THE LAND OF DARKNESS",
+   "c. THE WONDERS OF THE WORLD"
+  ],
+  "expected_tales": 25,
+  "extracted": 25,
+  "short": [],
+  "missing": [],
+  "ambiguous": [],
+  "oracle_match": true
  }
 ]

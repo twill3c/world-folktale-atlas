@@ -60,7 +60,7 @@ export default async function StoryPage({ params }: { params: Promise<{ id: stri
       </p>
       <h1 style={{ marginBottom: ".2rem" }}>{s.title}</h1>
       <p className="muted small">
-        {s.culture_region}({s.country}) ／ 本文の言語 {LANG[s.language] ?? s.language}
+        {s.culture_region}{s.country ? `(${s.country})` : ""} ／ 本文の言語 {LANG[s.language] ?? s.language}
         {s.original_language !== s.language && ` ／ 原話の言語 ${LANG[s.original_language] ?? s.original_language}`}
         {s.publication_year ? ` ／ 出典の刊年 ${s.publication_year}` : " ／ 刊年の刻みなし"}
         {" "}／ {s.word_count.toLocaleString()} 語
@@ -81,8 +81,18 @@ export default async function StoryPage({ params }: { params: Promise<{ id: stri
               <tr>
                 <th>地図上の位置</th>
                 <td>
-                  緯度 {s.latitude} / 経度 {s.longitude}(精度 <code>{s.location_precision}</code>)。
-                  <strong>話の舞台でも採集地でもなく</strong>、この本が扱う文化圏のおおよその中心である。
+                  {s.latitude === null || s.longitude === null ? (
+                    <>
+                      持っていない(精度 <code>{s.location_precision}</code>)。
+                      この本の伝承は<strong>単一の土地に置けない</strong>ので、
+                      もっともらしい座標を作らず、地図にも印を打っていない。
+                    </>
+                  ) : (
+                    <>
+                      緯度 {s.latitude} / 経度 {s.longitude}(精度 <code>{s.location_precision}</code>)。
+                      <strong>話の舞台でも採集地でもなく</strong>、この本が扱う文化圏のおおよその中心である。
+                    </>
+                  )}
                 </td>
               </tr>
             </tbody>

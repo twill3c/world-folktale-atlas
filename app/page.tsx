@@ -1,14 +1,15 @@
 import Link from "next/link";
 
-import { getGates, getIndex, regionOrder } from "@/lib/data";
+import { getBooks, getGates, getIndex, regionOrder } from "@/lib/data";
 import WorldMap, { type MapPoint } from "./WorldMap";
 
 export default function Home() {
   const index = getIndex();
   const gates = getGates();
+  const { books } = getBooks();
   const order = regionOrder(index);
 
-  const points: MapPoint[] = order.map((region, i) => {
+  const grouped = order.map((region, i) => {
     const rows = index.stories.filter((s) => s.region === region);
     return {
       region,
@@ -21,6 +22,10 @@ export default function Home() {
       colorIndex: (i % 11) + 1,
     };
   });
+  // 単一の土地に置けない伝承は地図に印を打たない(SPEC §24 / location_precision = unknown)
+  const points: MapPoint[] = grouped
+    .filter((p): p is MapPoint => p.lat !== null && p.lon !== null);
+  const placeless = grouped.filter((p) => p.lat === null || p.lon === null);
 
   const g05 = gates["G-05_判定"];
   const g07 = gates["G-07_本内と本間"];
@@ -30,13 +35,31 @@ export default function Home() {
     <>
       <h1>世界の民話を、意味の側から眺める</h1>
       <p style={{ maxWidth: "68ch" }}>
-        Project Gutenberg にある民話集 12 冊から、
+        Project Gutenberg にある民話集 {books.length} 冊から、
         <strong>その本の目次が挙げる題名の数と一致した本だけ</strong>を採り、
         {index.n_stories} 話に割った。全話に出典 URL と権利状態と確認日が付いている。
         話どうしの近さは多言語 Embedding(<code>{index.embedding_model}</code>)で測っている。
       </p>
 
       <WorldMap points={points} />
+
+      {placeless.length > 0 && (
+        <div className="card panel--source" style={{ marginTop: "1rem" }}>
+          <h3 style={{ marginTop: 0, fontSize: "1rem" }}>地図に印を打っていない伝承</h3>
+          <p className="small" style={{ margin: 0 }}>
+            {placeless.map((p) => (
+              <span key={p.region}>
+                <Link href={`/stories/?region=${encodeURIComponent(p.region)}`}>{p.region}</Link>
+                ({p.count} 話)
+              </span>
+            ))}
+            {" "}——{" "}
+            <strong>単一の土地に置けない</strong>ので、緯度経度を持たせていない
+            (<code>location_precision: unknown</code>)。
+            もっともらしい座標を置いて地図に載せることはしない。
+          </p>
+        </div>
+      )}
 
       <h2>このアトラスが最初に測ったこと</h2>
       <p className="muted small" style={{ maxWidth: "70ch" }}>
@@ -79,7 +102,8 @@ export default function Home() {
           </p>
           <p className="small" style={{ margin: 0 }}>
             置換検定 p = {(h03["置換検定 p"] as number).toFixed(4)}。
-            閾値の真上に乗っており、有効な標本は 11 冊しかない。
+            閾値の近くに乗っており、有効な標本は
+            {String(h03["本の数(検定の有効標本)"])} 冊しかない。
             <strong>これを発見として見せない。</strong>
           </p>
         </div>
@@ -102,7 +126,7 @@ export default function Home() {
         <div className="card">
           <h3 style={{ marginTop: 0 }}>眺める</h3>
           <p className="small">
-            <Link href="/space/">意味の空間</Link> — 361 話を 2 次元に落とした散布図。<br />
+            <Link href="/space/">意味の空間</Link> — {index.n_stories} 話を 2 次元に落とした散布図。<br />
             <Link href="/clusters/">群</Link> — 機械がまとめた 15 の群。<br />
             <Link href="/network/">つながり</Link> — 似ている話どうしを線で結ぶ。<br />
             <Link href="/regions/">文化圏くらべ</Link> — テーマ・モチーフ・動物の地域差。

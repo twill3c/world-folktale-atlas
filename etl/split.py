@@ -155,6 +155,36 @@ def _following_text_len(lines: list[str], k: int, all_positions: set[int]) -> in
     return n
 
 
+# {1,6} では XXXVIII(7 文字)が割れない。実測で第 38 話が丸ごと落ちていた
+FLOW_SPLIT = re.compile(r"\s+(?=(?:[IVXLC]{1,8})\.\s+[A-ZÄÖÜ])")
+
+
+def _split_flowing_toc(entries: list[str]) -> list[str]:
+    """流し組みの目次を題名ごとに割る。
+
+    目次が段組ではなく流し組みの本がある(7439『English Fairy Tales』)。
+    1 行に複数の題名が入る:
+
+        I. TOM TIT TOT II. THE THREE SILLIES III. THE ROSE-TREE IV. THE OLD …
+
+    ローマ数字 + ピリオド + 大文字、の直前で割る。**本ごとに `toc_flow` で明示した本にだけ**
+    当てる。すべての本に当てると、副題にローマ数字を含む題名が割れてしまう。
+
+    **行ごとに割ってはならない。** 題名は行末で折り返すので、行内で割ると
+    『XXVI. MR. FOX XXVII.』のような切れ端が残る。目次ブロック全体を一続きにしてから割る。
+    """
+    joined = " ".join(e.strip() for e in entries)
+    parts = [p.strip() for p in FLOW_SPLIT.split(joined) if p.strip()]
+    if len(parts) <= 1:
+        return entries
+    # 流し組みでは巻末の見出しまで一続きに入る。最後の題名の尻尾に付いた
+    # 『NOTES AND REFERENCES』のような語を落とす(これらは既に非話として宣言してある)
+    tail = re.compile(r"\s+(?:" + "|".join(sorted(DEFAULT_SKIP | {"NOTES AND REFERENCES"},
+                                                  key=len, reverse=True)) + r")\.?\s*$", re.I)
+    parts[-1] = tail.sub("", parts[-1]).strip()
+    return parts
+
+
 def _join_wrapped(entries: list[str], idx: dict[str, list[int]]) -> list[str]:
     """目次の折り返しを結合する。
 
@@ -223,7 +253,14 @@ def split_book(body: str, cfg: dict | None = None) -> tuple[list[Section], dict]
     idx = heading_positions(lines, exclude)
 
     all_positions = {p for ps in idx.values() for p in ps}
-    entries = _join_wrapped(block.entries, idx)
+    # 目次が本文の並びどおりだと分かっている本でだけ、位置の単調増加を課す。
+    # 独語版のように目次がアルファベット順の本もあるので、既定では課さない。
+    ordered = bool(cfg.get("toc_ordered"))
+    cursor = -1
+    entries = block.entries
+    if cfg.get("toc_flow"):
+        entries = _split_flowing_toc(entries)
+    entries = _join_wrapped(entries, idx)
     chosen: list[tuple[int, str]] = []
     missing, ambiguous, skipped = [], [], []
     for e in entries:
@@ -239,7 +276,16 @@ def split_book(body: str, cfg: dict | None = None) -> tuple[list[Section], dict]
             continue
         if len(cands) > 1:
             ambiguous.append(e)
+            if ordered:
+                # 目次が本文の並びどおりの本では、**前の話より後ろにある候補**を採る。
+                # これを課さないと、題名と同じ語句が本文中に単独行で出てくる本
+                # (7439 の掛け合いの繰り返し)で、見出しではないほうに当たる。
+                after = [k for k in cands if k > cursor]
+                cands = after or cands
             cands = sorted(cands, key=lambda k: -_following_text_len(lines, k, all_positions))
+        if ordered:
+            cands = sorted(cands)
+            cursor = cands[0]
         chosen.append((cands[0], e))
 
     chosen.sort()
