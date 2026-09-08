@@ -1,0 +1,2 @@
+{"v": "1.2", "ts": "2026-09-08T12:13:45+09:00", "project": "world-folktale-atlas", "loop_id": "loop_002", "event": "loop_start", "data": {"goal": "多言語 Embedding を作り、目玉 H-01(交差言語 P@1)と G-06/G-07 を測る", "spec_refs": ["F-05", "G-05", "G-06", "G-07", "H-01"], "scaffold_version": "1.30.0", "agent": "claude-code", "model": "claude-opus-5"}}
+{"v": "1.2", "ts": "2026-09-08T12:50:05+09:00", "project": "world-folktale-atlas", "loop_id": "loop_002", "event": "test_run", "data": {"command": "pytest -q", "passed": 22, "failed": 0, "duration_s": 60}}
