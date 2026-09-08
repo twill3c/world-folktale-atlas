@@ -1,0 +1,1 @@
+{"v": "1.2", "ts": "2026-09-08T12:51:53+09:00", "project": "world-folktale-atlas", "loop_id": "loop_003", "event": "loop_start", "data": {"goal": "近傍・クラスタ・意味空間・テーマ/モチーフ/構造/感情を作り、静的データを生成する", "spec_refs": ["F-06", "F-07", "F-08", "F-09", "G-08"], "scaffold_version": "1.30.0", "agent": "claude-code", "model": "claude-opus-5"}}

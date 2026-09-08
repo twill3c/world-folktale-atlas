@@ -1,0 +1,197 @@
+/*
+ * 世界民話AIアトラス — 見た目の骨格。
+ *
+ * 設計書 §48「古い民話資料館 × デジタル地球儀 × AI分析」。
+ * 古書の紙の色を地にして、AI の分析だけを現代的な計器の見た目にする。
+ *
+ * **原資料と AI 推定を、色ではなく形でも分ける**(SPEC N-04 / G-08)。
+ * 推定には破線の枠と「推定」の札を必ず付ける。色覚に依存させない。
+ */
+
+:root {
+  color-scheme: light;
+
+  --paper: #f6f1e6;
+  --paper-2: #fffdf8;
+  --ink: #241f18;
+  --ink-2: #4e463a;
+  --ink-3: #7a7062;
+  --rule: #ddd2bd;
+  --rule-2: #c9bda4;
+
+  --accent: #7a3b2e;      /* 朱 — 見出しと現在地 */
+  --accent-2: #2f5d63;    /* 藍 — 計器 */
+  --estimate: #6b5aa8;    /* 紫 — AI 推定 */
+  --warn: #8a5a12;
+
+  --r1: #7a3b2e;
+  --r2: #2f5d63;
+  --r3: #5b6e2f;
+  --r4: #8a5a12;
+  --r5: #4a4a7a;
+  --r6: #2f6b4a;
+  --r7: #7a2f5a;
+  --r8: #3f5a8a;
+  --r9: #6b4a2f;
+  --r10: #46706b;
+  --r11: #6b2f2f;
+
+  --shadow: 0 1px 2px rgba(36, 31, 24, .07), 0 6px 20px rgba(36, 31, 24, .06);
+  --serif: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", "Times New Roman", serif;
+  --sans: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", system-ui, sans-serif;
+  --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --paper: #16150f;
+    --paper-2: #1e1c15;
+    --ink: #ece4d4;
+    --ink-2: #c6bda9;
+    --ink-3: #948b78;
+    --rule: #35312a;
+    --rule-2: #4a443a;
+    --accent: #d98f77;
+    --accent-2: #7fb8be;
+    --estimate: #a795e8;
+    --warn: #d9a44e;
+    --r1: #d98f77; --r2: #7fb8be; --r3: #a9bd6e; --r4: #d9a44e; --r5: #9a9ad8;
+    --r6: #6fbf95; --r7: #d17fae; --r8: #86a6dd; --r9: #c1996e; --r10: #7fc3ba;
+    --r11: #d98080;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 6px 20px rgba(0, 0, 0, .35);
+  }
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.75;
+  -webkit-text-size-adjust: 100%;
+}
+
+body { display: flex; flex-direction: column; min-height: 100vh; }
+
+a { color: var(--accent); text-underline-offset: 2px; }
+a:hover { color: var(--ink); }
+:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 2px; border-radius: 3px; }
+
+h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.35; margin: 0 0 .4em; }
+h1 { font-size: 1.7rem; letter-spacing: .02em; }
+h2 { font-size: 1.25rem; margin-top: 2rem; }
+h3 { font-size: 1.05rem; margin-top: 1.4rem; }
+p { margin: 0 0 1em; }
+
+.wrap { width: min(1100px, 100% - 2rem); margin-inline: auto; }
+.main { flex: 1 0 auto; padding: 1.5rem 0 3rem; }
+.muted { color: var(--ink-3); font-size: .86rem; }
+.small { font-size: .82rem; }
+
+/* --- 帯 ------------------------------------------------------------- */
+.masthead {
+  border-bottom: 1px solid var(--rule);
+  background: linear-gradient(180deg, var(--paper-2), var(--paper));
+}
+.masthead__inner { display: flex; flex-wrap: wrap; align-items: baseline; gap: .3rem 1rem; padding: .9rem 0 .6rem; }
+.masthead__title { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; color: var(--ink); text-decoration: none; letter-spacing: .04em; }
+.masthead__sub { color: var(--ink-3); font-size: .78rem; }
+.nav { display: flex; flex-wrap: wrap; gap: .1rem .15rem; padding-bottom: .55rem; }
+.nav a {
+  display: inline-block; padding: .28rem .6rem; border-radius: 999px;
+  font-size: .85rem; text-decoration: none; color: var(--ink-2);
+  border: 1px solid transparent;
+}
+.nav a:hover { background: var(--paper-2); border-color: var(--rule); color: var(--ink); }
+.nav a[aria-current="page"] { background: var(--accent); color: var(--paper-2); border-color: var(--accent); }
+
+/* --- 箱 ------------------------------------------------------------- */
+.card {
+  background: var(--paper-2); border: 1px solid var(--rule);
+  border-radius: 10px; padding: 1rem 1.1rem; box-shadow: var(--shadow);
+}
+.grid { display: grid; gap: 1rem; }
+.grid--2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.grid--3 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+
+/* --- 原資料と AI 推定の区別(G-08)---------------------------------- */
+.tag {
+  display: inline-flex; align-items: center; gap: .3rem;
+  border-radius: 999px; padding: .1rem .55rem; font-size: .78rem;
+  border: 1px solid var(--rule-2); background: var(--paper);
+  white-space: nowrap;
+}
+.tag--source { border-style: solid; color: var(--ink-2); }
+.tag--estimate {
+  border-style: dashed; border-color: var(--estimate); color: var(--estimate);
+}
+.tag--estimate::before { content: "≈"; font-weight: 700; }
+.tag--count::before { content: "＃"; font-weight: 700; color: var(--ink-3); }
+.tag--strong { font-weight: 600; }
+.tag--weak { opacity: .72; }
+
+.panel--estimate {
+  border-left: 3px dashed var(--estimate);
+  padding-left: .9rem;
+}
+.panel--source { border-left: 3px solid var(--rule-2); padding-left: .9rem; }
+
+.legend-note {
+  font-size: .82rem; color: var(--ink-3);
+  display: flex; flex-wrap: wrap; gap: .4rem .9rem; align-items: center;
+}
+
+/* --- 表 ------------------------------------------------------------- */
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: .88rem; }
+th, td { text-align: left; padding: .42rem .6rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; color: var(--ink-2); white-space: nowrap; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* --- 入力 ----------------------------------------------------------- */
+input[type="search"], input[type="text"], select {
+  font: inherit; font-size: .9rem; color: var(--ink);
+  background: var(--paper-2); border: 1px solid var(--rule-2);
+  border-radius: 7px; padding: .38rem .6rem;
+}
+button {
+  font: inherit; font-size: .85rem; color: var(--ink-2);
+  background: var(--paper-2); border: 1px solid var(--rule-2);
+  border-radius: 999px; padding: .25rem .7rem; cursor: pointer;
+}
+button:hover { background: var(--paper); color: var(--ink); }
+button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--paper-2); }
+
+/* --- 本文 ----------------------------------------------------------- */
+.tale {
+  font-family: var(--serif); font-size: 1.02rem; line-height: 2;
+  max-width: 62ch;
+}
+.tale p { margin: 0 0 1.1em; }
+
+/* --- 図 ------------------------------------------------------------- */
+svg { display: block; max-width: 100%; }
+.axis { stroke: var(--rule-2); }
+.axis text { fill: var(--ink-3); font-size: 10px; font-family: var(--sans); }
+
+/* --- フッタ(フリート共通規約)-------------------------------------- */
+.site-footer {
+  flex: 0 0 auto; border-top: 1px solid var(--rule);
+  background: var(--paper-2); padding: .9rem 0; margin-top: auto;
+}
+.site-footer__inner {
+  width: min(1100px, 100% - 2rem); margin-inline: auto;
+  font-size: .8rem; color: var(--ink-3); line-height: 1.9;
+}
+.site-footer a { color: var(--ink-2); }
+.site-footer__copy { margin-left: .4rem; }
+.fsep { margin: 0 .45rem; color: var(--rule-2); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+}
