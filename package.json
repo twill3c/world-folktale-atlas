@@ -4,7 +4,7 @@
   "private": true,
   "license": "MIT",
   "type": "module",
-  "description": "権利を一件ずつ確かめた世界の民話 361 話を、多言語 Embedding で横断して眺めるアトラス",
+  "description": "権利を一件ずつ確かめた世界の民話 709 話を、多言語 Embedding で横断して眺めるアトラス",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

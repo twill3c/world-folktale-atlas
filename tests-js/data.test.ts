@@ -22,16 +22,29 @@ describe.skipIf(!has)("ブラウザへ配るデータ", () => {
     expect(files.size).toBe(idx.stories.length);
   });
 
-  it("地図の印は緯度経度として妥当で、精度が宣言されている", () => {
-    const idx = read<{ stories: { lat: number; lon: number; precision: string }[] }>("index.json");
+  it("座標と精度が食い違わない(unknown なら座標を持たない)", () => {
+    // 単一の土地に置けない伝承(ユダヤのディアスポラ)は座標を持たない。
+    // **もっともらしい座標を当てて地図に載せない**ことを、ここで表明する(SPEC §6.1)
+    const idx = read<{
+      stories: { id: string; lat: number | null; lon: number | null; precision: string }[];
+    }>("index.json");
+    let placeless = 0;
     for (const s of idx.stories) {
-      expect(s.lat).toBeGreaterThanOrEqual(-90);
-      expect(s.lat).toBeLessThanOrEqual(90);
-      expect(s.lon).toBeGreaterThanOrEqual(-180);
-      expect(s.lon).toBeLessThanOrEqual(180);
       expect(["exact", "city", "region", "country", "culture_region", "unknown"])
         .toContain(s.precision);
+      if (s.precision === "unknown") {
+        expect(s.lat, `${s.id}: unknown なのに座標がある`).toBeNull();
+        expect(s.lon, `${s.id}: unknown なのに座標がある`).toBeNull();
+        placeless += 1;
+        continue;
+      }
+      expect(s.lat, `${s.id}: 座標が無い`).not.toBeNull();
+      expect(s.lat!).toBeGreaterThanOrEqual(-90);
+      expect(s.lat!).toBeLessThanOrEqual(90);
+      expect(s.lon!).toBeGreaterThanOrEqual(-180);
+      expect(s.lon!).toBeLessThanOrEqual(180);
     }
+    expect(placeless).toBeGreaterThan(0);
   });
 
   it("目玉の判定が記録されており、閾値が動いていない", () => {
