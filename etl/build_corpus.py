@@ -24,6 +24,7 @@ ROOT = Path(__file__).resolve().parent.parent
 BOOKS = ROOT / "data" / "metadata" / "books.json"
 OUT = ROOT / "data" / "processed" / "stories.jsonl"
 REPORT = ROOT / "data" / "processed" / "split_report.json"
+STAMP = ROOT / "data" / "processed" / "corpus.stamp.json"
 
 PG_TRADEMARK = re.compile(r"Project Gutenberg", re.I)
 
@@ -54,9 +55,78 @@ def trim_backmatter(text: str, is_last: bool) -> tuple[str, str]:
         m = BACKMATTER_LAST.search(text)
         if m:
             text = text[:m.start()]
+    if is_last:
+        text = _trim_publisher_catalogue(text)
+        text = _trim_trailing_nonprose(text)
     text, notes = _split_trailing_notes(text)
     text = re.sub(r"\n\s*(?:NOTES?|FOOTNOTES?|Anmerkungen)\s*$", "", text.rstrip())
     return text.strip(), notes
+
+
+#: 値段を角括弧で示す行(『[Two Shillings.』)。出版社の目録に特徴的
+PRICE_LINE = re.compile(r"^\s*\[[^\]\n]{0,40}(Shillings?|Pence|Sixpence|Guinea)", re.M)
+
+
+def _trim_publisher_catalogue(text: str) -> str:
+    """巻末の出版目録を落とす。
+
+    実測(L4): PG-31481 の最後の話に、版元の新刊案内が丸ごと入っていた。
+    広告は地の文の形をしているので「短い」「大文字」では捕まらない。
+    **値段の行が繰り返し出る**ことを手がかりにする。
+    """
+    hits = list(PRICE_LINE.finditer(text))
+    if len(hits) < 2:
+        return text
+    # 目録は値段の行より前から始まる。**版元の名前が最初に出る段落**まで遡って切る
+    imprint = re.compile(r"LONDON:|FIELD\s*(?:&|AND)\s*TUER|Leadenhall Press|"
+                         r"_?By the same author", re.I)
+    paras = text.split("\n\n")
+    for i, p in enumerate(paras):
+        if imprint.search(p):
+            return "\n\n".join(paras[:i]).rstrip()
+    cut = text.rfind("\n\n", 0, hits[0].start())
+    return text[:cut] if cut > 0 else text
+
+
+def _trim_trailing_nonprose(text: str) -> str:
+    """末尾の「地の文でない塊」を落とす。
+
+    実測(L4)で最後の話に残っていたもの:
+      - 巻末の目次(題名 + 空白 + ページ番号の行が続く)   … PG-28932
+      - 印刷所の奥付(『Glasgow: Printed at the University Press…』) … PG-35557
+      - 本の閉じ口上(全部大文字の短い行の連なり)         … PG-7439
+    """
+    colophon = re.compile(r"Printed (?:at|by)\b|University Press|Press,\s*\d|Druck von", re.I)
+    page_row = re.compile(r"\S\s{2,}\d{1,4}\s*$")
+    blocks = text.split("\n\n")
+    popped = False
+    while blocks:
+        lines = [l.strip() for l in blocks[-1].split("\n") if l.strip()]
+        if not lines:
+            blocks.pop()
+            continue
+        avg = sum(len(l) for l in lines) / len(lines)
+        all_caps = all(l == l.upper() and any(c.isalpha() for c in l) for l in lines)
+        page_rows = sum(1 for l in lines if page_row.search(l))
+        if all_caps and avg < 45:
+            blocks.pop()
+        elif page_rows >= max(1, len(lines) // 2):
+            blocks.pop()
+        elif colophon.search(blocks[-1]) and len(blocks[-1]) < 300:
+            blocks.pop()
+        elif popped and blocks[-1].rstrip().endswith(":") and len(blocks[-1]) < 220:
+            # 後付けの一覧を落としたあとに残る導入文(『… are as follows:』)。
+            # 続きを消した以上、この一文だけ残しても意味をなさない
+            blocks.pop()
+        elif popped and len(lines) <= 3 and "." not in blocks[-1] and len(blocks[-1]) < 220:
+            # 巻末目次の途中に挟まる小見出し(『Upernivik, North Greenland--』『Page』)。
+            # **一度でも後付けを落としたあとにだけ**当てる。地の文の末尾を削らないため。
+            # 句点を含まないことを条件にする — 地の文の最後の段落は必ず句点で終わる
+            blocks.pop()
+        else:
+            break
+        popped = True
+    return "\n\n".join(blocks)
 
 
 def _split_trailing_notes(text: str) -> tuple[str, str]:
@@ -194,6 +264,43 @@ def build(strict: bool = True) -> tuple[list[dict], list[dict]]:
     return stories, report
 
 
+def corpus_fingerprint() -> str:
+    """stories.jsonl の内容そのものの指紋。下流の高価な工程が入力の同一性を確かめるのに使う。"""
+    import hashlib
+    return hashlib.sha256(OUT.read_bytes()).hexdigest()[:16]
+
+
+def write_stamp(strict: bool) -> str:
+    """コーパスの検印。**下流の重い工程はこれを見てから走る**(HC-233)。
+
+    実測(L4): コーパスを確定する前に Embedding の再計算(70 分)を始め、
+    そのあとの品質検査で 3 冊の巻末混入と 1 冊の単位混在が見つかって、話数が
+    730 → 709 に変わった。計算はまるごと捨てることになった。
+    順序を守る意思ではなく、**入力が変わったら下流が止まる仕掛け**で防ぐ。
+    """
+    fp = corpus_fingerprint()
+    STAMP.write_text(json.dumps({
+        "fingerprint": fp,
+        "strict": strict,
+        "n_stories": sum(1 for _ in OUT.open(encoding="utf-8")),
+    }, ensure_ascii=False, indent=1), encoding="utf-8")
+    return fp
+
+
+def require_fresh_corpus(who: str) -> None:
+    """下流の工程が呼ぶ。検印が無い/古いなら、走る前に止まる。"""
+    if not STAMP.exists():
+        raise SystemExit(
+            f"{who}: コーパスの検印が無い。先に `python etl/build_corpus.py` を走らせること")
+    stamp = json.loads(STAMP.read_text(encoding="utf-8"))
+    now = corpus_fingerprint()
+    if stamp["fingerprint"] != now:
+        raise SystemExit(
+            f"{who}: コーパスが検印のあとで変わっている"
+            f"(検印 {stamp['fingerprint']} / 現在 {now})。"
+            "`python etl/build_corpus.py` を走らせ直してから始めること")
+
+
 def main() -> int:
     strict = "--lenient" not in sys.argv
     stories, report = build(strict=strict)
@@ -202,6 +309,8 @@ def main() -> int:
         for s in stories:
             f.write(json.dumps(s, ensure_ascii=False) + "\n")
     REPORT.write_text(json.dumps(report, ensure_ascii=False, indent=1), encoding="utf-8")
+    fp = write_stamp(strict)
+    print(f"検印 {fp}(strict={strict})")
 
     print(f"{'book':<12} {'目次':>4} {'題名':>4} {'期待':>4} {'抽出':>4} {'短':>3} {'欠':>3} {'曖':>3}  一致")
     for r in report:

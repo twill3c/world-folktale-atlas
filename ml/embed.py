@@ -108,6 +108,11 @@ def load_stories() -> list[dict]:
 
 
 def main() -> int:
+    # 入力が確定していないうちに 70 分の計算を始めない(HC-233)
+    sys.path.insert(0, str(ROOT))
+    from etl.build_corpus import require_fresh_corpus
+    require_fresh_corpus("ml/embed.py")
+
     stories = load_stories()
     emb = Embedder()
     print(f"{len(stories)} 話 / モデル {MODEL_ID} / 次元 {emb.dim}")

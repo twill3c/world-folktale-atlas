@@ -203,6 +203,23 @@ def test_publication_year_has_evidence(ledger):
 
 # ---------------------------------------------------------------- 規模のゲート
 
+def test_corpus_stamp_matches_current_corpus():
+    """検印が現在のコーパスと一致する(HC-233)。
+
+    出所: 実測 2026-09-08。コーパスを確定する前に 70 分かかる Embedding を始め、
+    そのあとの品質検査で話数が 730 → 709 に変わって、計算をまるごと捨てた。
+    下流の重い工程はこの検印を見てから走る。
+    """
+    from etl.build_corpus import STAMP, corpus_fingerprint, require_fresh_corpus
+
+    if not STAMP.exists():
+        pytest.skip("検印未生成")
+    stamp = json.loads(STAMP.read_text(encoding="utf-8"))
+    assert stamp["fingerprint"] == corpus_fingerprint(), \
+        "コーパスが検印のあとで変わっている。build_corpus.py を走らせ直すこと"
+    require_fresh_corpus("test")
+
+
 def test_corpus_size_gate(stories):
     """G-01: 収録話数 100 以上。"""
     assert len(stories) >= 100, f"収録 {len(stories)} 話"

@@ -312,8 +312,23 @@
       "longitude": 9.0,
       "location_precision": "culture_region",
       "verification_date": "2026-09-08",
-      "split": {"strategy": "toc", "skip": ["TALES"], "min_words": 120},
-      "count_oracle": {"kind": "toc", "note": "目次の『TALES』は話ではなく区分の見出しなので除く"}
+      "split": {
+        "strategy": "toc",
+        "skip": [
+          "TALES", "Footnotes to Introduction", "FOOTNOTES TO INTRODUCTION",
+          "Notice to the Second Edition", "Notice to the First Edition",
+          "ORIGIN", "DIFFUSION", "NORSE MYTHOLOGY", "NORSE POPULAR TALES", "CONCLUSION",
+          "INTRODUCTION TO APPENDIX",
+          "1. WHY THE JACK SPANIARD’S WAIST IS SMALL", "2. ANANZI AND THE LION",
+          "3. ANANZI AND QUANQUA", "4. THE EAR OF CORN AND THE TWELVE MEN",
+          "5. THE KING AND THE ANT’S TREE", "6. THE LITTLE CHILD AND THE PUMPKIN TREE",
+          "7. THE BROTHER AND HIS SISTERS", "8. THE GIRL AND THE FISH",
+          "9. THE LION, THE GOAT, AND THE BABOON", "10. ANANZI AND BABOON",
+          "11. THE MAN AND THE DOUKANA TREE", "12. NANCY FAIRY", "13. THE DANCING GANG"
+        ],
+        "min_words": 120
+      },
+      "count_oracle": {"kind": "toc", "note": "この本の目次は**三つの単位を混ぜている**。(1) 序文の節(ORIGIN / DIFFUSION 等)、(2) ノルウェーの話 60 篇、(3) 付録の西インド諸島の話 13 篇。付録は文化圏がノルウェーではないので、この本からは採らない(誤った地域の札を貼るより採らないほうがよい)。序文の節と付録を明示して除いた残りが期待件数である"}
     },
     {
       "book_id": "PG-36668",
