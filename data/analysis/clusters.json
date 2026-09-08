@@ -1,9 +1,9 @@
 {
  "method": "PCA(50) → UMAP(8) → HDBSCAN(min_cluster_size=6, min_samples=3)",
  "seed": 20260908,
- "n_clusters": 15,
- "n_noise": 21,
- "silhouette": 0.0598270520567894,
+ "n_clusters": 30,
+ "n_noise": 62,
+ "silhouette": 0.015546209178864956,
  "caveat": "クラスタ名は学術的な正式分類ではない(設計書 §9)。同じ本の話が同じクラスタに入りやすいことは G-07 で測ってある",
  "clusters": [
   {
@@ -90,21 +90,235 @@
   },
   {
    "cluster_id": 1,
-   "story_count": 66,
+   "story_count": 15,
+   "countries": [
+    "South Africa"
+   ],
+   "books": [
+    "PG-35557"
+   ],
+   "story_ids": [
+    "ZA-35557-001",
+    "ZA-35557-002",
+    "ZA-35557-003",
+    "ZA-35557-004",
+    "ZA-35557-005",
+    "ZA-35557-006",
+    "ZA-35557-007",
+    "ZA-35557-008",
+    "ZA-35557-009",
+    "ZA-35557-010",
+    "ZA-35557-011",
+    "ZA-35557-012",
+    "ZA-35557-013",
+    "ZA-35557-014",
+    "ZA-35557-015"
+   ],
+   "sample_titles": [
+    "The Place and the People",
+    "How Jakhals Fed Oom Leeuw",
+    "Who was King?",
+    "Why the Hyena is Lame",
+    "Who was the Thief?",
+    "The Sun"
+   ]
+  },
+  {
+   "cluster_id": 2,
+   "story_count": 30,
+   "countries": [
+    "United States"
+   ],
+   "books": [
+    "PG-22072"
+   ],
+   "story_ids": [
+    "US-22072-001",
+    "US-22072-002",
+    "US-22072-003",
+    "US-22072-004",
+    "US-22072-005",
+    "US-22072-006",
+    "US-22072-007",
+    "US-22072-008",
+    "US-22072-010",
+    "US-22072-011",
+    "US-22072-012",
+    "US-22072-013",
+    "US-22072-014",
+    "US-22072-015",
+    "US-22072-016",
+    "US-22072-017",
+    "US-22072-018",
+    "US-22072-019",
+    "US-22072-020",
+    "US-22072-021",
+    "US-22072-022",
+    "US-22072-023",
+    "US-22072-024",
+    "US-22072-025",
+    "US-22072-026",
+    "US-22072-027",
+    "US-22072-028",
+    "US-22072-029",
+    "US-22072-031",
+    "US-22072-032"
+   ],
+   "sample_titles": [
+    "Moowis",
+    "The Girl who Married the Pine-tree",
+    "A Legend of Manabozho",
+    "Pauppukkeewis",
+    "The Discovery of the Upper World",
+    "The Boy who Snared the Sun"
+   ]
+  },
+  {
+   "cluster_id": 3,
+   "story_count": 56,
+   "countries": [
+    "Greenland",
+    "Korea",
+    "Germany",
+    "United States",
+    "United Kingdom",
+    "India",
+    "Portugal"
+   ],
+   "books": [
+    "PG-28932",
+    "PG-51002",
+    "PG-2591",
+    "PG-22072",
+    "PG-7439",
+    "PG-58816",
+    "PG-34431"
+   ],
+   "story_ids": [
+    "DE-2591-028",
+    "KR-51002-040",
+    "KR-51002-048",
+    "US-22072-009",
+    "GB-7439-024",
+    "IN-58816-011",
+    "PT-34431-031",
+    "GL-28932-001",
+    "GL-28932-002",
+    "GL-28932-003",
+    "GL-28932-004",
+    "GL-28932-005",
+    "GL-28932-006",
+    "GL-28932-007",
+    "GL-28932-008",
+    "GL-28932-009",
+    "GL-28932-010",
+    "GL-28932-011",
+    "GL-28932-012",
+    "GL-28932-013",
+    "GL-28932-015",
+    "GL-28932-016",
+    "GL-28932-017",
+    "GL-28932-018",
+    "GL-28932-019",
+    "GL-28932-020",
+    "GL-28932-021",
+    "GL-28932-022",
+    "GL-28932-023",
+    "GL-28932-024",
+    "GL-28932-025",
+    "GL-28932-026",
+    "GL-28932-027",
+    "GL-28932-028",
+    "GL-28932-030",
+    "GL-28932-031",
+    "GL-28932-032",
+    "GL-28932-033",
+    "GL-28932-034",
+    "GL-28932-035",
+    "GL-28932-036",
+    "GL-28932-037",
+    "GL-28932-038",
+    "GL-28932-039",
+    "GL-28932-040",
+    "GL-28932-041",
+    "GL-28932-042",
+    "GL-28932-043",
+    "GL-28932-044",
+    "GL-28932-045",
+    "GL-28932-046",
+    "GL-28932-047",
+    "GL-28932-048",
+    "GL-28932-049",
+    "GL-28932-050",
+    "GL-28932-051"
+   ],
+   "sample_titles": [
+    "The Old Man and His Grandson",
+    "God's Way",
+    "The Senses",
+    "The Wonderful Rod",
+    "The Golden Arm",
+    "Bey Huslo"
+   ]
+  },
+  {
+   "cluster_id": 4,
+   "story_count": 22,
+   "countries": [
+    null,
+    "Korea"
+   ],
+   "books": [
+    "PG-26711",
+    "PG-51002"
+   ],
+   "story_ids": [
+    "KR-51002-022",
+    "XJ-26711-001",
+    "XJ-26711-002",
+    "XJ-26711-003",
+    "XJ-26711-004",
+    "XJ-26711-006",
+    "XJ-26711-007",
+    "XJ-26711-008",
+    "XJ-26711-010",
+    "XJ-26711-011",
+    "XJ-26711-012",
+    "XJ-26711-013",
+    "XJ-26711-014",
+    "XJ-26711-015",
+    "XJ-26711-016",
+    "XJ-26711-017",
+    "XJ-26711-018",
+    "XJ-26711-019",
+    "XJ-26711-020",
+    "XJ-26711-021",
+    "XJ-26711-022",
+    "XJ-26711-025"
+   ],
+   "sample_titles": [
+    "The Man who Lost His Legs",
+    "The Palace of the Eagles",
+    "The Giant of the Flood",
+    "The Fairy Princess of Ergetz",
+    "The Higgledy-piggledy Palace",
+    "The Star Child"
+   ]
+  },
+  {
+   "cluster_id": 5,
+   "story_count": 62,
    "countries": [
     "Korea",
     "China",
-    "Germany",
     "Ghana"
    ],
    "books": [
     "PG-51002",
     "PG-26070",
-    "PG-2591",
     "PG-66923"
    ],
    "story_ids": [
-    "DE-2591-028",
     "KR-51002-001",
     "KR-51002-002",
     "KR-51002-003",
@@ -126,7 +340,6 @@
     "KR-51002-019",
     "KR-51002-020",
     "KR-51002-021",
-    "KR-51002-022",
     "KR-51002-023",
     "KR-51002-024",
     "KR-51002-025",
@@ -144,7 +357,6 @@
     "KR-51002-037",
     "KR-51002-038",
     "KR-51002-039",
-    "KR-51002-040",
     "KR-51002-041",
     "KR-51002-042",
     "KR-51002-043",
@@ -152,7 +364,6 @@
     "KR-51002-045",
     "KR-51002-046",
     "KR-51002-047",
-    "KR-51002-048",
     "KR-51002-049",
     "KR-51002-050",
     "KR-51002-051",
@@ -172,213 +383,16 @@
     "GH-66923-020"
    ],
    "sample_titles": [
-    "The Old Man and His Grandson",
     "Charan",
     "The Story of Chang To-ryong",
     "A Story of the Fox",
     "Cheung Puk-chang, the Seer",
-    "Yun Se-pyong, the Wizard"
-   ]
-  },
-  {
-   "cluster_id": 2,
-   "story_count": 10,
-   "countries": [
-    "Ireland"
-   ],
-   "books": [
-    "PG-2892"
-   ],
-   "story_ids": [
-    "IE-2892-001",
-    "IE-2892-002",
-    "IE-2892-003",
-    "IE-2892-004",
-    "IE-2892-005",
-    "IE-2892-006",
-    "IE-2892-007",
-    "IE-2892-008",
-    "IE-2892-009",
-    "IE-2892-010"
-   ],
-   "sample_titles": [
-    "The Story of Tuan Mac Cairill",
-    "The Boyhood of Fionn",
-    "The Birth of Bran",
-    "Oisi’n’s Mother",
-    "The Wooing of Becfola",
-    "The Little Brawl at Allen"
-   ]
-  },
-  {
-   "cluster_id": 3,
-   "story_count": 15,
-   "countries": [
-    "Ghana"
-   ],
-   "books": [
-    "PG-66923"
-   ],
-   "story_ids": [
-    "GH-66923-001",
-    "GH-66923-002",
-    "GH-66923-003",
-    "GH-66923-004",
-    "GH-66923-005",
-    "GH-66923-006",
-    "GH-66923-009",
-    "GH-66923-010",
-    "GH-66923-013",
-    "GH-66923-016",
-    "GH-66923-018",
-    "GH-66923-022",
-    "GH-66923-023",
-    "GH-66923-025",
-    "GH-66923-034"
-   ],
-   "sample_titles": [
-    "How We Got the Name ‘spider Tales’",
-    "How Wisdom Became the Property of the Human Race",
-    "Anansi and Nothing",
-    "Thunder and Anansi",
-    "Why the Lizard Continually Moves His Head Up and Down",
-    "Tit for Tat"
-   ]
-  },
-  {
-   "cluster_id": 4,
-   "story_count": 11,
-   "countries": [
-    "France",
-    "India",
-    "Brazil"
-   ],
-   "books": [
-    "PG-29021",
-    "PG-38488",
-    "PG-24714"
-   ],
-   "story_ids": [
-    "FR-29021-002",
-    "FR-29021-003",
-    "FR-29021-004",
-    "FR-29021-005",
-    "FR-29021-006",
-    "FR-29021-007",
-    "FR-29021-009",
-    "FR-29021-010",
-    "IN-38488-017",
-    "IN-38488-018",
-    "BR-24714-017"
-   ],
-   "sample_titles": [
-    "The Fairy",
-    "Blue Beard",
-    "The Sleeping Beauty in the Wood",
-    "The Master Cat; Or, Puss in Boots",
-    "Cinderilla; Or, the Little Glass Slipper",
-    "Riquet with the Tuft"
-   ]
-  },
-  {
-   "cluster_id": 5,
-   "story_count": 20,
-   "countries": [
-    "India"
-   ],
-   "books": [
-    "PG-38488"
-   ],
-   "story_ids": [
-    "IN-38488-001",
-    "IN-38488-002",
-    "IN-38488-003",
-    "IN-38488-004",
-    "IN-38488-005",
-    "IN-38488-006",
-    "IN-38488-007",
-    "IN-38488-008",
-    "IN-38488-009",
-    "IN-38488-010",
-    "IN-38488-011",
-    "IN-38488-012",
-    "IN-38488-013",
-    "IN-38488-014",
-    "IN-38488-015",
-    "IN-38488-016",
-    "IN-38488-019",
-    "IN-38488-020",
-    "IN-38488-021",
-    "IN-38488-022"
-   ],
-   "sample_titles": [
-    "Life's Secret",
-    "Phakir Chand",
-    "The Indigent Brahman",
-    "The Story of the Rakshasas",
-    "The Story of Swet-Basanta",
-    "The Evil Eye of Sani"
+    "Yun Se-pyong, the Wizard",
+    "The Wild-cat Woman"
    ]
   },
   {
    "cluster_id": 6,
-   "story_count": 35,
-   "countries": [
-    "United States",
-    "Brazil"
-   ],
-   "books": [
-    "PG-22072",
-    "PG-24714"
-   ],
-   "story_ids": [
-    "US-22072-001",
-    "US-22072-002",
-    "US-22072-003",
-    "US-22072-004",
-    "US-22072-005",
-    "US-22072-006",
-    "US-22072-007",
-    "US-22072-008",
-    "US-22072-009",
-    "US-22072-010",
-    "US-22072-011",
-    "US-22072-012",
-    "US-22072-013",
-    "US-22072-014",
-    "US-22072-015",
-    "US-22072-016",
-    "US-22072-017",
-    "US-22072-018",
-    "US-22072-019",
-    "US-22072-020",
-    "US-22072-021",
-    "US-22072-022",
-    "US-22072-023",
-    "US-22072-024",
-    "US-22072-025",
-    "US-22072-026",
-    "US-22072-027",
-    "US-22072-028",
-    "US-22072-029",
-    "US-22072-030",
-    "US-22072-031",
-    "US-22072-032",
-    "BR-24714-001",
-    "BR-24714-015",
-    "BR-24714-016"
-   ],
-   "sample_titles": [
-    "Moowis",
-    "The Girl who Married the Pine-tree",
-    "A Legend of Manabozho",
-    "Pauppukkeewis",
-    "The Discovery of the Upper World",
-    "The Boy who Snared the Sun"
-   ]
-  },
-  {
-   "cluster_id": 7,
    "story_count": 16,
    "countries": [
     "Türkiye"
@@ -414,38 +428,230 @@
    ]
   },
   {
-   "cluster_id": 8,
-   "story_count": 8,
+   "cluster_id": 7,
+   "story_count": 59,
    "countries": [
-    "Germany",
-    "Türkiye"
+    "India",
+    "France",
+    null
    ],
    "books": [
-    "PG-2591",
-    "PG-64807"
+    "PG-58816",
+    "PG-38488",
+    "PG-29021",
+    "PG-26711"
    ],
    "story_ids": [
-    "DE-2591-005",
-    "DE-2591-013",
-    "DE-2591-021",
-    "DE-2591-045",
-    "DE-2591-048",
-    "DE-2591-057",
-    "DE-2591-058",
-    "TR-64807-008"
+    "FR-29021-005",
+    "IN-38488-001",
+    "IN-38488-002",
+    "IN-38488-003",
+    "IN-38488-004",
+    "IN-38488-005",
+    "IN-38488-006",
+    "IN-38488-007",
+    "IN-38488-008",
+    "IN-38488-009",
+    "IN-38488-010",
+    "IN-38488-011",
+    "IN-38488-012",
+    "IN-38488-013",
+    "IN-38488-014",
+    "IN-38488-015",
+    "IN-38488-016",
+    "IN-38488-018",
+    "IN-38488-019",
+    "IN-38488-020",
+    "IN-38488-021",
+    "IN-38488-022",
+    "IN-58816-001",
+    "IN-58816-002",
+    "IN-58816-003",
+    "IN-58816-004",
+    "IN-58816-005",
+    "IN-58816-006",
+    "IN-58816-008",
+    "IN-58816-009",
+    "IN-58816-010",
+    "IN-58816-012",
+    "IN-58816-013",
+    "IN-58816-014",
+    "IN-58816-015",
+    "IN-58816-016",
+    "IN-58816-018",
+    "IN-58816-019",
+    "IN-58816-020",
+    "IN-58816-021",
+    "IN-58816-023",
+    "IN-58816-028",
+    "IN-58816-029",
+    "IN-58816-030",
+    "IN-58816-031",
+    "IN-58816-032",
+    "IN-58816-033",
+    "IN-58816-037",
+    "IN-58816-038",
+    "IN-58816-039",
+    "IN-58816-040",
+    "IN-58816-041",
+    "IN-58816-042",
+    "IN-58816-044",
+    "IN-58816-045",
+    "IN-58816-047",
+    "IN-58816-049",
+    "IN-58816-051",
+    "XJ-26711-023"
    ],
    "sample_titles": [
-    "Old Sultan",
-    "Cat and Mouse in Partnership",
-    "The Mouse, the Bird, and the Sausage",
-    "The Fox and the Cat",
-    "The Fox and the Horse",
-    "First Story"
+    "The Master Cat; Or, Puss in Boots",
+    "Life's Secret",
+    "Phakir Chand",
+    "The Indigent Brahman",
+    "The Story of the Rakshasas",
+    "The Story of Swet-Basanta"
+   ]
+  },
+  {
+   "cluster_id": 8,
+   "story_count": 11,
+   "countries": [
+    "India",
+    "Romania"
+   ],
+   "books": [
+    "PG-58816",
+    "PG-20552"
+   ],
+   "story_ids": [
+    "RO-20552-010",
+    "IN-58816-007",
+    "IN-58816-025",
+    "IN-58816-027",
+    "IN-58816-034",
+    "IN-58816-035",
+    "IN-58816-036",
+    "IN-58816-043",
+    "IN-58816-048",
+    "IN-58816-050",
+    "IN-58816-052"
+   ],
+   "sample_titles": [
+    "The Voice of Death",
+    "Kulloo, a Faithful Dog",
+    "The Adventures of a Bird",
+    "The Bunniah's Wife and the Thief",
+    "The Origin of a River",
+    "The Golden Scorpions"
    ]
   },
   {
    "cluster_id": 9,
-   "story_count": 20,
+   "story_count": 13,
+   "countries": [
+    "Ghana"
+   ],
+   "books": [
+    "PG-66923"
+   ],
+   "story_ids": [
+    "GH-66923-001",
+    "GH-66923-002",
+    "GH-66923-003",
+    "GH-66923-004",
+    "GH-66923-005",
+    "GH-66923-006",
+    "GH-66923-009",
+    "GH-66923-010",
+    "GH-66923-013",
+    "GH-66923-016",
+    "GH-66923-018",
+    "GH-66923-022",
+    "GH-66923-023"
+   ],
+   "sample_titles": [
+    "How We Got the Name ‘spider Tales’",
+    "How Wisdom Became the Property of the Human Race",
+    "Anansi and Nothing",
+    "Thunder and Anansi",
+    "Why the Lizard Continually Moves His Head Up and Down",
+    "Tit for Tat"
+   ]
+  },
+  {
+   "cluster_id": 10,
+   "story_count": 10,
+   "countries": [
+    "Ireland"
+   ],
+   "books": [
+    "PG-2892"
+   ],
+   "story_ids": [
+    "IE-2892-001",
+    "IE-2892-002",
+    "IE-2892-003",
+    "IE-2892-004",
+    "IE-2892-005",
+    "IE-2892-006",
+    "IE-2892-007",
+    "IE-2892-008",
+    "IE-2892-009",
+    "IE-2892-010"
+   ],
+   "sample_titles": [
+    "The Story of Tuan Mac Cairill",
+    "The Boyhood of Fionn",
+    "The Birth of Bran",
+    "Oisi’n’s Mother",
+    "The Wooing of Becfola",
+    "The Little Brawl at Allen"
+   ]
+  },
+  {
+   "cluster_id": 11,
+   "story_count": 18,
+   "countries": [
+    "Spain",
+    "France",
+    "United Kingdom"
+   ],
+   "books": [
+    "PG-31481",
+    "PG-29021",
+    "PG-7439"
+   ],
+   "story_ids": [
+    "FR-29021-008",
+    "GB-7439-015",
+    "ES-31481-001",
+    "ES-31481-002",
+    "ES-31481-003",
+    "ES-31481-004",
+    "ES-31481-005",
+    "ES-31481-006",
+    "ES-31481-007",
+    "ES-31481-008",
+    "ES-31481-010",
+    "ES-31481-011",
+    "ES-31481-014",
+    "ES-31481-015",
+    "ES-31481-016",
+    "ES-31481-019",
+    "ES-31481-020",
+    "ES-31481-021"
+   ],
+   "sample_titles": [
+    "Little Thumb",
+    "The Master and His Pupil",
+    "The Ingenious Student",
+    "The Ugly Princess",
+    "The Wolf-child",
+    "The Magic Mirror"
+   ]
+  },
+  {
+   "cluster_id": 12,
+   "story_count": 23,
    "countries": [
     "Japan",
     "Ghana"
@@ -467,6 +673,7 @@
     "JP-4018-013",
     "JP-4018-014",
     "JP-4018-015",
+    "JP-4018-016",
     "JP-4018-017",
     "JP-4018-018",
     "JP-4018-019",
@@ -474,7 +681,9 @@
     "JP-4018-021",
     "JP-4018-022",
     "GH-66923-011",
-    "GH-66923-019"
+    "GH-66923-019",
+    "GH-66923-025",
+    "GH-66923-034"
    ],
    "sample_titles": [
     "My Lord Bag of Rice",
@@ -486,41 +695,368 @@
    ]
   },
   {
-   "cluster_id": 10,
-   "story_count": 6,
+   "cluster_id": 13,
+   "story_count": 31,
    "countries": [
-    "Ghana"
+    "United Kingdom",
+    "France",
+    "Portugal",
+    null
    ],
    "books": [
-    "PG-66923"
+    "PG-9368",
+    "PG-29021",
+    "PG-7439",
+    "PG-34431",
+    "PG-26711"
+   ],
+   "story_ids": [
+    "FR-29021-002",
+    "FR-29021-003",
+    "FR-29021-009",
+    "GB-7439-025",
+    "GB-7439-040",
+    "GB-9368-001",
+    "GB-9368-002",
+    "GB-9368-003",
+    "GB-9368-004",
+    "GB-9368-005",
+    "GB-9368-006",
+    "GB-9368-007",
+    "GB-9368-008",
+    "GB-9368-009",
+    "GB-9368-010",
+    "GB-9368-011",
+    "GB-9368-012",
+    "GB-9368-013",
+    "GB-9368-014",
+    "GB-9368-015",
+    "GB-9368-016",
+    "GB-9368-017",
+    "GB-9368-018",
+    "GB-9368-019",
+    "GB-9368-020",
+    "GB-9368-021",
+    "GB-9368-022",
+    "GB-9368-023",
+    "GB-9368-024",
+    "PT-34431-004",
+    "XJ-26711-005"
+   ],
+   "sample_titles": [
+    "The Fairy",
+    "Blue Beard",
+    "The Ridiculous Wishes",
+    "The History of Tom Thumb",
+    "Fairy Ointment",
+    "Welsh Rabbit and Hunted Hares"
+   ]
+  },
+  {
+   "cluster_id": 14,
+   "story_count": 22,
+   "countries": [
+    "Romania",
+    "France",
+    "Poland",
+    "India",
+    null
+   ],
+   "books": [
+    "PG-20552",
+    "PG-29021",
+    "PG-36668",
+    "PG-58816",
+    "PG-26711"
+   ],
+   "story_ids": [
+    "FR-29021-004",
+    "FR-29021-006",
+    "FR-29021-007",
+    "FR-29021-010",
+    "PL-36668-002",
+    "PL-36668-003",
+    "PL-36668-004",
+    "PL-36668-006",
+    "RO-20552-002",
+    "RO-20552-003",
+    "RO-20552-004",
+    "RO-20552-006",
+    "RO-20552-007",
+    "RO-20552-008",
+    "RO-20552-009",
+    "RO-20552-012",
+    "RO-20552-013",
+    "RO-20552-015",
+    "RO-20552-017",
+    "IN-58816-022",
+    "IN-58816-053",
+    "XJ-26711-024"
+   ],
+   "sample_titles": [
+    "The Sleeping Beauty in the Wood",
+    "Cinderilla; Or, the Little Glass Slipper",
+    "Riquet with the Tuft",
+    "Donkey-skin",
+    "Princess Miranda and Prince Hero",
+    "The Eagles"
+   ]
+  },
+  {
+   "cluster_id": 15,
+   "story_count": 13,
+   "countries": [
+    "Portugal",
+    "Brazil",
+    "India"
+   ],
+   "books": [
+    "PG-34431",
+    "PG-24714",
+    "PG-38488"
+   ],
+   "story_ids": [
+    "IN-38488-017",
+    "BR-24714-001",
+    "BR-24714-007",
+    "BR-24714-017",
+    "PT-34431-001",
+    "PT-34431-006",
+    "PT-34431-009",
+    "PT-34431-012",
+    "PT-34431-016",
+    "PT-34431-017",
+    "PT-34431-018",
+    "PT-34431-019",
+    "PT-34431-020"
+   ],
+   "sample_titles": [
+    "The Origin of Rubies",
+    "How Night Came",
+    "How the Speckled Hen Got Her Speckles",
+    "Why the Sea Moans",
+    "Princess Bluegreen of the Seven Cities",
+    "Linda Branca and her Mask"
+   ]
+  },
+  {
+   "cluster_id": 16,
+   "story_count": 16,
+   "countries": [
+    "Portugal",
+    "Brazil"
+   ],
+   "books": [
+    "PG-34431",
+    "PG-24714"
+   ],
+   "story_ids": [
+    "BR-24714-015",
+    "BR-24714-016",
+    "PT-34431-002",
+    "PT-34431-011",
+    "PT-34431-015",
+    "PT-34431-021",
+    "PT-34431-022",
+    "PT-34431-023",
+    "PT-34431-024",
+    "PT-34431-026",
+    "PT-34431-027",
+    "PT-34431-028",
+    "PT-34431-029",
+    "PT-34431-030",
+    "PT-34431-032",
+    "PT-34431-033"
+   ],
+   "sample_titles": [
+    "How Black Became White",
+    "How the Pigeon Became a Tame Bird",
+    "The Islands of Flowers",
+    "St. Anthony's Godchild",
+    "The Necklace of Pearls",
+    "The Princess of the Lost Island"
+   ]
+  },
+  {
+   "cluster_id": 17,
+   "story_count": 6,
+   "countries": [
+    "India",
+    "Greenland",
+    "Portugal",
+    null
+   ],
+   "books": [
+    "PG-58816",
+    "PG-28932",
+    "PG-34431",
+    "PG-26711"
+   ],
+   "story_ids": [
+    "IN-58816-017",
+    "IN-58816-046",
+    "PT-34431-003",
+    "GL-28932-014",
+    "GL-28932-029",
+    "XJ-26711-009"
+   ],
+   "sample_titles": [
+    "The Jackal and the Guana",
+    "The Painted Jackal",
+    "Why Dogs Sniff",
+    "The Raven and the Goose",
+    "The Giant Dog",
+    "The Quarrel of the Cat and Dog"
+   ]
+  },
+  {
+   "cluster_id": 18,
+   "story_count": 31,
+   "countries": [
+    "United Kingdom",
+    "Germany",
+    "Norway",
+    "France",
+    "Türkiye",
+    "Romania"
+   ],
+   "books": [
+    "PG-7439",
+    "PG-2591",
+    "PG-8933",
+    "PG-29021",
+    "PG-64807",
+    "PG-20552"
+   ],
+   "story_ids": [
+    "DE-2591-004",
+    "DE-2591-013",
+    "DE-2591-016",
+    "DE-2591-021",
+    "DE-2591-023",
+    "DE-2591-038",
+    "DE-2591-043",
+    "FR-29021-001",
+    "TR-64807-008",
+    "GB-7439-001",
+    "GB-7439-004",
+    "GB-7439-006",
+    "GB-7439-010",
+    "GB-7439-011",
+    "GB-7439-012",
+    "GB-7439-014",
+    "GB-7439-016",
+    "GB-7439-018",
+    "GB-7439-020",
+    "GB-7439-028",
+    "GB-7439-030",
+    "GB-7439-032",
+    "GB-7439-034",
+    "GB-7439-036",
+    "GB-7439-038",
+    "GB-7439-042",
+    "NO-8933-028",
+    "NO-8933-036",
+    "NO-8933-048",
+    "NO-8933-053",
+    "RO-20552-011"
+   ],
+   "sample_titles": [
+    "The Travelling Musicians",
+    "Cat and Mouse in Partnership",
+    "How Chanticleer and Partlet Went to Visit Mr Korbes",
+    "The Mouse, the Bird, and the Sausage",
+    "Little Red-cap [little Red Riding Hood]",
+    "The Wolf and the Seven Little Kids"
+   ]
+  },
+  {
+   "cluster_id": 19,
+   "story_count": 10,
+   "countries": [
+    "Norway",
+    "Germany",
+    "Ghana",
+    "United Kingdom"
+   ],
+   "books": [
+    "PG-8933",
+    "PG-2591",
+    "PG-66923",
+    "PG-7439"
+   ],
+   "story_ids": [
+    "DE-2591-045",
+    "DE-2591-057",
+    "DE-2591-058",
+    "GH-66923-024",
+    "GB-7439-026",
+    "NO-8933-010",
+    "NO-8933-012",
+    "NO-8933-022",
+    "NO-8933-037",
+    "NO-8933-056"
+   ],
+   "sample_titles": [
+    "The Fox and the Cat",
+    "First Story",
+    "Second Story",
+    "The Lion and the Wolf",
+    "Mr. Fox",
+    "The Fox as Herdsman"
+   ]
+  },
+  {
+   "cluster_id": 20,
+   "story_count": 13,
+   "countries": [
+    "Ghana",
+    "Norway",
+    "Portugal"
+   ],
+   "books": [
+    "PG-66923",
+    "PG-8933",
+    "PG-34431"
    ],
    "story_ids": [
     "GH-66923-007",
     "GH-66923-008",
+    "GH-66923-015",
+    "GH-66923-026",
     "GH-66923-031",
     "GH-66923-032",
     "GH-66923-035",
-    "GH-66923-036"
+    "GH-66923-036",
+    "NO-8933-014",
+    "NO-8933-024",
+    "NO-8933-052",
+    "PT-34431-008",
+    "PT-34431-025"
    ],
    "sample_titles": [
     "Why White Ants Always Harm Man’s Property",
     "The Squirrel and the Spider",
+    "Why the Sea-turtle When Caught Beats Its Breast with Its Fore-legs",
+    "The Robber and the Old Man",
     "To Lose an Elephant for the Sake of a Wren Is a Very Foolish Thing to Do",
-    "The Ungrateful Man",
-    "How Mushrooms First Grew",
-    "Farmer Mybrow and the Fairies"
+    "The Ungrateful Man"
    ]
   },
   {
-   "cluster_id": 11,
-   "story_count": 18,
+   "cluster_id": 21,
+   "story_count": 19,
    "countries": [
     "Brazil",
-    "Ghana"
+    "Ghana",
+    "India",
+    "Portugal"
    ],
    "books": [
     "PG-24714",
-    "PG-66923"
+    "PG-66923",
+    "PG-58816",
+    "PG-34431"
    ],
    "story_ids": [
     "BR-24714-002",
@@ -528,7 +1064,6 @@
     "BR-24714-004",
     "BR-24714-005",
     "BR-24714-006",
-    "BR-24714-007",
     "BR-24714-008",
     "BR-24714-009",
     "BR-24714-010",
@@ -540,7 +1075,9 @@
     "GH-66923-027",
     "GH-66923-028",
     "GH-66923-030",
-    "GH-66923-033"
+    "GH-66923-033",
+    "IN-58816-024",
+    "PT-34431-014"
    ],
    "sample_titles": [
     "How the Rabbit Lost His Tail",
@@ -548,12 +1085,156 @@
     "How the Tiger Got His Stripes",
     "Why the Lamb Is Meek",
     "Why the Tiger and the Stag Fear Each Other",
-    "How the Speckled Hen Got Her Speckles"
+    "How the Monkey Became a Trickster"
    ]
   },
   {
-   "cluster_id": 12,
-   "story_count": 19,
+   "cluster_id": 22,
+   "story_count": 7,
+   "countries": [
+    "Germany",
+    "United Kingdom"
+   ],
+   "books": [
+    "PG-2591",
+    "PG-7439"
+   ],
+   "story_ids": [
+    "DE-2591-018",
+    "DE-2591-020",
+    "DE-2591-034",
+    "DE-2591-064",
+    "GB-7439-003",
+    "GB-7439-007",
+    "GB-7439-022"
+   ],
+   "sample_titles": [
+    "Fundevogel",
+    "Hansel and Gretel",
+    "Clever Elsie",
+    "Snow-white and Rose-red",
+    "The Rose-tree",
+    "Nix Nought Nothing"
+   ]
+  },
+  {
+   "cluster_id": 23,
+   "story_count": 23,
+   "countries": [
+    "Norway",
+    "Germany",
+    "United Kingdom"
+   ],
+   "books": [
+    "PG-8933",
+    "PG-2591",
+    "PG-7439"
+   ],
+   "story_ids": [
+    "DE-2591-002",
+    "DE-2591-008",
+    "DE-2591-025",
+    "DE-2591-027",
+    "DE-2591-029",
+    "DE-2591-030",
+    "DE-2591-055",
+    "GB-7439-002",
+    "GB-7439-008",
+    "GB-7439-039",
+    "NO-8933-002",
+    "NO-8933-015",
+    "NO-8933-017",
+    "NO-8933-020",
+    "NO-8933-023",
+    "NO-8933-030",
+    "NO-8933-032",
+    "NO-8933-033",
+    "NO-8933-034",
+    "NO-8933-038",
+    "NO-8933-040",
+    "NO-8933-046",
+    "NO-8933-057"
+   ],
+   "sample_titles": [
+    "Hans in Luck",
+    "The Dog and the Sparrow",
+    "Tom Thumb",
+    "Clever Gretel",
+    "The Little Peasant",
+    "Frederick and Catherine"
+   ]
+  },
+  {
+   "cluster_id": 24,
+   "story_count": 14,
+   "countries": [
+    "Germany",
+    "United Kingdom"
+   ],
+   "books": [
+    "PG-2591",
+    "PG-7439"
+   ],
+   "story_ids": [
+    "DE-2591-007",
+    "DE-2591-012",
+    "DE-2591-014",
+    "DE-2591-017",
+    "DE-2591-026",
+    "DE-2591-031",
+    "DE-2591-032",
+    "DE-2591-033",
+    "DE-2591-036",
+    "DE-2591-047",
+    "DE-2591-061",
+    "DE-2591-063",
+    "GB-7439-009",
+    "GB-7439-043"
+   ],
+   "sample_titles": [
+    "Briar Rose",
+    "The Frog-prince",
+    "The Goose-girl",
+    "Rapunzel",
+    "Rumpelstiltskin",
+    "Sweetheart Roland"
+   ]
+  },
+  {
+   "cluster_id": 25,
+   "story_count": 10,
+   "countries": [
+    "Germany",
+    "United Kingdom"
+   ],
+   "books": [
+    "PG-2591",
+    "PG-7439"
+   ],
+   "story_ids": [
+    "DE-2591-009",
+    "DE-2591-037",
+    "DE-2591-039",
+    "DE-2591-049",
+    "DE-2591-050",
+    "DE-2591-051",
+    "DE-2591-052",
+    "DE-2591-053",
+    "DE-2591-054",
+    "GB-7439-023"
+   ],
+   "sample_titles": [
+    "The Twelve Dancing Princesses",
+    "The White Snake",
+    "The Queen Bee",
+    "The Blue Light",
+    "The Raven",
+    "The Golden Goose"
+   ]
+  },
+  {
+   "cluster_id": 26,
+   "story_count": 7,
    "countries": [
     "Germany",
     "Ghana"
@@ -563,107 +1244,113 @@
     "PG-66923"
    ],
    "story_ids": [
-    "DE-2591-001",
-    "DE-2591-009",
     "DE-2591-019",
     "DE-2591-035",
-    "DE-2591-037",
-    "DE-2591-039",
-    "DE-2591-040",
     "DE-2591-042",
-    "DE-2591-044",
     "DE-2591-046",
-    "DE-2591-049",
-    "DE-2591-050",
-    "DE-2591-051",
-    "DE-2591-052",
-    "DE-2591-054",
     "DE-2591-059",
     "DE-2591-060",
-    "DE-2591-062",
     "GH-66923-021"
    ],
    "sample_titles": [
-    "The Golden Bird",
-    "The Twelve Dancing Princesses",
     "The Valiant Little Tailor",
     "The Miser in the Bush",
-    "The White Snake",
-    "The Queen Bee"
+    "The Turnip",
+    "The Four Clever Brothers",
+    "The Salad",
+    "The Story of the Youth who Went Forth to Learn What Fear Was"
    ]
   },
   {
-   "cluster_id": 13,
-   "story_count": 16,
+   "cluster_id": 27,
+   "story_count": 9,
    "countries": [
-    "Germany"
+    "Norway",
+    "United Kingdom"
    ],
    "books": [
-    "PG-2591"
+    "PG-8933",
+    "PG-7439"
    ],
    "story_ids": [
-    "DE-2591-002",
-    "DE-2591-004",
-    "DE-2591-006",
-    "DE-2591-008",
-    "DE-2591-015",
-    "DE-2591-016",
-    "DE-2591-018",
-    "DE-2591-020",
-    "DE-2591-023",
-    "DE-2591-025",
-    "DE-2591-027",
-    "DE-2591-029",
-    "DE-2591-030",
-    "DE-2591-034",
-    "DE-2591-038",
-    "DE-2591-055"
+    "GB-7439-037",
+    "NO-8933-004",
+    "NO-8933-006",
+    "NO-8933-008",
+    "NO-8933-026",
+    "NO-8933-027",
+    "NO-8933-044",
+    "NO-8933-049",
+    "NO-8933-058"
    ],
    "sample_titles": [
-    "Hans in Luck",
-    "The Travelling Musicians",
-    "The Straw, the Coal, and the Bean",
-    "The Dog and the Sparrow",
-    "How They Went to the Mountains to Eat Nuts",
-    "How Chanticleer and Partlet Went to Visit Mr Korbes"
+    "Kate Crackernuts",
+    "East O’ the Sun, and West O’ the Moon",
+    "Hacon Grizzlebeard",
+    "The Twelve Wild Ducks",
+    "The Lassie and Her Godmother",
+    "The Three Aunts"
    ]
   },
   {
-   "cluster_id": 14,
-   "story_count": 18,
+   "cluster_id": 28,
+   "story_count": 10,
    "countries": [
-    "Germany"
+    "Norway"
    ],
    "books": [
-    "PG-2591"
+    "PG-8933"
    ],
    "story_ids": [
-    "DE-2591-003",
-    "DE-2591-007",
-    "DE-2591-010",
-    "DE-2591-012",
-    "DE-2591-014",
-    "DE-2591-017",
-    "DE-2591-022",
-    "DE-2591-024",
-    "DE-2591-026",
-    "DE-2591-031",
-    "DE-2591-032",
-    "DE-2591-033",
-    "DE-2591-036",
-    "DE-2591-041",
-    "DE-2591-047",
-    "DE-2591-053",
-    "DE-2591-061",
-    "DE-2591-063"
+    "NO-8933-007",
+    "NO-8933-009",
+    "NO-8933-011",
+    "NO-8933-018",
+    "NO-8933-019",
+    "NO-8933-021",
+    "NO-8933-035",
+    "NO-8933-050",
+    "NO-8933-051",
+    "NO-8933-055"
    ],
    "sample_titles": [
-    "Jorinda and Jorindel",
-    "Briar Rose",
-    "The Fisherman and His Wife",
-    "The Frog-prince",
-    "The Goose-girl",
-    "Rapunzel"
+    "Boots who Made the Princess Say, “that’s a Story",
+    "The Giant who Had No Heart in His Body",
+    "The Mastermaid",
+    "Taming the Shrew",
+    "Shortshanks",
+    "The Blue Belt"
+   ]
+  },
+  {
+   "cluster_id": 29,
+   "story_count": 9,
+   "countries": [
+    "Norway",
+    "United Kingdom"
+   ],
+   "books": [
+    "PG-8933",
+    "PG-7439"
+   ],
+   "story_ids": [
+    "GB-7439-017",
+    "NO-8933-013",
+    "NO-8933-029",
+    "NO-8933-031",
+    "NO-8933-039",
+    "NO-8933-041",
+    "NO-8933-042",
+    "NO-8933-043",
+    "NO-8933-045"
+   ],
+   "sample_titles": [
+    "Jack and His Golden Snuff-box",
+    "Princess on the Glass Hill",
+    "Rich Peter the Pedlar",
+    "Boots and the Troll",
+    "Dapplegrim",
+    "Lord Peter"
    ]
   }
  ]

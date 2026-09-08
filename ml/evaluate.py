@@ -8,6 +8,7 @@
 """
 from __future__ import annotations
 
+import datetime as _dt
 import json
 import math
 import random
@@ -48,10 +49,13 @@ def cross_lingual_p_at_1(stories, vecs) -> dict:
         de_idx.append(by_key[(de_book, p["de"])])
         en_idx.append(by_key[(en_book, p["en"])])
 
+    grimm_pool = [i for i, s in enumerate(stories) if s["book_id"] == en_book]
+    english_pool = [i for i, s in enumerate(stories) if s["language"] == "en"]
     results = {}
+    # 名前に数を焼き込まない。コーパスが増えたときに古い数が黙って残る
     for name, pool in (
-        ("英語グリム 64 話の中から", [i for i, s in enumerate(stories) if s["book_id"] == en_book]),
-        ("コーパスの英語全 299 話の中から", [i for i, s in enumerate(stories) if s["language"] == "en"]),
+        (f"英語版グリム {len(grimm_pool)} 話の中から", grimm_pool),
+        (f"コーパスの英語全 {len(english_pool)} 話の中から", english_pool),
     ):
         pool_pos = {g: k for k, g in enumerate(pool)}
         S = vecs[de_idx] @ vecs[pool].T
@@ -125,7 +129,10 @@ def geography_vs_semantics(stories, vecs, seed: int = 20260908) -> dict:
     本内ペアを入れると「距離 0 で類似度が高い」が自動的に大量に入り、相関が作られる。
     さらに英語の話だけに絞る(言語差が地理差と交絡するため)。
     """
-    idx = [i for i, s in enumerate(stories) if s["language"] == "en"]
+    # 座標を持たない本(単一の土地に置けない伝承)は、地理の検定に参加できない。
+    # 代わりの座標を当てて参加させることはしない(SPEC §24)
+    idx = [i for i, s in enumerate(stories)
+           if s["language"] == "en" and s["latitude"] is not None and s["longitude"] is not None]
     books = [stories[i]["book_id"] for i in idx]
     book_ids = sorted(set(books))
     bpos = {b: k for k, b in enumerate(book_ids)}
@@ -179,13 +186,16 @@ def geography_vs_semantics(stories, vecs, seed: int = 20260908) -> dict:
         loo[drop] = float(np.corrcoef(d_geo[keep], d_sem[keep])[0, 1])
     lo, hi = min(loo.values()), max(loo.values())
 
+    # 判定の帯は**事前登録**である。結果を見てから動かさない。
+    # 本の数が 11 → 21 に増えて p は 0.0496 → 0.012 に下がったが、帯は据え置く。
     if p < 0.01:
         verdict = "地理と意味に相関がある"
     elif p <= 0.10:
-        verdict = "判定できない — p が閾値の上に乗っており、標本は 11 冊しかない"
+        verdict = f"判定できない — p = {p:.4f} は事前に決めた保留の帯(0.01〜0.10)の中にある"
     else:
         verdict = "地理と意味の相関は偶然と区別できない"
 
+    sd = float(null.std())
     return {
         "使ったペア数(本をまたぐ英語ペアのみ)": int(len(d_sem)),
         "本の数(検定の有効標本)": len(book_ids),
@@ -193,29 +203,36 @@ def geography_vs_semantics(stories, vecs, seed: int = 20260908) -> dict:
         "置換検定 p": p,
         "置換回数": n_perm,
         "帰無分布の平均 r": float(null.mean()),
-        "帰無分布の標準偏差": float(null.std()),
+        "帰無分布の標準偏差": sd,
         "一冊抜きの r の範囲": [lo, hi],
         "一冊抜きの内訳": loo,
         "判定": verdict,
-        "注記": ("検定の単位はペアではなく本である。39,061 ペアを標本数として扱うと"
-                 "水増しになり、ほぼ必ず有意になる。帰無分布の標準偏差は 0.13 あり、"
-                 "観測 r=0.26 はその 2 倍にすぎない。地理は本(翻訳者・時代・編集方針)と"
-                 "完全に交絡しており、11 冊では両者を分離できない。"),
+        "注記": (
+            f"検定の単位はペアではなく本である。{len(d_sem):,} ペアを標本数として扱うと"
+            f"水増しになり、ほぼ必ず有意になる。有効な標本は {len(book_ids)} 冊である。"
+            f"帰無分布の標準偏差は {sd:.3f} で、観測 r={r:.3f} はその {abs(r)/sd:.1f} 倍にあたる。"
+            f"一冊抜きでも r は {lo:.3f}〜{hi:.3f} に収まり、特定の一冊が作っている相関ではない。"
+            "それでも地理は本(翻訳者・時代・編集方針)と交絡しており、"
+            "「地理が近いから似ている」と「たまたまこの本たちが似ている」は分離できていない。"
+        ),
     }
 
 
 def main() -> int:
     stories, vecs, meta = load()
     cl = cross_lingual_p_at_1(stories, vecs)
-    best = cl["英語グリム 64 話の中から"]
+    # 判定に使うのは「同じ本の中から探す」ほう(閾値 0.50 はこの条件で事前登録した)
+    primary = next(k for k in cl if k.startswith("英語版グリム"))
+    best = cl[primary]
     gates = {
-        "generated_at": "2026-09-08",
+        # 実行日から取る。手で書くと、測り直したのに日付だけ古いまま画面に出る
+        "generated_at": _dt.date.today().isoformat(),
         "model_id": meta["model_id"],
         "embedding_version": meta["embedding_version"],
         "n_stories": len(stories),
         "H-01_交差言語検索": cl,
         "G-05_判定": {
-            "指標": "交差言語 P@1(英語グリム 64 話の中から)",
+            "指標": f"交差言語 P@1({primary})",
             "閾値": P_AT_1_THRESHOLD,
             "実測": best["p_at_1"],
             "偶然の水準": best["chance_p_at_1"],

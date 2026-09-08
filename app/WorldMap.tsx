@@ -31,33 +31,55 @@ const H = Math.round((W / 360) * (LAT_TOP - LAT_BOTTOM));
 const px = (lon: number) => ((lon + 180) / 360) * W;
 const py = (lat: number) => ((LAT_TOP - lat) / (LAT_TOP - LAT_BOTTOM)) * H;
 
+type Placed = { x: number; y: number; anchor: "start" | "middle" | "end" };
+
 /**
  * ラベルの重なりをほどく。
  *
- * 印は近くに固まる(ヨーロッパに 3 つ、東アジアに 3 つ)。
- * **他のラベルだけでなく、他の印の円も障害物として避ける。**
- * ラベルどうしだけを見ていたときは、日本のラベルが朝鮮半島の円に重なっていた(実測)。
+ * 21 の文化圏のうち 10 がヨーロッパに固まる。**縦に逃がすだけでは解けない。**
+ * 縦だけで解こうとしたときは、ラベルが図の上端からはみ出して切れ、
+ * アイルランド・ウェールズ・フランス・ポーランドの名前が消えていた(実測)。
+ *
+ * 八方向へ、距離を伸ばしながら置き場所を探す。
+ *   - 他のラベルだけでなく、**他の印の円も障害物**として避ける
+ *   - 図の外へ出さない(はみ出すと文字が切れる)
+ *   - 印から離れたら引き出し線を引く
  */
 function placeLabels(
-  items: { key: string; x: number; y: number; text: string }[],
-  circles: { x: number; y: number; r: number }[],
+  items: { key: string; x: number; y: number; r: number; text: string }[],
+  bounds: { w: number; h: number },
 ) {
   const boxes: { x: number; y: number; w: number; h: number }[] =
-    circles.map((c) => ({ x: c.x, y: c.y, w: c.r * 2, h: c.r * 2 }));
-  const out: Record<string, number> = {};
+    items.map((c) => ({ x: c.x, y: c.y, w: c.r * 2, h: c.r * 2 }));
+  const out: Record<string, Placed> = {};
   const LH = 12;
+  const DIRS: [number, number, Placed["anchor"]][] = [
+    [0, 1, "middle"], [0, -1, "middle"],
+    [1, 0, "start"], [-1, 0, "end"],
+    [1, 1, "start"], [-1, 1, "end"], [1, -1, "start"], [-1, -1, "end"],
+  ];
+
   for (const it of items) {
     const w = it.text.length * 9.8;
-    let y = it.y;
-    for (let step = 0; step < 20; step++) {
-      const cand = it.y + (step % 2 === 0 ? 1 : -1) * Math.ceil(step / 2) * LH;
-      const hit = boxes.some((b) =>
-        Math.abs(b.y - cand) < (b.h + LH) / 2 && Math.abs(b.x - it.x) < (b.w + w) / 2);
-      if (!hit) { y = cand; break; }
-      y = cand;
+    let best: Placed | null = null;
+    outer:
+    for (let ring = 1; ring <= 9; ring++) {
+      for (const [dx, dy, anchor] of DIRS) {
+        const gap = it.r + 6 + (ring - 1) * LH;
+        const x = it.x + dx * (gap + (dx ? w / 2 : 0));
+        const y = it.y + dy * gap + (dy >= 0 ? 4 : 0);
+        const left = anchor === "start" ? x : anchor === "end" ? x - w : x - w / 2;
+        if (left < 3 || left + w > bounds.w - 3 || y - LH < 3 || y > bounds.h - 3) continue;
+        const cx = left + w / 2;
+        const hit = boxes.some((b) =>
+          Math.abs(b.y - y) < (b.h + LH) / 2 && Math.abs(b.x - cx) < (b.w + w) / 2);
+        if (!hit) { best = { x, y, anchor }; break outer; }
+      }
     }
-    boxes.push({ x: it.x, y, w, h: LH });
-    out[it.key] = y;
+    const p = best ?? { x: it.x, y: it.y + it.r + 10, anchor: "middle" as const };
+    const left = p.anchor === "start" ? p.x : p.anchor === "end" ? p.x - w : p.x - w / 2;
+    boxes.push({ x: left + w / 2, y: p.y, w, h: LH });
+    out[it.key] = p;
   }
   return out;
 }
@@ -83,18 +105,18 @@ export default function WorldMap({ points }: { points: MapPoint[] }) {
   }, [base]);
 
   const maxCount = Math.max(...points.map((p) => p.count), 1);
-  const r = (n: number) => 4.5 + 12 * Math.sqrt(n / maxCount);
+  const r = (n: number) => 4 + 10 * Math.sqrt(n / maxCount);
   const shown = points.find((p) => p.region === active) ?? null;
 
-  const labelY = useMemo(
+  const label = useMemo(
     () => placeLabels(
+      // 大きい印から先に置き場所を取る(小さい印のほうが逃がしやすい)
       [...points]
         .sort((a, b) => b.count - a.count)
         .map((p) => ({
-          key: p.region, x: px(p.lon),
-          y: py(p.lat) + r(p.count) + 10, text: p.region,
+          key: p.region, x: px(p.lon), y: py(p.lat), r: r(p.count), text: p.region,
         })),
-      points.map((p) => ({ x: px(p.lon), y: py(p.lat), r: r(p.count) }))),
+      { w: W, h: H }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [points]);
 
@@ -133,15 +155,14 @@ export default function WorldMap({ points }: { points: MapPoint[] }) {
                   onFocus={() => setActive(p.region)}
                   onClick={() => setActive(p.region)}
                 />
-                {Math.abs(labelY[p.region] - (py(p.lat) + r(p.count) + 10)) > 6 && (
-                  <line
-                    x1={px(p.lon)} y1={py(p.lat)} x2={px(p.lon)} y2={labelY[p.region] - 3.5}
-                    stroke={`var(--r${p.colorIndex})`} strokeWidth={0.7} strokeOpacity={0.6}
-                  />
-                )}
+                <line
+                  x1={px(p.lon)} y1={py(p.lat)}
+                  x2={label[p.region].x} y2={label[p.region].y - 3.5}
+                  stroke={`var(--r${p.colorIndex})`} strokeWidth={0.7} strokeOpacity={0.55}
+                />
                 <text
-                  x={px(p.lon)} y={labelY[p.region]}
-                  textAnchor="middle" fontSize={9.5} fill="var(--ink-2)"
+                  x={label[p.region].x} y={label[p.region].y}
+                  textAnchor={label[p.region].anchor} fontSize={9.5} fill="var(--ink-2)"
                   stroke="var(--paper-2)" strokeWidth={2.6} paintOrder="stroke"
                   style={{ pointerEvents: "none", fontFamily: "var(--sans)" }}
                 >
