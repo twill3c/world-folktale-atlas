@@ -11,6 +11,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "smoke": "node harness/smoke.mjs",
+    "live": "node harness/live.mjs",
     "verify": "npm run typecheck && npm run test && npm run build"
   },
   "dependencies": {
