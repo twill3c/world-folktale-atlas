@@ -24,17 +24,13 @@
   --estimate: #6b5aa8;    /* 紫 — AI 推定 */
   --warn: #8a5a12;
 
-  --r1: #7a3b2e;
-  --r2: #2f5d63;
-  --r3: #5b6e2f;
-  --r4: #8a5a12;
-  --r5: #4a4a7a;
-  --r6: #2f6b4a;
-  --r7: #7a2f5a;
-  --r8: #3f5a8a;
-  --r9: #6b4a2f;
-  --r10: #46706b;
-  --r11: #6b2f2f;
+  /* 文化圏の色。22 圏あるので 22 色。隣り合う番号どうしが似ないよう色相を飛ばしてある */
+  --r1: #7a3b2e;  --r2: #2f5d63;  --r3: #5b6e2f;  --r4: #8a5a12;
+  --r5: #4a4a7a;  --r6: #2f6b4a;  --r7: #7a2f5a;  --r8: #3f5a8a;
+  --r9: #6b4a2f;  --r10: #46706b; --r11: #6b2f2f; --r12: #345c2f;
+  --r13: #8a3f6b; --r14: #2f4a6b; --r15: #7a6b2f; --r16: #4a2f6b;
+  --r17: #2f6b6b; --r18: #8a4a2f; --r19: #5a2f4a; --r20: #3f6b3f;
+  --r21: #6b5a8a; --r22: #2f3f5a;
 
   --shadow: 0 1px 2px rgba(36, 31, 24, .07), 0 6px 20px rgba(36, 31, 24, .06);
   --serif: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", "Times New Roman", serif;
@@ -56,9 +52,12 @@
     --accent-2: #7fb8be;
     --estimate: #a795e8;
     --warn: #d9a44e;
-    --r1: #d98f77; --r2: #7fb8be; --r3: #a9bd6e; --r4: #d9a44e; --r5: #9a9ad8;
-    --r6: #6fbf95; --r7: #d17fae; --r8: #86a6dd; --r9: #c1996e; --r10: #7fc3ba;
-    --r11: #d98080;
+    --r1: #d98f77; --r2: #7fb8be; --r3: #a9bd6e; --r4: #d9a44e;
+    --r5: #9a9ad8; --r6: #6fbf95; --r7: #d17fae; --r8: #86a6dd;
+    --r9: #c1996e; --r10: #7fc3ba; --r11: #d98080; --r12: #8fc47f;
+    --r13: #dd8fc4; --r14: #7f9fd9; --r15: #ccc47f; --r16: #b08fd9;
+    --r17: #7fd0cc; --r18: #dda57f; --r19: #c48fa5; --r20: #8fd0a0;
+    --r21: #b0a5dd; --r22: #8fb0cc;
     --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 6px 20px rgba(0, 0, 0, .35);
   }
 }

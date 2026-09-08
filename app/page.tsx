@@ -1,13 +1,15 @@
 import Link from "next/link";
 
-import { getBooks, getGates, getIndex, regionOrder } from "@/lib/data";
+import { getBooks, getClusters, getGates, getIndex, regionOrder } from "@/lib/data";
 import WorldMap, { type MapPoint } from "./WorldMap";
 
 export default function Home() {
   const index = getIndex();
   const gates = getGates();
+  const clusters = getClusters();
   const { books } = getBooks();
   const order = regionOrder(index);
+  const nPairs = Object.values(gates["H-01_交差言語検索"])[0]?.n_pairs ?? 0;
 
   const grouped = order.map((region, i) => {
     const rows = index.stories.filter((s) => s.region === region);
@@ -19,7 +21,7 @@ export default function Home() {
       count: rows.length,
       languages: [...new Set(rows.map((s) => s.lang))],
       years: [...new Set(rows.map((s) => s.year))],
-      colorIndex: (i % 11) + 1,
+      colorIndex: (i % 22) + 1,
     };
   });
   // 単一の土地に置けない伝承は地図に印を打たない(SPEC §24 / location_precision = unknown)
@@ -77,7 +79,7 @@ export default function Home() {
             {(g05.実測 * 100).toFixed(1)}<span style={{ fontSize: "1rem" }}>%</span>
           </p>
           <p className="small" style={{ margin: 0 }}>
-            同じ物語の独英版 26 組で、相手が第 1 位になった率。
+            同じ物語の独英版 {nPairs} 組で、相手が第 1 位になった率。
             偶然の水準は {(g05.偶然の水準 * 100).toFixed(1)}%、
             閾値 {(g05.閾値 * 100).toFixed(0)}% は測る前に決めた。
           </p>
@@ -127,7 +129,7 @@ export default function Home() {
           <h3 style={{ marginTop: 0 }}>眺める</h3>
           <p className="small">
             <Link href="/space/">意味の空間</Link> — {index.n_stories} 話を 2 次元に落とした散布図。<br />
-            <Link href="/clusters/">群</Link> — 機械がまとめた 15 の群。<br />
+            <Link href="/clusters/">群</Link> — 機械がまとめた {clusters.n_clusters} の群。<br />
             <Link href="/network/">つながり</Link> — 似ている話どうしを線で結ぶ。<br />
             <Link href="/regions/">文化圏くらべ</Link> — テーマ・モチーフ・動物の地域差。
           </p>

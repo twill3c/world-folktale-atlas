@@ -96,7 +96,7 @@ export default function NetworkView({
           const deg = degree.get(s.id) ?? 0;
           return (
             <circle key={s.id} cx={p[0]} cy={p[1]} r={deg ? 3 + Math.min(6, deg) : 1.6}
-                    fill={deg ? `var(--r${(regions.indexOf(s.region) % 11) + 1})` : "var(--rule-2)"}
+                    fill={deg ? `var(--r${(regions.indexOf(s.region) % 22) + 1})` : "var(--rule-2)"}
                     fillOpacity={deg ? 0.85 : 0.35}
                     style={{ cursor: deg ? "pointer" : "default" }}
                     onMouseEnter={() => deg && setHover(s)}>

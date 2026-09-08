@@ -276,17 +276,19 @@ def split_book(body: str, cfg: dict | None = None) -> tuple[list[Section], dict]
             continue
         if len(cands) > 1:
             ambiguous.append(e)
-            if ordered:
-                # 目次が本文の並びどおりの本では、**前の話より後ろにある候補**を採る。
-                # これを課さないと、題名と同じ語句が本文中に単独行で出てくる本
-                # (7439 の掛け合いの繰り返し)で、見出しではないほうに当たる。
-                after = [k for k in cands if k > cursor]
-                cands = after or cands
-            cands = sorted(cands, key=lambda k: -_following_text_len(lines, k, all_positions))
         if ordered:
-            cands = sorted(cands)
-            cursor = cands[0]
-        chosen.append((cands[0], e))
+            # 目次が本文の並びどおりの本では、**前の話より後ろにある最初の候補**を採る。
+            # これを課さないと、題名と同じ語句が本文中に単独行で出てくる本
+            # (7439 の掛け合いの繰り返し)で、見出しではないほうに当たり、
+            # 第 1 話が本文の途中から始まっていた。
+            after = sorted(k for k in cands if k > cursor)
+            pick = after[0] if after else min(cands)
+            cursor = pick
+        else:
+            # 順序が当てにならない本では、**後続本文がいちばん長い**位置を採る。
+            # 曖昧の実体は柱(ランニングヘッド)と挿絵の見出しで、後には本文が続かない。
+            pick = max(cands, key=lambda k: _following_text_len(lines, k, all_positions))
+        chosen.append((pick, e))
 
     chosen.sort()
     bounds = [k for k, _ in chosen]

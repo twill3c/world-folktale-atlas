@@ -36,9 +36,9 @@ export default function SpacePlot({
     [stories]);
 
   const colorOf = (s: IndexStory) => {
-    if (colorBy === "region") return `var(--r${(regions.indexOf(s.region) % 11) + 1})`;
+    if (colorBy === "region") return `var(--r${(regions.indexOf(s.region) % 22) + 1})`;
     if (colorBy === "lang") return s.lang === "de" ? "var(--r2)" : "var(--r1)";
-    return s.cluster < 0 ? "var(--rule-2)" : `var(--r${(clusters.indexOf(s.cluster) % 11) + 1})`;
+    return s.cluster < 0 ? "var(--rule-2)" : `var(--r${(clusters.indexOf(s.cluster) % 22) + 1})`;
   };
 
   return (
@@ -107,7 +107,7 @@ export default function SpacePlot({
             <span key={label} style={{ display: "inline-flex", alignItems: "center", gap: ".3rem" }}>
               <span aria-hidden="true" style={{
                 width: 9, height: 9, borderRadius: 9, display: "inline-block",
-                background: `var(--r${(i % 11) + 1})`,
+                background: `var(--r${(i % 22) + 1})`,
               }} />
               {colorBy === "cluster" ? `群 ${label}` : label}
             </span>
