@@ -1,0 +1,26 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# モデルの重み(出荷物ではない。curl で取得する — SPEC §2.6)
+.models/
+
+# 生データ(取得元は data/metadata/books.json に記録してある。再取得できる)
+data/raw/
+
+# Embedding 本体(ブラウザへ送らない — SPEC N-02)
+data/embeddings/
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+.vercel/
+
+# OS
+Thumbs.db
+.DS_Store

@@ -1,0 +1,17 @@
+# world-folktale-atlas のオフライン解析側の依存(出荷物ではない)。
+#
+# 実測環境: Python 3.14.2 / Windows 11 / 2026-09-08
+#
+# このリポジトリは専用 venv を持つ(.venv)。作る前の sys.prefix は
+# 別プロジェクトの venv を指していた。再現するときは必ず専用の環境を作ること。
+#
+#   py -3.14 -m venv .venv
+#   .venv/Scripts/python -m pip install -r requirements.txt
+#
+# torch は入れない。この機からは download.pytorch.org の名前解決ができない(L0 実測)。
+# 推論は onnxruntime で行い、モデルの重みは curl で .models/ へ取得する。
+# 版を範囲で書かない(HC-050)。ここに並ぶ版は照合の権威である。
+onnxruntime==1.29.0
+tokenizers==0.23.2
+numpy==2.5.3
+scikit-learn==1.9.0
