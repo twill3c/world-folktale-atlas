@@ -1,0 +1,41 @@
+{
+ "id": 20051,
+ "title": "Märchen der Gebrüder Grimm 2",
+ "authors": [
+  {
+   "name": "Grimm, Jacob",
+   "birth_year": 1785,
+   "death_year": 1863
+  },
+  {
+   "name": "Grimm, Wilhelm",
+   "birth_year": 1786,
+   "death_year": 1859
+  }
+ ],
+ "summaries": [],
+ "editors": [],
+ "translators": [],
+ "subjects": [
+  "Fairy tales -- Germany"
+ ],
+ "bookshelves": [
+  "DE Kinderbuch"
+ ],
+ "languages": [
+  "de"
+ ],
+ "copyright": false,
+ "media_type": "Sound",
+ "formats": {
+  "text/plain; charset=us-ascii": "https://www.gutenberg.org/files/20051/20051-readme.txt",
+  "text/html": "https://www.gutenberg.org/files/20051/20051-index.html",
+  "audio/ogg": "https://www.gutenberg.org/files/20051/ogg/20051-01.ogg",
+  "audio/mp4": "https://www.gutenberg.org/files/20051/m4b/20051-01.m4b",
+  "audio/mpeg": "https://www.gutenberg.org/files/20051/mp3/20051-01.mp3",
+  "application/rdf+xml": "https://www.gutenberg.org/ebooks/20051.rdf",
+  "image/jpeg": "https://www.gutenberg.org/cache/epub/20051/pg20051.cover.medium.jpg",
+  "application/octet-stream": "https://www.gutenberg.org/files/20051/20051-m4b.zip"
+ },
+ "download_count": 14578
+}

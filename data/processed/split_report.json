@@ -1,0 +1,179 @@
+[
+ {
+  "book_id": "PG-2591",
+  "gutenberg_id": 2591,
+  "toc_entries": 67,
+  "toc_titles": 67,
+  "skipped": [],
+  "expected_tales": 67,
+  "extracted": 64,
+  "short": [
+   "THE ADVENTURES OF CHANTICLEER AND PARTLET",
+   "THE JUNIPER-TREE",
+   "THE WEDDING OF MRS FOX"
+  ],
+  "missing": [],
+  "ambiguous": [
+   "THE JUNIPER-TREE",
+   "the juniper-tree."
+  ],
+  "oracle_match": true
+ },
+ {
+  "book_id": "PG-77905",
+  "gutenberg_id": 77905,
+  "toc_entries": 62,
+  "toc_titles": 62,
+  "skipped": [],
+  "expected_tales": 62,
+  "extracted": 62,
+  "short": [],
+  "missing": [],
+  "ambiguous": [],
+  "oracle_match": true
+ },
+ {
+  "book_id": "PG-29021",
+  "gutenberg_id": 29021,
+  "toc_entries": 11,
+  "toc_titles": 11,
+  "skipped": [
+   "INTRODUCTION"
+  ],
+  "expected_tales": 10,
+  "extracted": 10,
+  "short": [],
+  "missing": [],
+  "ambiguous": [],
+  "oracle_match": true
+ },
+ {
+  "book_id": "PG-4018",
+  "gutenberg_id": 4018,
+  "toc_entries": 24,
+  "toc_titles": 24,
+  "skipped": [
+   "PREFACE",
+   "JAPANESE FAIRY TALES"
+  ],
+  "expected_tales": 22,
+  "extracted": 22,
+  "short": [],
+  "missing": [],
+  "ambiguous": [],
+  "oracle_match": true
+ },
+ {
+  "book_id": "PG-51002",
+  "gutenberg_id": 51002,
+  "toc_entries": 53,
+  "toc_titles": 53,
+  "skipped": [],
+  "expected_tales": 53,
+  "extracted": 53,
+  "short": [],
+  "missing": [],
+  "ambiguous": [],
+  "oracle_match": true
+ },
+ {
+  "book_id": "PG-26070",
+  "gutenberg_id": 26070,
+  "toc_entries": 11,
+  "toc_titles": 11,
+  "skipped": [],
+  "expected_tales": 11,
+  "extracted": 11,
+  "short": [],
+  "missing": [],
+  "ambiguous": [],
+  "oracle_match": true
+ },
+ {
+  "book_id": "PG-38488",
+  "gutenberg_id": 38488,
+  "toc_entries": 22,
+  "toc_titles": 22,
+  "skipped": [],
+  "expected_tales": 22,
+  "extracted": 22,
+  "short": [],
+  "missing": [],
+  "ambiguous": [],
+  "oracle_match": true
+ },
+ {
+  "book_id": "PG-64807",
+  "gutenberg_id": 64807,
+  "toc_entries": 22,
+  "toc_titles": 22,
+  "skipped": [],
+  "expected_tales": 22,
+  "extracted": 21,
+  "short": [
+   "ROUMANIAN FAIRY TALES"
+  ],
+  "missing": [],
+  "ambiguous": [],
+  "oracle_match": true
+ },
+ {
+  "book_id": "PG-2892",
+  "gutenberg_id": 2892,
+  "toc_entries": 10,
+  "toc_titles": 10,
+  "skipped": [],
+  "expected_tales": 10,
+  "extracted": 10,
+  "short": [],
+  "missing": [],
+  "ambiguous": [],
+  "oracle_match": true
+ },
+ {
+  "book_id": "PG-22072",
+  "gutenberg_id": 22072,
+  "toc_entries": 32,
+  "toc_titles": 32,
+  "skipped": [],
+  "expected_tales": 32,
+  "extracted": 32,
+  "short": [],
+  "missing": [],
+  "ambiguous": [],
+  "oracle_match": true
+ },
+ {
+  "book_id": "PG-24714",
+  "gutenberg_id": 24714,
+  "toc_entries": 19,
+  "toc_titles": 19,
+  "skipped": [
+   "PREFACE"
+  ],
+  "expected_tales": 18,
+  "extracted": 18,
+  "short": [],
+  "missing": [],
+  "ambiguous": [],
+  "oracle_match": true
+ },
+ {
+  "book_id": "PG-66923",
+  "gutenberg_id": 66923,
+  "toc_entries": 47,
+  "toc_titles": 39,
+  "skipped": [
+   "INTRODUCTION",
+   "I.  ANANSI, OR SPIDER, TALES"
+  ],
+  "expected_tales": 37,
+  "extracted": 36,
+  "short": [
+   "II. MISCELLANEOUS TALES"
+  ],
+  "missing": [],
+  "ambiguous": [],
+  "oracle_match": true
+ }
+]

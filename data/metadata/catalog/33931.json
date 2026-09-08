@@ -1,0 +1,49 @@
+{
+ "id": 33931,
+ "title": "Popular Tales",
+ "authors": [
+  {
+   "name": "Perrault, Charles",
+   "birth_year": 1628,
+   "death_year": 1703
+  }
+ ],
+ "summaries": [
+  "\"Popular Tales\" by Charles Perrault is a collection of fairy tales written in the late 17th century. This work includes well-known stories such as \"Cinderella,\" \"Sleeping Beauty,\" and \"Little Red Riding Hood,\" exploring themes of morality, love, and adventure through enchanting narratives and fantastical characters. Perrault's tales have significantly influenced the fairy tale genre and continue to capture the imaginations of readers across generations.  At the start of the collection, an introduction provides context on Charles Perrault's life and literary contributions, emphasizing his role in popularizing stories that blend folk traditions with sophisticated literary style. The introduction highlights how these tales, originally oral traditions, made their way to the courts of France, where they were embraced by nobility and ultimately transformed into printed tales. Readers are drawn into the charm of these stories with familiar settings and characters, setting the stage for the magical narratives to unfold in the subsequent tales. (This is an automatically generated summary.)"
+ ],
+ "editors": [
+  {
+   "name": "Lang, Andrew",
+   "birth_year": 1844,
+   "death_year": 1912
+  }
+ ],
+ "translators": [],
+ "subjects": [
+  "Fairy tales -- France"
+ ],
+ "bookshelves": [
+  "Category: Children & Young Adult Reading",
+  "Category: French Literature",
+  "Category: Mythology, Legends & Folklore",
+  "Category: Short Stories",
+  "FR Contes"
+ ],
+ "languages": [
+  "en",
+  "fr"
+ ],
+ "copyright": false,
+ "media_type": "Text",
+ "formats": {
+  "text/html": "https://www.gutenberg.org/ebooks/33931.html.images",
+  "application/epub+zip": "https://www.gutenberg.org/ebooks/33931.epub3.images",
+  "application/x-mobipocket-ebook": "https://www.gutenberg.org/ebooks/33931.kf8.images",
+  "application/rdf+xml": "https://www.gutenberg.org/ebooks/33931.rdf",
+  "image/jpeg": "https://www.gutenberg.org/cache/epub/33931/pg33931.cover.medium.jpg",
+  "application/octet-stream": "https://www.gutenberg.org/files/33931/33931-8.zip",
+  "text/plain; charset=utf-8": "https://www.gutenberg.org/ebooks/33931.txt.utf-8",
+  "text/plain; charset=us-ascii": "https://www.gutenberg.org/files/33931/33931-8.txt"
+ },
+ "download_count": 1514
+}

@@ -1,0 +1,46 @@
+{
+ "id": 2591,
+ "title": "Grimms' Fairy Tales",
+ "authors": [
+  {
+   "name": "Grimm, Jacob",
+   "birth_year": 1785,
+   "death_year": 1863
+  },
+  {
+   "name": "Grimm, Wilhelm",
+   "birth_year": 1786,
+   "death_year": 1859
+  }
+ ],
+ "summaries": [
+  "\"Grimms' Fairy Tales\" by Jacob Grimm and Wilhelm Grimm is a German collection of fairy tales first published in 1812. Beginning with 86 stories and eventually expanding to 210 tales across seven editions, this seminal work transformed oral folklore into written literature. The brothers collected stories from friends, acquaintances, and old books to preserve German cultural history. What started as a scholarly project evolved through decades of revisions, with tales added and removed, content adjusted for young readers, and illustrations incorporated to become a cornerstone of Western children's literature. (This is an automatically generated summary.)"
+ ],
+ "editors": [],
+ "translators": [],
+ "subjects": [
+  "Fairy tales -- Germany"
+ ],
+ "bookshelves": [
+  "Category: Children & Young Adult Reading",
+  "Category: German Literature",
+  "Category: Mythology, Legends & Folklore",
+  "Category: Short Stories"
+ ],
+ "languages": [
+  "en"
+ ],
+ "copyright": false,
+ "media_type": "Text",
+ "formats": {
+  "text/html": "https://www.gutenberg.org/ebooks/2591.html.images",
+  "text/html; charset=utf-8": "https://www.gutenberg.org/files/2591/2591-h/2591-h.htm",
+  "application/epub+zip": "https://www.gutenberg.org/ebooks/2591.epub3.images",
+  "application/x-mobipocket-ebook": "https://www.gutenberg.org/ebooks/2591.kf8.images",
+  "application/rdf+xml": "https://www.gutenberg.org/ebooks/2591.rdf",
+  "image/jpeg": "https://www.gutenberg.org/cache/epub/2591/pg2591.cover.medium.jpg",
+  "application/octet-stream": "https://www.gutenberg.org/cache/epub/2591/pg2591-h.zip",
+  "text/plain; charset=utf-8": "https://www.gutenberg.org/ebooks/2591.txt.utf-8"
+ },
+ "download_count": 45468
+}

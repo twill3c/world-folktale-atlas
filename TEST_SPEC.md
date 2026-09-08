@@ -1,42 +1,37 @@
 # TEST_SPEC.md — world-folktale-atlas
 
-<!-- scaffold template v1.30.0 から展開(2026-09-08) -->
+<!-- scaffold template v1.30.0 から展開(2026-09-08)。以後このファイルはプロジェクトが育てる -->
 
-## 実行規約
+各ケースは SPEC の要求 ID にトレースし、**期待値の出所**(SPEC の条項 / 実測 / 外部権威)を書く。
 
-- `pytest -x -q` を stage 3–5 の判定に使用。マーカー: `unit` / `integration` / `validation`
-- フィクスチャ更新は専用コミット(`test: update fixtures`)で行い、理由をループログに記す
-- 解析解を期待する合成フィクスチャは、期待値の導出前提(直交性・一意性・単一帰属等)を
-  **テスト内の assert で検算**し、導出過程をコメントに残す。前提を検算しない期待値は
-  正しい実装を落とす(VERIF-FALSE / HC-004)
+## 1. データ品質(`tests/test_corpus.py`)
 
-## 期待値の出所(HC-016)
-
-合成フィクスチャだけでなく、**外部データ・外部権威に対する期待値**にも同じ規律が要る。
-ケースごとに、その期待値がどこから来たのかを書くこと。
-
-| 出所 | 書き方 |
-|---|---|
-| SPEC の条項 | 条項 ID を書く。**SPEC の保証粒度を超える期待値を書かない**(超えるなら先に SPEC を上げる) |
-| 外部権威(公表値・規格・検証データ) | 出典 URL と取得日をフィクスチャの先頭に書く |
-| 実測 | **実測日と実測値**をコメントに残す。「誰かの仮定」と区別できるようにする |
-
-件数・行数は定数で書かず、**集合の一致・取りこぼしの不在**という不変量で書く。
-外部データは重複や欠落を含むため、数はデータが動くたびに壊れる。
-
-## オラクルの出所
-
-| フィクスチャ | 出所 | 性格 |
+| ケース | SPEC | 期待値の出所 |
 |---|---|---|
-| | | |
+| `test_raw_books_have_both_pg_markers` | T-DATA-01 | L0 実測。`pg{id}.txt` は 6 冊中 2 冊で 404 を返し、そのエラーページは 6,398 バイトある。サイズでは成功と区別できない |
+| `test_audiobooks_are_rejected` | T-DATA-01 | L1 実測。PG 20050/20051/20972 は朗読音声で、`text/plain` は録音の README。README にも PG マーカーが両方ある |
+| `test_required_fields_present` | T-DATA-02 / F-01 | SPEC §7 の必須欄 |
+| `test_rights_fields_complete` | T-DATA-02 / G-02 | SPEC §5.2 の権利フィールド |
+| `test_story_ids_unique` | T-DATA-03 | SPEC §7 |
+| `test_text_not_empty_and_long_enough` | T-DATA-04 | `books.json` の `split.min_words = 120` |
+| `test_no_gutenberg_boilerplate_in_text` | T-DATA-05 | SPEC §5.1 の 4(PG の商標・ライセンス文言を再配布しない) |
+| `test_strip_boilerplate_removes_markers` | T-DATA-05 | 実装の単体検査 |
+| `test_split_matches_count_oracle` | T-DATA-06 / G-03 | 各本の目次が挙げる題名の数(折り返し結合後 − 前付け) |
+| `test_every_book_in_ledger_produced_stories` | T-DATA-06 | 台帳に載せた本は 1 話以上出ること |
+| `test_no_cyrillic_leak` | T-DATA-07 | フリート規範(字形の近い別字種は目視で気づけない) |
+| `test_no_control_characters` | T-DATA-07 | 同上 |
+| `test_location_precision_is_declared` | T-DATA-08 | SPEC §24(推測した緯度経度を事実として保存しない) |
+| `test_publication_year_has_evidence` | SPEC §5 | 版年は本が刻んでいるときだけ持つ。無い本は null + 理由 |
+| `test_corpus_size_gate` | G-01 | SPEC のゲート(100 話以上) |
+| `test_region_diversity` | 設計書 §46 | 地域の多様性を優先する |
 
-## ケース一覧
+## 2. Embedding と目玉(`tests/test_embedding.py` — L2 で追加)
 
-**「対応要求」には SPEC の ID を必ず書く**(HC-157)。品質ゲート `G-xx` を確かめるケースには
-その `G-xx` を書くこと —— **SPEC のゲート表と、それを確かめるケースの対応を機械で数えられる形に
-しておくため**である。どのケースからも参照されない `G-xx` は、SPEC 側に「未実装」と明記するか、
-ケースを書くかのどちらかにする。宣言しただけのゲートは、誰も守っていないのに守られて見える。
+| ケース | SPEC | 期待値の出所 |
+|---|---|---|
+| `test_embedding_two_implementations_agree` | G-06 | 二実装照合。最大絶対差 < 1e-4 |
+| `test_cross_lingual_p_at_1` | G-05 / H-01 | 独英グリムの同一話対応(目次の題名で対応づける)。閾値 0.50 は事前登録 |
 
-| ID | 対応要求 | ケース | 期待 |
-|---|---|---|---|
-| T-001 | F-01 | | |
+## 3. Web(`tests-js/` — L4 以降で追加)
+
+未着手。

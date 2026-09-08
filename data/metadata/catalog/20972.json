@@ -1,0 +1,36 @@
+{
+ "id": 20972,
+ "title": "Histoires ou Contes du temps passé avec des moralités",
+ "authors": [
+  {
+   "name": "Perrault, Charles",
+   "birth_year": 1628,
+   "death_year": 1703
+  }
+ ],
+ "summaries": [],
+ "editors": [],
+ "translators": [],
+ "subjects": [
+  "Fairy tales"
+ ],
+ "bookshelves": [
+  "FR Contes"
+ ],
+ "languages": [
+  "fr"
+ ],
+ "copyright": false,
+ "media_type": "Sound",
+ "formats": {
+  "text/plain; charset=us-ascii": "https://www.gutenberg.org/files/20972/20972-readme.txt",
+  "text/html": "https://www.gutenberg.org/files/20972/20972-index.html",
+  "audio/ogg": "https://www.gutenberg.org/files/20972/ogg/20972-01.ogg",
+  "audio/mp4": "https://www.gutenberg.org/files/20972/m4b/20972-01.m4b",
+  "audio/mpeg": "https://www.gutenberg.org/files/20972/mp3/20972-01.mp3",
+  "application/rdf+xml": "https://www.gutenberg.org/ebooks/20972.rdf",
+  "image/jpeg": "https://www.gutenberg.org/cache/epub/20972/pg20972.cover.medium.jpg",
+  "application/octet-stream": "https://www.gutenberg.org/files/20972/20972-m4b.zip"
+ },
+ "download_count": 2189
+}

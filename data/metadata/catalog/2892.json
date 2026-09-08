@@ -1,0 +1,43 @@
+{
+ "id": 2892,
+ "title": "Irish Fairy Tales",
+ "authors": [
+  {
+   "name": "Stephens, James",
+   "birth_year": 1882,
+   "death_year": 1950
+  }
+ ],
+ "summaries": [
+  "\"Irish Fairy Tales\" by James Stephens is a collection of ten retellings published in 1920. Set in a wooded, medieval Ireland, these stories bring to life hunters, warriors, kings, and fairies from Irish mythology. Many tales follow the legendary Fianna and their captain, Fionn mac Uail, from the Fenian Cycle. Through magical transformations, epic quests, and encounters with fairy folk, Stephens weaves ancient folklore into vivid narratives where heroes face sorcery, seek wisdom, and navigate between the mortal world and Faery. (This is an automatically generated summary.)"
+ ],
+ "editors": [],
+ "translators": [],
+ "subjects": [
+  "Fairy tales -- Ireland",
+  "Folklore -- Ireland",
+  "Tales -- Ireland"
+ ],
+ "bookshelves": [
+  "Category: Mythology, Legends & Folklore",
+  "Children's Myths, Fairy Tales, etc.",
+  "Fantasy",
+  "Folklore"
+ ],
+ "languages": [
+  "en"
+ ],
+ "copyright": false,
+ "media_type": "Text",
+ "formats": {
+  "text/html": "https://www.gutenberg.org/ebooks/2892.html.images",
+  "application/epub+zip": "https://www.gutenberg.org/ebooks/2892.epub3.images",
+  "application/x-mobipocket-ebook": "https://www.gutenberg.org/ebooks/2892.kf8.images",
+  "application/rdf+xml": "https://www.gutenberg.org/ebooks/2892.rdf",
+  "image/jpeg": "https://www.gutenberg.org/cache/epub/2892/pg2892.cover.medium.jpg",
+  "application/octet-stream": "https://www.gutenberg.org/files/2892/2892-0.zip",
+  "text/plain; charset=us-ascii": "https://www.gutenberg.org/files/2892/2892.txt",
+  "text/plain; charset=utf-8": "https://www.gutenberg.org/ebooks/2892.txt.utf-8"
+ },
+ "download_count": 1723
+}
