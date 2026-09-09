@@ -112,6 +112,15 @@ npm install && npm run verify              # 型検査 → テスト → ビル�
 node harness/smoke.mjs --shot              # 実ブラウザ検品
 ```
 
+### 和訳
+
+全 709 話の和訳を目指している。**いま 66 話(9.3%)、語数で 5.4%。全 22 文化圏に 3 話以上ある。**
+進捗は [和訳のすすみ](https://world-folktale-atlas.vercel.app/translations/) に出している。
+
+和訳は **AI が作ったもの**であり(`translation_type: AI_GENERATED`)、原資料ではない。
+**Embedding には入れない**(測定が汚れる)。**交差言語オラクルにも使わない**
+(同じ本文の訳が原文を引き当てるのは当たり前で、何の証拠にもならない)。
+
 和訳を足すときは、`data/translations/incoming/batch-NNNN.json` に
 `{"STORY_ID": ["段落1", "段落2", ...]}` を書いて次を走らせる。
 段落数が原文と合わない訳は取り込まれない。
