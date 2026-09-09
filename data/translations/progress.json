@@ -1,10 +1,10 @@
 {
- "translated": 56,
+ "translated": 61,
  "total": 709,
- "fraction": 0.079,
- "translated_words": 40102,
+ "fraction": 0.086,
+ "translated_words": 47890,
  "total_words": 1201572,
- "word_fraction": 0.0334,
+ "word_fraction": 0.0399,
  "translation_type": "AI_GENERATED",
  "model": "claude-opus-5",
  "by_region": {
@@ -54,7 +54,7 @@
   },
   "日本": {
    "total": 22,
-   "done": 2
+   "done": 3
   },
   "ベンガル": {
    "total": 22,
@@ -62,7 +62,7 @@
   },
   "アナトリア": {
    "total": 21,
-   "done": 2
+   "done": 3
   },
   "イベリア半島": {
    "total": 21,
@@ -78,7 +78,7 @@
   },
   "南アフリカ": {
    "total": 15,
-   "done": 2
+   "done": 3
   },
   "中国": {
    "total": 11,
@@ -86,7 +86,7 @@
   },
   "フランス": {
    "total": 10,
-   "done": 2
+   "done": 3
   },
   "アイルランド": {
    "total": 10,
@@ -94,7 +94,7 @@
   },
   "ポーランド": {
    "total": 7,
-   "done": 1
+   "done": 2
   }
  }
 }
