@@ -1,0 +1,1 @@
+{"v": "1.2", "ts": "2026-09-10T06:33:06+09:00", "project": "world-folktale-atlas", "loop_id": "loop_006", "event": "loop_start", "data": {"goal": "和訳を各文化圏 3 話ずつ(66 話)へ積み増す", "spec_refs": ["F-04", "N-06"], "scaffold_version": "1.30.0", "agent": "claude-code", "model": "claude-opus-5"}}
