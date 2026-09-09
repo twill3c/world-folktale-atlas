@@ -52,6 +52,18 @@ RATIO_MIN = 0.9
 RATIO_MAX = 4.5
 
 
+KANJI_DIGITS = str.maketrans("〇一二三四五六七八九", "0123456789")
+
+
+def kanji_to_arabic(text: str) -> str:
+    """位取りで書かれた漢数字(『一九一四』)を算用数字に直す。
+
+    『三十六』のような命数法は扱わない。年号のように桁を並べる書き方だけを対象にする。
+    ここでの目的は「数が訳文から消えていないか」を見ることであって、値を求めることではない。
+    """
+    return text.translate(KANJI_DIGITS)
+
+
 def load_sources() -> dict[str, dict]:
     return {s["story_id"]: s
             for s in (json.loads(l) for l in STORIES.read_text(encoding="utf-8").splitlines() if l)}
@@ -80,10 +92,13 @@ def check(story: dict, ja: list[str]) -> list[str]:
         if bad:
             errs.append(f"T-JA-04 第 {i+1} 段落に制御文字 {bad[:2]!r}")
         src_nums = set(DIGITS.findall(s))
-        if src_nums and not (src_nums & set(DIGITS.findall(t))):
-            # 漢数字にした場合があるので警告どまりにはしない — 全部消えたときだけ拾う
-            if len(src_nums) >= 2:
-                errs.append(f"T-JA-06 第 {i+1} 段落で算用数字がすべて消えた {sorted(src_nums)[:3]}")
+        if src_nums and len(src_nums) >= 2:
+            # 訳文の漢数字を算用数字に直してから照合する。
+            # 『一九一四年から一九一八年』は数が消えたのではなく、日本語として妥当な書き方である
+            # (実測 2026-09-10: この検査が正しい訳を却下した)
+            got = set(DIGITS.findall(t)) | set(DIGITS.findall(kanji_to_arabic(t)))
+            if not (src_nums & got):
+                errs.append(f"T-JA-06 第 {i+1} 段落で数がすべて消えた {sorted(src_nums)[:3]}")
 
     ja_chars = sum(len(JA_CHARS.findall(t)) + len(t) for t in ja) / 2
     ratio = ja_chars / max(1, story["word_count"])
