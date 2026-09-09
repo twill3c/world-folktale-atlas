@@ -112,6 +112,25 @@ npm install && npm run verify              # 型検査 → テスト → ビル�
 node harness/smoke.mjs --shot              # 実ブラウザ検品
 ```
 
+和訳を足すときは、`data/translations/incoming/batch-NNNN.json` に
+`{"STORY_ID": ["段落1", "段落2", ...]}` を書いて次を走らせる。
+段落数が原文と合わない訳は取り込まれない。
+
+```bash
+.venv/Scripts/python etl/build_translations.py
+.venv/Scripts/python etl/export_web.py
+```
+
+### 公開
+
+**`git push` で自動的に本番へ出る。`vercel deploy` を打つ必要はない**(HC-256)。
+CLI を重ねて叩くと、走っている正規のビルドと競合して `Upload aborted` を返すことがある。
+**出荷できたかどうかは、道具の終了コードではなく公開 URL を引いて確かめる。**
+
+```bash
+node harness/live.mjs                      # 本番に対する検品(13 画面 + 全文検索)
+```
+
 ## 出典と権利
 
 | 種別 | 内容 |
