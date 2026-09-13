@@ -82,7 +82,9 @@ def check(story: dict, ja: list[str]) -> list[str]:
         if not t.strip():
             errs.append(f"T-JA-02 第 {i+1} 段落が空")
             continue
-        if not JA_CHARS.search(t):
+        # 原文に文字が一つも無い段落(場面の区切り『*  *  *』)は、訳文もそのまま写してよい。
+        # 訳すべき語が無いのだから、日本語が無いのは正しい(実測 2026-09-14: ペロー『青髭』)
+        if not JA_CHARS.search(t) and re.search(r"[A-Za-zÀ-ɏ]", s):
             errs.append(f"T-JA-03 第 {i+1} 段落に日本語が無い: {t[:40]!r}")
         if CYRILLIC.search(t):
             errs.append(f"T-JA-04 第 {i+1} 段落にキリル文字")

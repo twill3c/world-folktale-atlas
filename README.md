@@ -114,7 +114,7 @@ node harness/smoke.mjs --shot              # 実ブラウザ検品
 
 ### 和訳
 
-全 709 話の和訳を目指している。**いま 66 話(9.3%)、語数で 5.4%。全 22 文化圏に 3 話以上ある。**
+全 709 話の和訳を目指している。**いま 110 話(15.5%)、語数で 10.4%。全 22 文化圏に 5 話以上ある。**
 進捗は [和訳のすすみ](https://world-folktale-atlas.vercel.app/translations/) に出している。
 
 和訳は **AI が作ったもの**であり(`translation_type: AI_GENERATED`)、原資料ではない。

@@ -1,0 +1,2 @@
+{"v": "1.2", "ts": "2026-09-14T04:59:14+09:00", "project": "world-folktale-atlas", "loop_id": "loop_007", "event": "loop_start", "data": {"goal": "和訳を各文化圏 5 話ずつ(110 話)へ積み増す", "spec_refs": ["F-04", "N-06"], "scaffold_version": "1.30.0", "agent": "claude-code", "model": "claude-opus-5"}}
+{"v": "1.2", "ts": "2026-09-14T06:03:40+09:00", "project": "world-folktale-atlas", "loop_id": "loop_007", "event": "test_run", "data": {"command": "pytest -q && vitest run && smoke", "passed": 52, "failed": 0, "duration_s": 300}}
