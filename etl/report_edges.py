@@ -47,8 +47,10 @@ def suspicious(p: str, *, is_last: bool) -> list[str]:
     tail = re.sub(r"\s*\[\d+\]\s*\Z", "", s)
     # 句点のあとに閉じ括弧が来るのは、文が終わっている形である。アイヌ本は全話が
     # 『…--(Translated literally. Told by Penri, 17th July, 1886.)』で終わり、
-    # 編者の補足『[… a Buddhist monk.]』で終わる話もある(実測 L8、偽陽性 42 件)
-    tail = re.sub(r"(?<=[.!?])[)\]]+\s*\Z", "", tail)
+    # 編者の補足『[… a Buddhist monk.]』で終わる話もある(実測 L8、偽陽性 42 件)。
+    # 斜体の閉じ(`_`)も同じ。ペローの 10 話は斜体の教訓詩『… bears sway._』で終わる(実測 L11。
+    # 末尾に次の話の題名が残っていたあいだは、題名が 30 字未満で検査されず見えなかった)
+    tail = re.sub(r"(?<=[.!?])[)\]_]+\s*\Z", "", tail)
     if is_last and len(tail) > 30 and not re.search(r"[.!?。」』”\"'’—-]\s*\Z", tail):
         why.append("文末の句読点が無い")
     return why

@@ -182,6 +182,22 @@ def _split_trailing_notes(text: str) -> tuple[str, str]:
     return "\n".join(lines[:start]).strip(), "\n".join(lines[start:]).strip()
 
 
+def trim_next_title(text: str, next_title: str) -> str:
+    """末尾の段落が**次の話の題名そのもの**なら落とす。
+
+    実測(L11): PG-29021(ペロー)は本文の見出しを斜体の段落(`_Riquet with the Tuft_`)で置き、
+    分割は大文字の見出しの位置で切るので、斜体の題名が前の話の末尾に取り残されていた(9 話)。
+    題名は短く、句点も無いので、端の検査(30 字未満の末尾は見ない)をすり抜けた。
+    和訳の段落を並べたときに「最後の段落が次の話の題名」と気づいた。
+    **次の話の題名と正規形で一致するときだけ**落とす。本文の段落を題名らしさで削らない。
+    """
+    from etl.split import nkey
+    paras = [p for p in re.split(r"\n{2,}", text) if p.strip()]
+    if len(paras) > 1 and nkey(paras[-1].strip().strip("_ .")) == nkey(next_title):
+        paras.pop()
+    return "\n\n".join(paras)
+
+
 LEAD_NUM_TITLE = re.compile(r"^\s*(?:[IVXLCDM]+|\d+)\s*[.．—–:)-]?\s+")
 
 
@@ -256,6 +272,8 @@ def build(strict: bool = True) -> tuple[list[dict], list[dict]]:
         for n, sec in enumerate(secs, 1):
             text, notes = trim_backmatter(clean_text(sec.text), is_last=(n == len(secs)))
             notes = "\n".join(x for x in (sec.notes, notes) if x)
+            if n < len(secs):
+                text = trim_next_title(text, clean_title(secs[n].title))
             sid = f"{book['country_code']}-{bid}-{n:03d}"
             stories.append({
                 "story_id": sid,

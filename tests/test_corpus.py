@@ -277,6 +277,11 @@ def test_edge_report_stays_within_the_recorded_count(stories):
     (句点のあとの閉じ括弧で終わる話)を検査で直したあと、既存 24 件に
     新しく 2 件 —— US-24569-001 の小見出し『HOW MEN WERE CREATED』と
     US-18450-001 の小見出し『I.--SNARING THE SUN』—— を目で通して認めた。
+
+    2026-09-15(L11): 上限を 20 に締めた。ペロー本の末尾から次の話の題名を落とすと、
+    10 話が斜体の教訓詩(`… bears sway._`)で終わる形になり、検査が斜体の閉じを知らず 32 件に増えた。
+    検査を直すと、ペロー 10 件とイングランド本 2 件(同じ斜体の閉じ)が外れて 20 件になった。
+    残る 20 件はいずれも以前に目で通したもの。
     """
     from etl.paragraphs import split_paragraphs
     from etl.report_edges import STRUCTURAL_HEAD, suspicious
@@ -289,7 +294,32 @@ def test_edge_report_stays_within_the_recorded_count(stories):
         head = [] if STRUCTURAL_HEAD.match(ps[0]) else suspicious(ps[0], is_last=False)
         if head or suspicious(ps[-1], is_last=True):
             flagged.append(s["story_id"])
-    assert len(flagged) <= 26, f"端が怪しい話が {len(flagged)} 件({flagged[:5]})"
+    assert len(flagged) <= 20, f"端が怪しい話が {len(flagged)} 件({flagged[:5]})"
+
+
+def test_no_story_ends_with_the_next_story_title(stories):
+    """話の末尾に、同じ本の次の話の題名が残っていない(HC-244)。
+
+    出所: 実測 2026-09-15(L11)。PG-29021 の 9 話の末尾に次の話の斜体の題名
+    (`_Riquet with the Tuft_`)が残り、うち 5 話はそのまま和訳されていた。
+    題名は短く句点も無いので、端の検査(30 字未満の末尾は見ない)をすり抜けた。
+    """
+    from collections import defaultdict
+
+    from etl.paragraphs import split_paragraphs
+    from etl.split import nkey
+
+    by_book = defaultdict(list)
+    for s in stories:
+        by_book[s["book_id"]].append(s)
+    bad = []
+    for ss in by_book.values():
+        ss.sort(key=lambda s: s["seq_in_book"])
+        for cur, nxt in zip(ss, ss[1:]):
+            last = split_paragraphs(cur["text"])[-1].strip().strip("_ .")
+            if nkey(last) == nkey(nxt["title"]):
+                bad.append(cur["story_id"])
+    assert not bad, f"次の話の題名で終わる話 {len(bad)} 件: {bad[:5]}"
 
 
 def test_edge_check_accepts_closing_bracket_after_full_stop():
@@ -304,6 +334,8 @@ def test_edge_check_accepts_closing_bracket_after_full_stop():
     ok = [
         "and so it ended.--(Translated literally. Told by Penri, 17th July, 1886.)",
         "remained there. [According to another version, however, he became a Buddhist monk.]",
+        # 斜体の閉じ(L11、ペローの教訓詩)
+        "_Grizeld, or russet, it is hard to say Which of the two, the man or wife, bears sway._",
     ]
     for p in ok:
         assert "文末の句読点が無い" not in suspicious(p, is_last=True), p
