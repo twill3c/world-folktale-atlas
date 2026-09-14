@@ -31,6 +31,7 @@ const PAGES = [
   ["/story/JP-29287-001/", ["出典と権利", "アイヌ", "本に付いていた註"]],
   ["/story/LK-56614-008/", ["出典と権利", "本に付いていた註", "North-western Province."]],
   ["/story/JM-72735-001/", ["出典と権利", "a. The Fish-basket.", "b. The Storm.", "George Parkes, Mandeville."]],
+  ["/story/JP-29287-003/", ["和訳対照", "昔は犬も口をきくことができた", "語り手イシャナシテ"]],
 ];
 
 const errors = [];

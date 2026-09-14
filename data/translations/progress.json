@@ -1,16 +1,16 @@
 {
- "translated": 110,
+ "translated": 145,
  "total": 1113,
- "fraction": 0.0988,
- "translated_words": 124722,
+ "fraction": 0.1303,
+ "translated_words": 135625,
  "total_words": 1578419,
- "word_fraction": 0.079,
+ "word_fraction": 0.0859,
  "translation_type": "AI_GENERATED",
  "model": "claude-opus-5",
  "by_region": {
   "ジャマイカ": {
    "total": 136,
-   "done": 0
+   "done": 5
   },
   "ドイツ語圏": {
    "total": 126,
@@ -18,11 +18,11 @@
   },
   "スリランカ": {
    "total": 73,
-   "done": 0
+   "done": 5
   },
   "ロシア": {
    "total": 72,
-   "done": 0
+   "done": 5
   },
   "ノルウェー": {
    "total": 58,
@@ -46,11 +46,11 @@
   },
   "アイヌ": {
    "total": 40,
-   "done": 0
+   "done": 5
   },
   "ナイジェリア南部": {
    "total": 40,
-   "done": 0
+   "done": 5
   },
   "西アフリカ(ゴールドコースト)": {
    "total": 36,
@@ -74,7 +74,7 @@
   },
   "ハワイ": {
    "total": 24,
-   "done": 0
+   "done": 5
   },
   "日本": {
    "total": 22,
@@ -94,7 +94,7 @@
   },
   "ベーリング海峡(アラスカ)": {
    "total": 19,
-   "done": 0
+   "done": 5
   },
   "ブラジル": {
    "total": 18,
