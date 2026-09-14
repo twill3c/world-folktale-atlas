@@ -110,6 +110,36 @@ def check(story: dict, ja: list[str]) -> list[str]:
     return errs
 
 
+#: 長い話を複数の batch に分けて書くときの鍵(『CN-26070-003#1』『CN-26070-003#2』)
+PART_KEY = re.compile(r"\A(?P<sid>[^#]+)#(?P<n>\d+)\Z")
+
+
+def merge_parts(items: list[tuple[str, list[str], str]]) -> tuple[dict[str, tuple[list[str], str]], list[str]]:
+    """batch の (鍵, 段落, ファイル名) を話ごとにまとめる。
+
+    一度に書き出せる長さには上限があり、1 万語を超える話(アイルランド本)は一つの batch に収まらない。
+    そこで鍵に部分番号を付けて分けて書き、ここで**番号順につないでから**検査にかける。
+    部分番号が 1 から欠けなく続かないときは、つながないで違反として返す(途中の部分だけで取り込まない)。
+    """
+    whole: dict[str, tuple[list[str], str]] = {}
+    parts: dict[str, dict[int, tuple[list[str], str]]] = {}
+    for key, ja, fname in items:
+        m = PART_KEY.match(key)
+        if m:
+            parts.setdefault(m["sid"], {})[int(m["n"])] = (ja, fname)
+        else:
+            whole[key] = (ja, fname)
+    errors: list[str] = []
+    for sid, ps in parts.items():
+        nums = sorted(ps)
+        if nums != list(range(1, len(nums) + 1)):
+            errors.append(f"{sid}: 部分番号が 1 から欠けなく続かない {nums}")
+            continue
+        joined = [p for n in nums for p in ps[n][0]]
+        whole[sid] = (joined, "+".join(ps[n][1] for n in nums))
+    return whole, errors
+
+
 def main() -> int:
     sources = load_sources()
     store: dict[str, dict] = {}
@@ -121,29 +151,34 @@ def main() -> int:
 
     INCOMING.mkdir(parents=True, exist_ok=True)
     added, rejected = 0, 0
-    for path in sorted(INCOMING.glob("*.json")):
-        batch = json.loads(path.read_text(encoding="utf-8"))
-        for sid, ja in batch.items():
-            if sid not in sources:
-                print(f"  ✗ {sid}: コーパスに無い({path.name})")
-                rejected += 1
-                continue
-            errs = check(sources[sid], ja)
-            if errs:
-                rejected += 1
-                print(f"  ✗ {sid} ({path.name})")
-                for e in errs[:4]:
-                    print(f"      {e}")
-                continue
-            store[sid] = {
-                "story_id": sid,
-                "translation_type": TRANSLATION_TYPE,
-                "language": "ja",
-                "model": TRANSLATION_MODEL,
-                "source_paragraphs": len(ja),
-                "paragraphs": ja,
-            }
-            added += 1
+    items = [(key, ja, path.name)
+             for path in sorted(INCOMING.glob("*.json"))
+             for key, ja in json.loads(path.read_text(encoding="utf-8")).items()]
+    merged, part_errors = merge_parts(items)
+    for e in part_errors:
+        print(f"  ✗ {e}")
+        rejected += 1
+    for sid, (ja, fname) in merged.items():
+        if sid not in sources:
+            print(f"  ✗ {sid}: コーパスに無い({fname})")
+            rejected += 1
+            continue
+        errs = check(sources[sid], ja)
+        if errs:
+            rejected += 1
+            print(f"  ✗ {sid} ({fname})")
+            for e in errs[:4]:
+                print(f"      {e}")
+            continue
+        store[sid] = {
+            "story_id": sid,
+            "translation_type": TRANSLATION_TYPE,
+            "language": "ja",
+            "model": TRANSLATION_MODEL,
+            "source_paragraphs": len(ja),
+            "paragraphs": ja,
+        }
+        added += 1
 
     TDIR.mkdir(parents=True, exist_ok=True)
     with STORE.open("w", encoding="utf-8", newline="\n") as f:
