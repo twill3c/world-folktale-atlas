@@ -149,6 +149,52 @@ def test_split_matches_count_oracle(report):
             f"/ 欠 {r['missing']}")
 
 
+_WORDS = " ".join(["word"] * 130)
+
+
+def _numbered_book(nums: list[str], toc_n: int) -> str:
+    toc = "\n".join(f"{r}. Title {r}" for r in ["I", "II", "III"][:toc_n])
+    parts = [f"CONTENTS\n\n{toc}\n"]
+    parts += [f"{r}\n\n_Title {r}_\n\n{_WORDS}\n" for r in nums]
+    return "\n\n".join(parts)
+
+
+def test_numbered_split_catches_gaps_and_toc_disagreement():
+    """番号方式の件数オラクルは、欠番と目次との食い違いの両方で落ちる(L8)。
+
+    出所: 設計。本文の連番だけでは、地の文の行頭の番号を見出しと取り違えても
+    連番が偶然続けば通る。目次の項目数は別の文書なので、そちらと突き合わせる。
+    """
+    from etl.split import split_numbered
+
+    cfg = {"strategy": "numbered", "heading": r"^(?P<num>[IVXL]+)$",
+           "toc_count": {"pattern": r"^[IVXL]+\.\s"}}
+    secs, d = split_numbered(_numbered_book(["I", "II", "III"], 3), cfg)
+    assert len(secs) == 3 and not d["missing"]
+    assert secs[0].title == "Title I"
+    _, d = split_numbered(_numbered_book(["I", "III"], 2), cfg)
+    assert any("連続しない" in m for m in d["missing"])
+    _, d = split_numbered(_numbered_book(["I", "II", "III"], 2), cfg)
+    assert any("目次" in m for m in d["missing"])
+
+
+def test_numbered_split_stop_take_from_footnotes_and_macrons():
+    """部の打ち切り・前半の除外・文字脚注・長音記法(L8、PG-29287 / PG-24569)。"""
+    from etl.split import split_numbered
+
+    body = (f"i.--_First._\n\n{_WORDS} T[=o]ky[=o]\n\n[B] A note.\n\n"
+            f"ii.--_Second._\n\n{_WORDS}\n\nV.--SCRAPS.\n\niii.--_Third._\n\n{_WORDS}")
+    cfg = {"strategy": "numbered", "heading": r"^(?P<num>[ivxlc]+)\.--_(?P<title>.+?)\.?_$",
+           "stop_at": r"^V\.--", "macron_brackets": True, "letter_footnotes": True}
+    secs, d = split_numbered(body, cfg)
+    assert [s.title for s in secs] == ["First", "Second"] and not d["missing"]
+    assert "Tōkyō" in secs[0].text and "[B]" not in secs[0].text
+    assert secs[0].notes == "[B] A note."
+    assert "SCRAPS" not in secs[1].text
+    secs, d = split_numbered(body, {**cfg, "take_from": 2})
+    assert [s.title for s in secs] == ["Second"] and d["skipped"] == ["First"]
+
+
 def test_every_book_in_ledger_produced_stories(ledger, stories):
     got = {s["book_id"] for s in stories}
     for book in ledger["books"]:
@@ -226,6 +272,11 @@ def test_edge_report_stays_within_the_recorded_count(stories):
     出所: 2026-09-09 に 25 件を一件ずつ目で通し、いずれも本文の一部
     (叫び声で終わる話・諺・ト書き・副題)であることを確かめた。
     これを超えたら、新しい種類の混入が入ったということである。
+
+    2026-09-14(L8、6 冊追加): 上限を 26 にした。検査側の偽陽性 42 件
+    (句点のあとの閉じ括弧で終わる話)を検査で直したあと、既存 24 件に
+    新しく 2 件 —— US-24569-001 の小見出し『HOW MEN WERE CREATED』と
+    US-18450-001 の小見出し『I.--SNARING THE SUN』—— を目で通して認めた。
     """
     from etl.paragraphs import split_paragraphs
     from etl.report_edges import STRUCTURAL_HEAD, suspicious
@@ -238,7 +289,27 @@ def test_edge_report_stays_within_the_recorded_count(stories):
         head = [] if STRUCTURAL_HEAD.match(ps[0]) else suspicious(ps[0], is_last=False)
         if head or suspicious(ps[-1], is_last=True):
             flagged.append(s["story_id"])
-    assert len(flagged) <= 25, f"端が怪しい話が {len(flagged)} 件({flagged[:5]})"
+    assert len(flagged) <= 26, f"端が怪しい話が {len(flagged)} 件({flagged[:5]})"
+
+
+def test_edge_check_accepts_closing_bracket_after_full_stop():
+    """文末の判定は、句点のあとの閉じ括弧を文の終わりとして認める(HC-274)。
+
+    出所: 実測 2026-09-14。アイヌ本は全話が採話者の署名
+    『…--(Translated literally. Told by Penri, 17th July, 1886.)』で終わり、
+    検査が 42 件を偽陽性にした。陽性対照(認める形)と陰性対照(本当に切れた末尾)を並べる。
+    """
+    from etl.report_edges import suspicious
+
+    ok = [
+        "and so it ended.--(Translated literally. Told by Penri, 17th July, 1886.)",
+        "remained there. [According to another version, however, he became a Buddhist monk.]",
+    ]
+    for p in ok:
+        assert "文末の句読点が無い" not in suspicious(p, is_last=True), p
+    cut = 'In a little more time the Cat said to the Squirrel, "O Squirrel,'
+    assert "文末の句読点が無い" in suspicious(cut, is_last=True)
+    assert "文末の句読点が無い" in suspicious("the story continues (see the note", is_last=True)
 
 
 def test_corpus_stamp_matches_current_corpus():

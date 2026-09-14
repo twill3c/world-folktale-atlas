@@ -17,11 +17,16 @@
 | `test_no_gutenberg_boilerplate_in_text` | T-DATA-05 | SPEC §5.1 の 4(PG の商標・ライセンス文言を再配布しない) |
 | `test_strip_boilerplate_removes_markers` | T-DATA-05 | 実装の単体検査 |
 | `test_split_matches_count_oracle` | T-DATA-06 / G-03 | 各本の目次が挙げる題名の数(折り返し結合後 − 前付け) |
+| `test_numbered_split_catches_gaps_and_toc_disagreement` | T-DATA-06 / G-03 | 番号方式(`split.strategy = "numbered"`、L8)の件数オラクル。**著者が刷った通し番号の連続**と**目次の番号付き項目の数**の二つを突き合わせ、欠番でも目次との食い違いでも落ちること。連番だけだと、地の文の行頭の番号を見出しと取り違えても偶然続けば通る |
+| `test_numbered_split_stop_take_from_footnotes_and_macrons` | T-DATA-06 | PG-29287(目次が無い・第 V 部は断片で採らない・文字の脚注・翻刻者の長音記法 `[=o]`)と PG-24569(前半の部を採らない)の実測に合わせた単体検査 |
 | `test_every_book_in_ledger_produced_stories` | T-DATA-06 | 台帳に載せた本は 1 話以上出ること |
 | `test_no_cyrillic_leak` | T-DATA-07 | フリート規範(字形の近い別字種は目視で気づけない) |
 | `test_no_control_characters` | T-DATA-07 | 同上 |
 | `test_location_precision_is_declared` | T-DATA-08 | SPEC §24(推測した緯度経度を事実として保存しない) |
 | `test_publication_year_has_evidence` | SPEC §5 | 版年は本が刻んでいるときだけ持つ。無い本は null + 理由 |
+| `test_no_story_begins_or_ends_with_a_bare_numeral` | HC-244 | 実測 2026-09-09。709 話中 137 話の末尾に次の話の番号が残っていた |
+| `test_edge_report_stays_within_the_recorded_count` | HC-244 | 端が怪しい話の数が、**目で通して認めた数**(26 件、2026-09-14)を超えない |
+| `test_edge_check_accepts_closing_bracket_after_full_stop` | HC-274 | 実測 2026-09-14。句点のあとの閉じ括弧で終わる話(アイヌ本の全話の採話者署名『…1886.)』)を検査が 42 件偽陽性にした。陽性対照(認める形)と陰性対照(文の途中で切れた末尾)を並べる |
 | `test_corpus_size_gate` | G-01 | SPEC のゲート(100 話以上) |
 | `test_region_diversity` | 設計書 §46 | 地域の多様性を優先する |
 

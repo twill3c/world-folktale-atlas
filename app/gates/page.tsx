@@ -107,7 +107,12 @@ export default function GatesPage() {
         画面の近傍一覧にも「同じ本／別の本」の札を付けてある。
       </p>
 
-      <h2>△ H-03 — 地理と意味の関係は、判定できない</h2>
+      {/* 見出しは評価スクリプトの判定から出す(帯を画面側に二重に持たない) */}
+      {String(h03["判定"]).startsWith("地理と意味に相関がある") ? (
+        <h2>✓ H-03 — 地理と意味に相関がある(ただし本とは分離できていない)</h2>
+      ) : (
+        <h2>△ H-03 — 地理と意味の関係は、判定できない</h2>
+      )}
       <p style={{ maxWidth: "72ch" }}>
         設計書が価値として掲げていた前提「地理的に近い文化圏の民話は意味的にも近い」を、
         本をまたぐ英語ペア {String(h03["使ったペア数(本をまたぐ英語ペアのみ)"])} 組で測った。
@@ -127,6 +132,37 @@ export default function GatesPage() {
         </table>
       </div>
       <p style={{ maxWidth: "72ch" }}>{String(h03["注記"])}</p>
+      <h3>判定の履歴 ── 帯は一度も動かしていない</h3>
+      <div className="tablewrap">
+        <table>
+          <thead>
+            <tr><th>時点</th><th className="num">有効標本</th><th className="num">r</th><th className="num">p</th><th>判定</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>L1</td><td className="num">11 冊</td><td className="num">—</td><td className="num">0.0496</td><td>判定できない</td></tr>
+            <tr><td>L4</td><td className="num">21 冊</td><td className="num">0.246</td><td className="num">0.012</td><td>判定できない</td></tr>
+            <tr>
+              <td>現在</td>
+              <td className="num">{String(h03["本の数(検定の有効標本)"])} 冊</td>
+              <td className="num">{Number(h03["地理距離と意味距離の相関 r"]).toFixed(3)}</td>
+              <td className="num">{Number(h03["置換検定 p"]).toFixed(4)}</td>
+              <td>{String(h03["判定"]).split(" — ")[0]}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style={{ maxWidth: "72ch" }}>
+        L8 でロシア・アイヌ・アラスカ・スリランカ・ナイジェリア南部・ハワイの 6 冊を足し、
+        27 冊で p = 0.001 になった。これを読むときに知っておいてほしいことが三つある。
+      </p>
+      <ul style={{ maxWidth: "72ch" }}>
+        <li><strong>変化は本を足した効果である。</strong>
+          新しく計算し直した Embedding のまま、L4 の 21 冊だけで測ると r = 0.243、p = 0.012 で、L4 の結果を再現した</li>
+        <li><strong>同じ仮説を 3 回見ている。</strong>見るたびに、偶然「成立」に入る機会は増える。
+          3 回分として p を 3 倍しても 0.003 で、帯(p &lt; 0.01)の中にある</li>
+        <li><strong>相関は因果ではない。</strong>近い土地の本は、翻訳者・時代・編集方針も近いことがある。
+          H-02 の本の効果(d = 0.77)も大きく、この二つはこのコーパスでは切り離せていない</li>
+      </ul>
       <details>
         <summary className="small">一冊抜きの内訳を見る</summary>
         <div className="tablewrap">
@@ -158,6 +194,8 @@ export default function GatesPage() {
       <h2>✓ G-03 — 分割は、その本自身の目次と一致した</h2>
       <p style={{ maxWidth: "72ch" }}>
         民話集を一話ずつに割るとき、期待件数は<strong>その本の目次が挙げる題名の数</strong>から取った。
+        目次の無い本や、目次と本文の見出しの形が違う本では、<strong>著者が刷った通し番号</strong>が
+        1 から欠けなく続くことと、目次があればその番号付き項目の数と合うことの二つを突き合わせた。
         採録した {books.length} 冊すべてが一致している。一致しなかった本は
         <strong>コーパスに入れていない</strong>。取れた分だけ採ると、その本だけ話の切れ目が
         違うことになり、以後の類似度がその差を測ってしまうからである。

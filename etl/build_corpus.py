@@ -172,6 +172,13 @@ def _split_trailing_notes(text: str) -> tuple[str, str]:
         start = a
     if start == marks[-1]:
         return text, ""
+    # 註の塊は番号の行が密に並ぶ。地の文の折り返しの頭に註番号が来る本では
+    # (『"O Squirrel,』+ 次行『[136] I am hungry."』)、番号の行が間遠に続くだけで、
+    # それを註と見なすと話が文の途中で切れる(実測 L8、PG-56614 No. 64)
+    block = [ln for ln in lines[start:] if ln.strip()]
+    in_block = sum(1 for i in marks if i >= start)
+    if in_block / max(1, len(block)) < 0.25:
+        return text, ""
     return "\n".join(lines[:start]).strip(), "\n".join(lines[start:]).strip()
 
 
@@ -248,6 +255,7 @@ def build(strict: bool = True) -> tuple[list[dict], list[dict]]:
 
         for n, sec in enumerate(secs, 1):
             text, notes = trim_backmatter(clean_text(sec.text), is_last=(n == len(secs)))
+            notes = "\n".join(x for x in (sec.notes, notes) if x)
             sid = f"{book['country_code']}-{bid}-{n:03d}"
             stories.append({
                 "story_id": sid,

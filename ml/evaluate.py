@@ -166,8 +166,8 @@ def geography_vs_semantics(stories, vecs, seed: int = 20260908) -> dict:
     r = float(np.corrcoef(d_geo, d_sem)[0, 1])
 
     # 帰無: **本に貼られた文化圏の座標を入れ替える**置換検定。
-    # 有効な標本は 39,061 ペアではなく 11 冊である。ペアを単位に検定すると
-    # 標本数を水増しして必ず有意になる。
+    # 有効な標本はペアの数ではなく本の数である(L1 で 11 冊、L4 で 21 冊、L8 で 27 冊)。
+    # ペアを単位に検定すると標本数を水増しして必ず有意になる。
     rng = random.Random(seed)
     n_perm = 5000
     null = np.empty(n_perm)
@@ -178,16 +178,24 @@ def geography_vs_semantics(stories, vecs, seed: int = 20260908) -> dict:
         null[t] = np.corrcoef(Mp[ia, ib], d_sem)[0, 1]
     p = float((np.abs(null) >= abs(r)).mean())
 
-    # 一冊抜きの感度。11 冊しかないので、1 冊で結論が動くなら結論ではない
+    # 一冊抜きの感度。本の数は少ないので、1 冊で結論が動くなら結論ではない
     loo = {}
     for drop in book_ids:
         k = bpos[drop]
         keep = (ia != k) & (ib != k)
         loo[drop] = float(np.corrcoef(d_geo[keep], d_sem[keep])[0, 1])
     lo, hi = min(loo.values()), max(loo.values())
+    # 「特定の一冊が作っている相関ではない」は、一冊抜きで符号が変わらず、
+    # 振れ幅が観測 r の半分に収まるときだけ言う。**結果にかかわらず同じ文を出さない**(L8)
+    loo_stable = (lo * r > 0) and (hi * r > 0) and (hi - lo) <= abs(r) / 2
+    loo_note = (
+        f"一冊抜きでも r は {lo:.3f}〜{hi:.3f} に収まり、特定の一冊が作っている相関ではない。"
+        if loo_stable else
+        f"**一冊抜きで r は {lo:.3f}〜{hi:.3f} と動く。** 結論が特定の本に左右されうる。"
+    )
 
     # 判定の帯は**事前登録**である。結果を見てから動かさない。
-    # 本の数が 11 → 21 に増えて p は 0.0496 → 0.012 に下がったが、帯は据え置く。
+    # 本の数が 11 → 21 に増えて p は 0.0496 → 0.012 に下がったが、帯は据え置いた。L8 でも据え置く。
     if p < 0.01:
         verdict = "地理と意味に相関がある"
     elif p <= 0.10:
@@ -211,7 +219,7 @@ def geography_vs_semantics(stories, vecs, seed: int = 20260908) -> dict:
             f"検定の単位はペアではなく本である。{len(d_sem):,} ペアを標本数として扱うと"
             f"水増しになり、ほぼ必ず有意になる。有効な標本は {len(book_ids)} 冊である。"
             f"帰無分布の標準偏差は {sd:.3f} で、観測 r={r:.3f} はその {abs(r)/sd:.1f} 倍にあたる。"
-            f"一冊抜きでも r は {lo:.3f}〜{hi:.3f} に収まり、特定の一冊が作っている相関ではない。"
+            f"{loo_note}"
             "それでも地理は本(翻訳者・時代・編集方針)と交絡しており、"
             "「地理が近いから似ている」と「たまたまこの本たちが似ている」は分離できていない。"
         ),

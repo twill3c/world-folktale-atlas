@@ -234,6 +234,180 @@ class Section:
     title: str
     line: int
     text: str
+    #: 本文から切り離した脚注(番号方式の本だけが使う)
+    notes: str = ""
+
+
+_ROMAN = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100}
+
+
+def roman_to_int(s: str) -> int | None:
+    s = s.upper()
+    if not s or any(c not in _ROMAN for c in s):
+        return None
+    total = 0
+    for i, c in enumerate(s):
+        v = _ROMAN[c]
+        total += -v if i + 1 < len(s) and _ROMAN[s[i + 1]] > v else v
+    return total
+
+
+#: 翻刻者の長音記法(『T[=o]ky[=o]』)。PG-29287 の翻刻者注が「長音符付きの母音」と明言している
+MACRON_BRACKET = re.compile(r"\[=([AEIOUaeiou])\]")
+_MACRON = dict(zip("AEIOUaeiou", "ĀĒĪŌŪāēīōū"))
+#: 文字で振った脚注の本体(『[B] The Aino name here used …』)
+LETTER_FOOTNOTE = re.compile(r"\A\[[A-Z]\]\s")
+
+
+def _blocks_after(lines: list[str], k: int) -> tuple[list[str], int]:
+    """k 行目以降で最初の「空行で区切られた塊」と、その次の行番号を返す。"""
+    n = len(lines)
+    while k < n and not lines[k].strip():
+        k += 1
+    group = []
+    while k < n and lines[k].strip():
+        group.append(lines[k].strip())
+        k += 1
+    return group, k
+
+
+def split_numbered(body: str, cfg: dict) -> tuple[list[Section], dict]:
+    """本文の通し番号で割る(`split.strategy = "numbered"`)。
+
+    目次が無い本(PG-29287 アイヌ)や、目次の題名と本文の見出しの形が違う本
+    (PG-34655 は本文で題名を斜体の塊に置く。斜体は見出しの索引から外している)がある。
+    こうした本では、**著者が刷った通し番号**を件数オラクルにする。
+
+      1. 番号が 1 から欠けも重複もなく続くこと(本文の側の証拠)
+      2. 目次がある本では、目次の番号付き項目の数と一致すること(別の文書の側の証拠)
+
+    2 は 1 と独立である。1 だけだと、地の文の行頭に立った番号を見出しと取り違えても
+    連番が偶然続けば通ってしまうが、目次の数とは合わなくなる。
+
+    見出しの行は**直前が空行**のものに限る。地の文の途中の行頭の番号を拾わないため。
+    """
+    lines = body.split("\n")
+    head = re.compile(cfg["heading"])
+    conv = int if cfg.get("numeral") == "arabic" else roman_to_int
+    min_words = int(cfg.get("min_words", 120))
+    take_from = int(cfg.get("take_from", 1))
+    boundary = re.compile(cfg["boundary"]) if cfg.get("boundary") else None
+
+    stop = len(lines)
+    if cfg.get("stop_at"):
+        rx = re.compile(cfg["stop_at"])
+        stop = next((i for i, ln in enumerate(lines) if rx.search(ln.strip())), stop)
+
+    heads: list[tuple[int, int, re.Match]] = []
+    for i in range(stop):
+        m = head.match(lines[i].strip())
+        if m and (i == 0 or not lines[i - 1].strip()):
+            heads.append((i, conv(m.group("num")) or 0, m))
+
+    nums = [n for _, n, _ in heads]
+    missing: list[str] = []
+    if not nums:
+        missing.append("番号付きの見出しが一つも無い")
+    elif nums != list(range(1, len(nums) + 1)):
+        breaks = [f"{a}→{b}" for a, b in zip([0] + nums, nums) if b != a + 1]
+        missing.append(f"通し番号が連続しない: {breaks[:5]}")
+
+    toc = cfg.get("toc_count")
+    toc_count = None
+    if toc and heads:
+        lo, hi = 0, heads[0][0]
+        if toc.get("between"):
+            a, b = (re.compile(p) for p in toc["between"])
+            lo = next((i for i in range(hi) if a.search(lines[i].strip())), 0)
+            hi = next((i for i in range(lo + 1, hi) if b.search(lines[i].strip())), hi)
+        rx = re.compile(toc["pattern"])
+        toc_count = sum(1 for ln in lines[lo:hi] if rx.match(ln.strip()))
+        if toc_count != len(nums):
+            missing.append(f"目次の項目 {toc_count} と本文の通し番号 {len(nums)} が合わない")
+
+    sections, short, skipped = [], [], []
+    for n, (k, num, m) in enumerate(heads):
+        end = heads[n + 1][0] if n + 1 < len(heads) else stop
+        if boundary:
+            end = next((j for j in range(k + 1, end) if boundary.search(lines[j].strip())), end)
+        title = (m.groupdict().get("title") or "").strip()
+        start = k + 1
+        close = cfg.get("title_close")
+        if title and close:
+            # 斜体の題名は閉じ記号までが題名(PG-29287)。閉じの前後の揺れを実測で 3 通り踏んだ:
+            #   『…to』+ 次行『copulate._』(折り返し) / 『…a Fox_.』(句点が外) /
+            #   『…Tiger._--(No. I.)』(同題の話の区別)
+            while close not in title and start < end and lines[start].strip():
+                title = f"{title} {lines[start].strip()}"
+                start += 1
+            main, _, rest = title.partition(close)
+            suffix = re.search(cfg["title_suffix"], rest) if cfg.get("title_suffix") else None
+            title = main.rstrip(". ") + (f" {suffix.group(0)}" if suffix else "")
+        if not title:
+            group, start = _blocks_after(lines, k + 1)
+            title = " ".join(group)
+            if cfg.get("subtitle_caps"):
+                # 題名の下の副題(PG-18450『HAWAII THE ORIGINAL HOME OF THE BROWNIES』)
+                nxt, after = _blocks_after(lines, start)
+                sub = " ".join(nxt)
+                if nxt and len(nxt) <= 2 and sub.isupper() and len(sub) < 80 and after <= end:
+                    title, start = f"{title}: {sub}", after
+        if cfg.get("drop_byline"):
+            # 題名の下の寄稿者名(PG-18450『_Rev. C. M. Hyde, D.D._』)は本文ではない
+            nxt, after = _blocks_after(lines, start)
+            if nxt and re.fullmatch(r"_[^_]{2,100}_", " ".join(nxt)) and after <= end:
+                start = after
+        title = title.strip("_ ").strip()
+        if num < take_from or num in cfg.get("exclude", []):
+            skipped.append(title)
+            continue
+        notes = ""
+        if cfg.get("tale_end"):
+            # 話の後ろに編者の注記が続く本(PG-56614)。右寄せの採話地の行
+            # (『North-western Province.』)が話の終わりで、その後は他書との比較と異話である。
+            # **最初の**一致で切る — 異話にもそれぞれ採話地の行が付く
+            rx = re.compile(cfg["tale_end"])
+            j = next((i for i in range(start, end) if rx.match(lines[i])), None)
+            gap = int(cfg.get("tale_end_blank_run", 0))
+            if gap:
+                # 採話地の行が無い話もある(No. 10 / 40〜44)。その本では注記の直前だけが
+                # 空行 3 行で、題名と本文・本文と採話地の間は空行 2 行である(実測 L8)
+                run = 0
+                for i in range(start, end if j is None else j):
+                    run = run + 1 if not lines[i].strip() else 0
+                    if run == gap and any(lines[x].strip() for x in range(start, i)):
+                        j = i - gap + 1
+                        break
+            if j is not None:
+                notes = "\n".join(ln.strip() for ln in lines[j:end]).strip()
+                end = j
+        text = "\n".join(lines[start:end]).strip("\n")
+        if cfg.get("macron_brackets"):
+            text = MACRON_BRACKET.sub(lambda x: _MACRON[x.group(1)], text)
+            title = MACRON_BRACKET.sub(lambda x: _MACRON[x.group(1)], title)
+        if cfg.get("letter_footnotes"):
+            paras = re.split(r"\n{2,}", text)
+            notes = "\n".join(p.strip() for p in paras if LETTER_FOOTNOTE.match(p.strip()))
+            text = "\n\n".join(p for p in paras if not LETTER_FOOTNOTE.match(p.strip()))
+        text = re.sub(r"\n{3,}", "\n\n", text).strip()
+        if len(text.split()) < min_words:
+            short.append(title)
+            continue
+        sections.append(Section(title=title, line=k, text=text, notes=notes))
+
+    diag = {
+        "toc_entries": toc_count if toc_count is not None else len(nums),
+        # 件数オラクルは「本文の通し番号の数」。目次があれば上で突き合わせ済み
+        "toc_titles": len(nums),
+        "toc_line": heads[0][0] if heads else None,
+        "matched": len(nums),
+        "skipped": skipped,
+        "missing": missing,
+        "ambiguous": [],
+        "short": short,
+        "sections": len(sections),
+    }
+    return sections, diag
 
 
 def split_book(body: str, cfg: dict | None = None) -> tuple[list[Section], dict]:
@@ -242,6 +416,8 @@ def split_book(body: str, cfg: dict | None = None) -> tuple[list[Section], dict]
     戻り値の診断: toc_entries / matched / skipped / missing / ambiguous / short
     """
     cfg = cfg or {}
+    if cfg.get("strategy") == "numbered":
+        return split_numbered(body, cfg)
     skip = {norm(s) for s in cfg.get("skip", [])} | DEFAULT_SKIP
     # 目次の表記と本文の見出しが違う本がある。対応は books.json に**明示**する
     #   51002「WHOM THE KING HONORS」(目次・米綴り) → 本文「WHOM THE KING HONOURS」

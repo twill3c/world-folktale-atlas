@@ -38,7 +38,7 @@ export default function Home() {
       <h1>世界の民話を、意味の側から眺める</h1>
       <p style={{ maxWidth: "68ch" }}>
         Project Gutenberg にある民話集 {books.length} 冊から、
-        <strong>その本の目次が挙げる題名の数と一致した本だけ</strong>を採り、
+        <strong>その本自身の目次(または著者が刷った通し番号)と件数が一致した本だけ</strong>を採り、
         {index.n_stories} 話に割った。全話に出典 URL と権利状態と確認日が付いている。
         話どうしの近さは多言語 Embedding(<code>{index.embedding_model}</code>)で測っている。
       </p>
@@ -98,15 +98,21 @@ export default function Home() {
         </div>
 
         <div className="card">
-          <h3 style={{ marginTop: 0 }}>△ 地理と意味の関係は判定できない</h3>
+          {/* 見出しは評価スクリプトの判定から出す。帯(p < 0.01)を画面側に二重に持たない。
+              L8 で判定が変わったとき、数値だけ新しく見出しが古いまま残っていた */}
+          {String(h03["判定"]).startsWith("地理と意味に相関がある") ? (
+            <h3 style={{ marginTop: 0 }}>✓ 地理と意味に相関がある ── ただし本とは分離できていない</h3>
+          ) : (
+            <h3 style={{ marginTop: 0 }}>△ 地理と意味の関係は判定できない</h3>
+          )}
           <p style={{ fontSize: "2rem", margin: ".2rem 0", fontFamily: "var(--serif)" }}>
             r = {(h03["地理距離と意味距離の相関 r"] as number).toFixed(3)}
           </p>
           <p className="small" style={{ margin: 0 }}>
-            置換検定 p = {(h03["置換検定 p"] as number).toFixed(4)}。
-            閾値の近くに乗っており、有効な標本は
-            {String(h03["本の数(検定の有効標本)"])} 冊しかない。
-            <strong>これを発見として見せない。</strong>
+            置換検定 p = {(h03["置換検定 p"] as number).toFixed(4)}、有効な標本は
+            {String(h03["本の数(検定の有効標本)"])} 冊。
+            判定の帯は測る前に決めてあり、動かしていない。
+            <strong>それでも「地理が近いから似ている」とは言わない</strong> ── 地理は本と交絡している。
           </p>
         </div>
       </div>

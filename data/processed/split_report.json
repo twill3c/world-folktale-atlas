@@ -402,5 +402,116 @@
   "missing": [],
   "ambiguous": [],
   "oracle_match": true
+ },
+ {
+  "book_id": "PG-62509",
+  "gutenberg_id": 62509,
+  "toc_entries": 77,
+  "toc_titles": 77,
+  "skipped": [
+   "Introduction                                                          v",
+   "The Pronunciation of Russian Words                                   xi",
+   "Notes",
+   "Glossary"
+  ],
+  "expected_tales": 73,
+  "extracted": 72,
+  "short": [
+   "The Journey to Jerusalem"
+  ],
+  "missing": [],
+  "ambiguous": [
+   "A Tale of the Dead",
+   "A Tale of the Dead",
+   "A Tale of the Dead"
+  ],
+  "oracle_match": true
+ },
+ {
+  "book_id": "PG-29287",
+  "gutenberg_id": 29287,
+  "toc_entries": 43,
+  "toc_titles": 43,
+  "skipped": [],
+  "expected_tales": 43,
+  "extracted": 40,
+  "short": [
+   "The Position of the Private Parts",
+   "Sunrise",
+   "The Sex of the Two Luminaries"
+  ],
+  "missing": [],
+  "ambiguous": [],
+  "oracle_match": true
+ },
+ {
+  "book_id": "PG-24569",
+  "gutenberg_id": 24569,
+  "toc_entries": 31,
+  "toc_titles": 31,
+  "skipped": [
+   "THE BABY ESKIMO",
+   "KIVIUNG",
+   "THE GIANT",
+   "KALOPALING",
+   "THE WOMAN MAGICIAN",
+   "THE BIRD WIFE",
+   "THE SPIRIT OF THE SINGING HOUSE",
+   "THE TORNIT",
+   "THE FLIGHT TO THE MOON",
+   "WHAT THE MAN IN THE MOON DID",
+   "THE GUEST",
+   "THE ORIGIN OF THE NARWHAL"
+  ],
+  "expected_tales": 19,
+  "extracted": 19,
+  "short": [],
+  "missing": [],
+  "ambiguous": [],
+  "oracle_match": true
+ },
+ {
+  "book_id": "PG-56614",
+  "gutenberg_id": 56614,
+  "toc_entries": 75,
+  "toc_titles": 75,
+  "skipped": [],
+  "expected_tales": 75,
+  "extracted": 73,
+  "short": [
+   "THE KADAMBAWA MEN AND THE MOUSE-DEER",
+   "THE KADAMBAWA MEN AND THE BUSH"
+  ],
+  "missing": [],
+  "ambiguous": [],
+  "oracle_match": true
+ },
+ {
+  "book_id": "PG-34655",
+  "gutenberg_id": 34655,
+  "toc_entries": 40,
+  "toc_titles": 40,
+  "skipped": [],
+  "expected_tales": 40,
+  "extracted": 40,
+  "short": [],
+  "missing": [],
+  "ambiguous": [],
+  "oracle_match": true
+ },
+ {
+  "book_id": "PG-18450",
+  "gutenberg_id": 18450,
+  "toc_entries": 25,
+  "toc_titles": 25,
+  "skipped": [
+   "LEGENDS RESEMBLING OLD TESTAMENT HISTORY"
+  ],
+  "expected_tales": 24,
+  "extracted": 24,
+  "short": [],
+  "missing": [],
+  "ambiguous": [],
+  "oracle_match": true
  }
 ]

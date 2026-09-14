@@ -27,7 +27,9 @@ export default function AboutPage() {
         <li>米国パブリックドメインとして提供されていること</li>
         <li>書誌ページの URL を恒久的に記録できること</li>
         <li>取得後に PG のヘッダ・フッタを除去し、<strong>PG の商標・ライセンス文言を再配布しないこと</strong></li>
-        <li>抽出した話数が、<strong>その本の目次が挙げる題名の数と一致すること</strong></li>
+        <li>抽出した話数が、<strong>その本の目次が挙げる題名の数と一致すること</strong>。
+          目次の無い本や、目次と本文の見出しの形が違う本では、
+          <strong>著者が刷った通し番号が 1 から欠けなく続き、目次があればその項目数とも合うこと</strong></li>
       </ol>
       <p className="muted small" style={{ maxWidth: "72ch" }}>
         {String(license_policy.notes)}
@@ -38,6 +40,12 @@ export default function AboutPage() {
         <li><strong>朗読音声</strong> — PG 20050/20051/20972 は音声本で、text/plain は録音の README だった。
           PG のヘッダ・フッタの印は両方あり、それだけでは本文と区別できない</li>
         <li><strong>目次と件数が合わない本</strong> — 6 冊。取れた分だけ採ると、その本だけ話の切れ目が違うことになる</li>
+        <li><strong>一冊の中で地域や単位が混ざる部分</strong> — ノルウェー本の西インド諸島の付録、
+          『A Treasury of Eskimo Tales』のカナダ北部の部(ベーリング海峡の部だけを採った)、
+          『Hawaiian Folk Tales』第 I 章(話ではなく論考)、『Aino Folk-Tales』第 V 部(夢占いなどの断片)。
+          この地図は一冊を一つの地点に置くので、混ぜると誤った地域の札が付く</li>
+        <li><strong>『Jamaica Anansi Stories』</strong> — 番号の付いた話の下に異話が並び、約半数が 120 語に満たない断片である。
+          件数は合わせられても中身が大きく欠けたまま通ってしまうので、今回は見送った</li>
         <li><strong>ATU 分類</strong> — 権利上の問題なく参照できる対応表を確認できていない。
           <strong>AI による推定 ATU も出さない</strong>(正式な分類と推定を混同させないため)</li>
         <li><strong>外部の地図タイル</strong> — API キーと従量課金を伴い、閲覧者のブラウザから第三者へ
@@ -90,6 +98,13 @@ export default function AboutPage() {
         <li>一つの文化圏はたいてい一冊の本から来ている。その編者が何を選んだかがそのまま出る</li>
         <li>口承の多くは文字になっていない。ここに無いことは「無かった」ことではない</li>
         <li>植民地期の資料には採集者側の解釈が含まれる</li>
+        <li><strong>アイヌの話は、1888 年に英国人 B. H. Chamberlain が採録した記録である。</strong>
+          アイヌの人々自身が編んだものでも、当時の和人の記録でもない。
+          序文には当時の蔑称が出る(序文は取り込んでいない)。表題の「Aino」も古い呼び方である。
+          アイヌは今も生きている先住民族であり、この 40 話は 19 世紀末の一人の外部の記録者が
+          書き留めたものとして読んでほしい</li>
+        <li>研究者向けの私家版だった本(『Aino Folk-Tales』)は、編者が「原文の卑俗な表現も省かなかった」と
+          序文で述べており、<strong>性的な描写を含む話がある</strong>。原資料どおりに載せている</li>
       </ul>
       <p style={{ maxWidth: "72ch" }}>
         <Link href="/gates/">測ったこと</Link>には、

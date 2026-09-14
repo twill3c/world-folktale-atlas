@@ -45,6 +45,10 @@ def suspicious(p: str, *, is_last: bool) -> list[str]:
         why.append("後付けの語")
     # 註の参照(`[9]`)は本文の一部なので、外してから文末を見る
     tail = re.sub(r"\s*\[\d+\]\s*\Z", "", s)
+    # 句点のあとに閉じ括弧が来るのは、文が終わっている形である。アイヌ本は全話が
+    # 『…--(Translated literally. Told by Penri, 17th July, 1886.)』で終わり、
+    # 編者の補足『[… a Buddhist monk.]』で終わる話もある(実測 L8、偽陽性 42 件)
+    tail = re.sub(r"(?<=[.!?])[)\]]+\s*\Z", "", tail)
     if is_last and len(tail) > 30 and not re.search(r"[.!?。」』”\"'’—-]\s*\Z", tail):
         why.append("文末の句読点が無い")
     return why
