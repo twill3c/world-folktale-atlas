@@ -513,5 +513,32 @@
   "missing": [],
   "ambiguous": [],
   "oracle_match": true
+ },
+ {
+  "book_id": "PG-72735",
+  "gutenberg_id": 72735,
+  "toc_entries": 149,
+  "toc_titles": 149,
+  "skipped": [],
+  "expected_tales": 149,
+  "extracted": 136,
+  "short": [
+   "TURTLE’S ESCAPE",
+   "WHY ROCKS AT THE RIVER ARE COVERED WITH MOSS",
+   "WHY GROUND-DOVE COMPLAINS",
+   "WHY WOODPECKER BORES WOOD",
+   "THE FASTING TRIAL (FRAGMENT)",
+   "DANCING TO ANANSI’S FIDDLE",
+   "ANANSI CLAIMS THE DINNER",
+   "IN COME MURRAY",
+   "GUZZAH MAN",
+   "FOWL AND PRETTY POLL. [70]",
+   "THE CUMBOLO",
+   "JOHN-CROW AND FOWL AT COURT",
+   "WOODEN PING-PING AND COCK"
+  ],
+  "missing": [],
+  "ambiguous": [],
+  "oracle_match": true
  }
 ]

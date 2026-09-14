@@ -141,6 +141,7 @@ export default function GatesPage() {
           <tbody>
             <tr><td>L1</td><td className="num">11 冊</td><td className="num">—</td><td className="num">0.0496</td><td>判定できない</td></tr>
             <tr><td>L4</td><td className="num">21 冊</td><td className="num">0.246</td><td className="num">0.012</td><td>判定できない</td></tr>
+            <tr><td>L8</td><td className="num">27 冊</td><td className="num">0.231</td><td className="num">0.001</td><td>地理と意味に相関がある</td></tr>
             <tr>
               <td>現在</td>
               <td className="num">{String(h03["本の数(検定の有効標本)"])} 冊</td>
@@ -152,16 +153,20 @@ export default function GatesPage() {
         </table>
       </div>
       <p style={{ maxWidth: "72ch" }}>
-        L8 でロシア・アイヌ・アラスカ・スリランカ・ナイジェリア南部・ハワイの 6 冊を足し、
-        27 冊で p = 0.001 になった。これを読むときに知っておいてほしいことが三つある。
+        L8 でロシア・アイヌ・アラスカ・スリランカ・ナイジェリア南部・ハワイの 6 冊を足して 27 冊で p = 0.001、
+        L9 でジャマイカを足して 28 冊で p = 0.0002 になった。これを読むときに知っておいてほしいことが四つある。
       </p>
       <ul style={{ maxWidth: "72ch" }}>
         <li><strong>変化は本を足した効果である。</strong>
-          新しく計算し直した Embedding のまま、L4 の 21 冊だけで測ると r = 0.243、p = 0.012 で、L4 の結果を再現した</li>
-        <li><strong>同じ仮説を 3 回見ている。</strong>見るたびに、偶然「成立」に入る機会は増える。
-          3 回分として p を 3 倍しても 0.003 で、帯(p &lt; 0.01)の中にある</li>
+          計算し直した Embedding のまま、L4 の 21 冊だけで測ると p = 0.012、L8 の 27 冊だけで測ると p = 0.0010 で、それぞれを再現した</li>
+        <li><strong>同じ仮説を 4 回見ている。</strong>見るたびに、偶然「成立」に入る機会は増える。
+          4 回分として p を 4 倍しても 0.0008 で、帯(p &lt; 0.01)の中にある</li>
+        <li><strong>r の大きさはジャマイカ本に強く依存する。</strong>ジャマイカを抜くと r は 0.315 → 0.231 に下がる(一冊抜きで最大の変化)。
+          この本はクレオールの聞き書きで、本をまたぐ平均類似度が 30 冊中下から 2 番目(これより低いのは独語版グリムだけ)。
+          綴りの違いで一様に遠く出る本が地理的にも遠い位置にあることが r を押し上げたと読むのが自然で、地理の証拠として数えない。
+          ジャマイカを抜いた 27 冊でも p = 0.001 で、結論は一冊に依存しない</li>
         <li><strong>相関は因果ではない。</strong>近い土地の本は、翻訳者・時代・編集方針も近いことがある。
-          H-02 の本の効果(d = 0.77)も大きく、この二つはこのコーパスでは切り離せていない</li>
+          H-02 の本の効果(d = {Number(g07["効果量 Cohen d"]).toFixed(2)})も大きく、この二つはこのコーパスでは切り離せていない</li>
       </ul>
       <details>
         <summary className="small">一冊抜きの内訳を見る</summary>

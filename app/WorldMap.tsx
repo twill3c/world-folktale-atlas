@@ -76,7 +76,14 @@ function placeLabels(
         if (!hit) { best = { x, y, anchor }; break outer; }
       }
     }
-    const p = best ?? { x: it.x, y: it.y + it.r + 10, anchor: "middle" as const };
+    // 置き場所が見つからなかったときの逃げ道も、図の外へ出さない。
+    // 候補の探索だけが枠を見ていて、逃げ道は印の真下に置いていたので、
+    // 左端のアラスカ(経度 -164)の長いラベルが 35px はみ出して切れた(実測 L9)
+    const p = best ?? {
+      x: Math.min(Math.max(it.x, 3 + w / 2), bounds.w - 3 - w / 2),
+      y: Math.min(it.y + it.r + 10, bounds.h - 3),
+      anchor: "middle" as const,
+    };
     const left = p.anchor === "start" ? p.x : p.anchor === "end" ? p.x - w : p.x - w / 2;
     boxes.push({ x: left + w / 2, y: p.y, w, h: LH });
     out[it.key] = p;

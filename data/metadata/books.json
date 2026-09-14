@@ -681,6 +681,34 @@
         "min_words": 120
       },
       "count_oracle": {"kind": "numbered", "note": "目次に寄稿者名の行と、章の中の小話(『I. Snaring the Sun 31』)が挟まる。**頁番号の付かない章の項目だけ**を数えると本文の章番号 I〜XXV と一致する。単位は章で、第 II 章(マウイ)や第 X 章(メネフネ)の小話は章の中に残す。題名の下の寄稿者名は本文ではないので落とす。**第 I 章『Legends Resembling Old Testament History』は Hyde の論考**(書き出しが『In the first volume of Judge Fornander's elaborate work…』)で話ではないので、ノルウェー本の序文の節と同じく採らない"}
+    },
+    {
+      "book_id": "PG-72735",
+      "gutenberg_id": 72735,
+      "title": "Jamaica Anansi Stories",
+      "language": "en",
+      "original_language": "jam",
+      "collector": "Martha Warren Beckwith",
+      "translator": null,
+      "publication_year": 1924,
+      "year_evidence": "扉に『PUBLISHED BY THE AMERICAN FOLK-LORE SOCIETY … 1924』、序文の署名に『April, 1924.』",
+      "culture_region": "ジャマイカ",
+      "country": "Jamaica",
+      "country_code": "JM",
+      "latitude": 18.1,
+      "longitude": -77.3,
+      "location_precision": "culture_region",
+      "verification_date": "2026-09-14",
+      "split": {
+        "strategy": "numbered",
+        "heading": "^(?P<num>\\d+)\\.\\s+(?P<title>[^a-z]+?)\\.?$",
+        "numeral": "arabic",
+        "stop_at": "^WITTICISMS\\.$",
+        "boundary": "^(?:ANIMAL STORIES|OLD STORIES, CHIEFLY OF SORCERY|MODERN EUROPEAN STORIES|DANCE AND SONG)\\.$",
+        "toc_count": {"between": ["^CONTENTS\\.$", "^PREFACE\\.$"], "pattern": "^\\d+\\.\\s"},
+        "min_words": 120
+      },
+      "count_oracle": {"kind": "numbered", "note": "**話の単位は著者の番号(1〜149)とし、その下の a/b/c の異話は一つの話の中にまとめる。** 異話は同じ話を別の語り手が語ったもの(No. 1 の a は George Parkes、b は Vivian Bailey、ともに Mandeville)。異話を別の話にすると、近傍の 1 位が必ず兄弟の異話になり、件数の根拠も揺れる(目次の異話は 75 件、本文の異話見出しは 84 件で合わない)。番号は本文で 1〜149 が欠けなく続き、目次の番号付き項目 149 と一致する。『DANCE AND SONG』(139〜149)は歌の入った語りなので採る。番号の外にある小話(WITTICISMS)・謎々(RIDDLES)・注(NOTES)は採らない。語り手の名前と土地の行は各話・各異話の頭にあり、原資料どおり本文に残す。L8 で『約半数が 120 語に満たない』として見送ったのは、目次照合の分割器が異話を別の単位として数えた誤りで、番号単位では 149 話中 13 話(8.7%)だった"}
     }
   ]
 }

@@ -68,6 +68,8 @@ const PAGES = [
   // L8 で足した本。目次の無い本(通し番号で割った)と、編者の注記を註に回した本
   ["/story/JP-29287-001/", "民話の詳細(アイヌ)", ["出典と権利", "アイヌ", "本に付いていた註"]],
   ["/story/LK-56614-008/", "民話の詳細(スリランカ)", ["出典と権利", "本に付いていた註", "North-western Province."]],
+  // L9: 番号 1 つの下に異話 a/b をまとめた話。語り手の行も本文に残る
+  ["/story/JM-72735-001/", "民話の詳細(ジャマイカ)", ["出典と権利", "a. The Fish-basket.", "b. The Storm.", "George Parkes, Mandeville."]],
 ];
 
 const run = async () => {
@@ -159,6 +161,41 @@ const run = async () => {
       + `body=${contrast.bodyBg} / 低コントラスト ${contrast.n} 件`);
     if (SHOT) await dark.screenshot({ path: "screenshots/dark_地図.png" });
     await dark.close();
+  }
+
+  // 地図のラベルが枠からはみ出していないか・互いに重なっていないか(矩形で測る)。
+  // 横スクロールの検査は svg の内側で切れた文字を見ない。L9 でジャマイカを足したとき、
+  // 「ベーリング海峡(アラスカ)」が左端から 35px はみ出して切れていたのを、撮った画像で見つけた
+  {
+    const m = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+    await m.goto(`http://127.0.0.1:${PORT}/`, { waitUntil: "networkidle" });
+    const lab = await m.evaluate(() => {
+      const svg = document.querySelector("svg[aria-label^='世界地図']");
+      if (!svg) return null;
+      const s = svg.getBoundingClientRect();
+      const rs = [...svg.querySelectorAll("text")].filter((t) => t.textContent.trim())
+        .map((t) => ({ t: t.textContent.trim(), r: t.getBoundingClientRect() }));
+      const outside = rs.filter(({ r }) =>
+        r.left < s.left || r.right > s.right || r.top < s.top || r.bottom > s.bottom).map((x) => x.t);
+      const overlaps = [];
+      for (let i = 0; i < rs.length; i++) {
+        for (let j = i + 1; j < rs.length; j++) {
+          const a = rs[i].r, b = rs[j].r;
+          const w = Math.min(a.right, b.right) - Math.max(a.left, b.left);
+          const h = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
+          if (w > 1 && h > 1) overlaps.push(`${rs[i].t}×${rs[j].t}`);
+        }
+      }
+      return { n: rs.length, outside, overlaps };
+    });
+    if (!lab) errors.push("地図: svg が無い");
+    else {
+      for (const t of lab.outside) errors.push(`地図: ラベル「${t}」が枠からはみ出している`);
+      for (const t of lab.overlaps) errors.push(`地図: ラベルが重なっている ${t}`);
+      console.log(`  ${lab.outside.length + lab.overlaps.length ? "✗" : "✓"} 地図のラベル        `
+        + `${lab.n} 個 / はみ出し ${lab.outside.length} / 重なり ${lab.overlaps.length}`);
+    }
+    await m.close();
   }
 
   // 動きのある部分を触る

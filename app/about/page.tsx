@@ -42,10 +42,9 @@ export default function AboutPage() {
         <li><strong>目次と件数が合わない本</strong> — 6 冊。取れた分だけ採ると、その本だけ話の切れ目が違うことになる</li>
         <li><strong>一冊の中で地域や単位が混ざる部分</strong> — ノルウェー本の西インド諸島の付録、
           『A Treasury of Eskimo Tales』のカナダ北部の部(ベーリング海峡の部だけを採った)、
-          『Hawaiian Folk Tales』第 I 章(話ではなく論考)、『Aino Folk-Tales』第 V 部(夢占いなどの断片)。
+          『Hawaiian Folk Tales』第 I 章(話ではなく論考)、『Aino Folk-Tales』第 V 部(夢占いなどの断片)、
+          『Jamaica Anansi Stories』の番号の外にある小話・謎々・注。
           この地図は一冊を一つの地点に置くので、混ぜると誤った地域の札が付く</li>
-        <li><strong>『Jamaica Anansi Stories』</strong> — 番号の付いた話の下に異話が並び、約半数が 120 語に満たない断片である。
-          件数は合わせられても中身が大きく欠けたまま通ってしまうので、今回は見送った</li>
         <li><strong>ATU 分類</strong> — 権利上の問題なく参照できる対応表を確認できていない。
           <strong>AI による推定 ATU も出さない</strong>(正式な分類と推定を混同させないため)</li>
         <li><strong>外部の地図タイル</strong> — API キーと従量課金を伴い、閲覧者のブラウザから第三者へ
@@ -103,6 +102,10 @@ export default function AboutPage() {
           序文には当時の蔑称が出る(序文は取り込んでいない)。表題の「Aino」も古い呼び方である。
           アイヌは今も生きている先住民族であり、この 40 話は 19 世紀末の一人の外部の記録者が
           書き留めたものとして読んでほしい</li>
+        <li><strong>ジャマイカの話はクレオールの聞き書き</strong>(<code>de</code>、<code>dat</code>、<code>t’ief</code>)で、
+          <strong>語の数え上げ(出来事・動物・自然)が当たりにくい</strong>。同じ長さの話どうしで比べても、
+          出来事が一つも見つからない区画の割合が他の本より 0.10〜0.14 高い。ジャマイカの話で数え上げが少ないのは、
+          話の中身が乏しいからではない。Embedding でも、この本は綴りの違いのために他の本から一様に遠く出る</li>
         <li>研究者向けの私家版だった本(『Aino Folk-Tales』)は、編者が「原文の卑俗な表現も省かなかった」と
           序文で述べており、<strong>性的な描写を含む話がある</strong>。原資料どおりに載せている</li>
       </ul>
