@@ -1,10 +1,10 @@
 {
- "translated": 266,
+ "translated": 282,
  "total": 1113,
- "fraction": 0.239,
- "translated_words": 330134,
+ "fraction": 0.2534,
+ "translated_words": 358652,
  "total_words": 1578386,
- "word_fraction": 0.2092,
+ "word_fraction": 0.2272,
  "translation_type": "AI_GENERATED",
  "model": "claude-opus-5",
  "by_region": {
@@ -90,7 +90,7 @@
   },
   "イベリア半島": {
    "total": 21,
-   "done": 5
+   "done": 21
   },
   "ベーリング海峡(アラスカ)": {
    "total": 19,
