@@ -1,10 +1,10 @@
 {
- "translated": 310,
+ "translated": 329,
  "total": 1113,
- "fraction": 0.2785,
- "translated_words": 393097,
+ "fraction": 0.2956,
+ "translated_words": 430340,
  "total_words": 1578386,
- "word_fraction": 0.249,
+ "word_fraction": 0.2726,
  "translation_type": "AI_GENERATED",
  "model": "claude-opus-5",
  "by_region": {
@@ -70,7 +70,7 @@
   },
   "ウェールズ": {
    "total": 24,
-   "done": 5
+   "done": 24
   },
   "ハワイ": {
    "total": 24,
