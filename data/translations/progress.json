@@ -1,10 +1,10 @@
 {
- "translated": 168,
+ "translated": 173,
  "total": 1113,
- "fraction": 0.1509,
- "translated_words": 212721,
+ "fraction": 0.1554,
+ "translated_words": 258640,
  "total_words": 1578386,
- "word_fraction": 0.1348,
+ "word_fraction": 0.1639,
  "translation_type": "AI_GENERATED",
  "model": "claude-opus-5",
  "by_region": {
@@ -118,7 +118,7 @@
   },
   "アイルランド": {
    "total": 10,
-   "done": 5
+   "done": 10
   },
   "ポーランド": {
    "total": 7,
