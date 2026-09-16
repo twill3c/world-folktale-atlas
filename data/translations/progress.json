@@ -1,10 +1,10 @@
 {
- "translated": 364,
+ "translated": 412,
  "total": 1113,
- "fraction": 0.327,
- "translated_words": 468819,
+ "fraction": 0.3702,
+ "translated_words": 507634,
  "total_words": 1578386,
- "word_fraction": 0.297,
+ "word_fraction": 0.3216,
  "translation_type": "AI_GENERATED",
  "model": "claude-opus-5",
  "by_region": {
@@ -34,7 +34,7 @@
   },
   "ヒマラヤ山麓": {
    "total": 53,
-   "done": 5
+   "done": 53
   },
   "グリーンランド(イヌイット)": {
    "total": 51,
