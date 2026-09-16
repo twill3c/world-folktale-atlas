@@ -84,3 +84,31 @@ LABELS: list[dict] = [
 
 KEYS = [x["key"] for x in LABELS]
 assert len(set(KEYS)) == len(KEYS), "ラベル名が重複している"
+
+#: 陽性対照(SPEC §3 H-04)。正解で「ない」の話の中央に差し込む一文。
+#: **仮説文をそのまま写さない**(写せば、字面の一致を当てるだけの検査になる)。
+#: 語りの地の文として自然に読める形にし、固有名は使わない。
+CONTROL_SENTENCES: dict[str, str] = {
+    "特殊出生": "Soon afterwards a baby boy stepped out of the peach that the old woman had cut open.",
+    "旅立ち": "The next morning the youth said farewell to his mother and set off to wander far from his village.",
+    "試練": "The chief declared that whoever could empty the lake with a sieve in one night would win, and the lad had to try.",
+    "助力者": "Then a small grey mouse came to the girl and showed her the secret way out, so that she could reach her goal.",
+    "怪物退治": "With one blow of his axe the young man cut off the ogre's head, and the ogre fell dead.",
+    "魔法の品": "He struck the ground with the enchanted staff, and at once a house full of food rose up before him.",
+    "変身": "The sorcerer touched the boy with his wand, and the boy became a black raven.",
+    "禁忌の破り": "Though she had been told never to open the iron chest, she opened it that very night.",
+    "贈与": "In thanks the old man handed her a beautiful silver comb to keep.",
+    "結婚": "So the young man and the girl were wed, and the wedding feast lasted seven days.",
+    "王位": "When the old ruler died, the people crowned the young man and he reigned over the land.",
+    "財宝": "Under the stone he found a pot full of gold coins, and he was rich from that day on.",
+    "復讐": "To pay back the wrong that had been done to him, he burned down his enemy's house.",
+    "契約": "They struck a bargain: the stranger would build the bridge, and in return the man promised him his first cow.",
+    "死": "The old hunter fell from the cliff and died.",
+    "再生": "The woman sprinkled the water on the dead body, and the dead man opened his eyes and lived again.",
+    "争い": "The two brothers seized each other and fought fiercely on the ground.",
+    "逃走": "When the giant fell asleep, the girl slipped out of the cave and ran away as fast as she could.",
+    "帰還": "After many years of travel he came back to his own home at last.",
+    "罰": "For his wickedness the thief was beaten and driven out of the village.",
+    "策略": "The hare pretended to be dead, and when the lion came near, the hare fooled him and took his meat.",
+}
+assert set(CONTROL_SENTENCES) == set(KEYS), "陽性対照の文がラベルとずれている"

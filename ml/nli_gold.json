@@ -1,0 +1,5774 @@
+{
+ "schema_version": "1.0",
+ "purpose": "NLI 推定(SPEC §3 H-04)の正解集。モデルを走らせる前に付けてコミットした",
+ "selection": "ml/nli_gold.py(種 20260917・各本 1 話 + 15 話)",
+ "annotators": {
+  "A": "Claude サブエージェント(3 体で 15 話ずつ)",
+  "B": "Claude サブエージェント(A と別の 3 体。互いの答えを見ていない)",
+  "note": "民話学の専門家の注釈ではない。定義は ml/nli_labels.py。正解に使うのは A と B が一致した項目だけ",
+  "date": "2026-09-17",
+  "quote_check": "1 を付けた項目の引用 654 件中 648 件が本文に字句どおりあった。残り 6 件は引用符の字形・注番号・短い言い換えの差で、該当箇所は本文にある"
+ },
+ "stories": {
+  "BR-24714-003": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "attend a party in the sky",
+    "evidence_B": "an invitation to attend a party in the sky"
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: ハゲタカと鷹は知らずに運んだだけ",
+    "evidence_B": "迷い: ハゲワシと鷹は知らずに運んだだけで助けるつもりはない"
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "変身": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "結婚": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "死": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "帰還": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "he could hardly hop home",
+    "evidence_B": "he could hardly hop home"
+   },
+   "罰": {
+    "A": 1,
+    "B": 0,
+    "evidence_A": "so covered with bruises ... cured of being a gad about",
+    "evidence_B": "迷い: 傷は落下の結果で、悪事への報いとは明言されない"
+   },
+   "策略": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "The toad jumped through the window and hid himself inside the violin",
+    "evidence_B": "The toad jumped through the window and hid himself inside the violin"
+   }
+  },
+  "BR-24714-018": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "試練": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "set the royal palm tree ... as the goal of the race",
+    "evidence_B": "How would you like to race with the beetle?"
+   },
+   "助力者": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "変身": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": "迷い: 甲虫の上着の色が変わるが姿の変化とは言いにくい"
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "When she received her new coat",
+    "evidence_B": "I'll offer a bright coloured coat as a prize"
+   },
+   "結婚": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "if you change you'll have to give up something",
+    "evidence_B": "if you change you'll have to give up something"
+   },
+   "死": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "帰還": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "罰": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": "迷い: 鼠は賞を失うが罰と明言されない"
+   },
+   "策略": {
+    "A": 0,
+    "B": 1,
+    "evidence_A": "迷い: 走らずに飛んだのは機転でだましとは言い難い",
+    "evidence_B": "Nobody said anything about having to run ... so I flew instead"
+   }
+  },
+  "CN-26070-001": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 変装して町外れへ行くが遠出とは言いにくい",
+    "evidence_B": ""
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "gave such testimony that the guilt of the wretched wife was clearly established",
+    "evidence_B": "gave such testimony that the guilt of the wretched wife was clearly established"
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "変身": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: dressed as a peddler of cloth は変装であり変身ではない",
+    "evidence_B": "迷い: 行商人への変装のみで姿が変わるわけではない"
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: your fortune is made は約束のみで授受の描写なし",
+    "evidence_B": "迷い: your fortune is made は約束のみで受け取りは語られない"
+   },
+   "結婚": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 霊の旋風は抗議として描かれるが報復行為とまでは言えない",
+    "evidence_B": "迷い: 妻の動機は as though ... wished to avenge it と推測のみ"
+   },
+   "契約": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Shih-Kung and this thief agreed to assist each other",
+    "evidence_B": "Shih-Kung and this thief agreed to assist each other"
+   },
+   "死": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "tossed convulsively on the bed, and then lay still",
+    "evidence_B": "drove the needle deep down into his navel"
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "I dashed out of the house with all the speed",
+    "evidence_B": "I dashed out of the house with all the speed"
+   },
+   "帰還": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": "迷い: 泥棒や役人が家に戻るのは日常の帰宅で旅からの帰還ではない"
+   },
+   "罰": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "due punishment meted out to her",
+    "evidence_B": "due punishment meted out to her"
+   },
+   "策略": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "I am not really a peddler of cloth, as I have pretended",
+    "evidence_B": "the man had fallen into the trap which had been laid"
+   }
+  },
+  "DE-2591-031": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Then she hurried away with her lover",
+    "evidence_B": "Then she hurried away with her lover"
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "throw a white cloth over it, and then the magic will be stopped",
+    "evidence_B": "throw a white cloth over it, and then the magic will be stopped"
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 魔女は死ぬが定義の怪物・巨人・竜・鬼・人食いに当たるか不明",
+    "evidence_B": "迷い: 魔女は死ぬが怪物・人食いとは書かれていない"
+   },
+   "魔法の品": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "changed, with her magic wand, her sweetheart Roland into a lake",
+    "evidence_B": "changed, with her magic wand, her sweetheart Roland into a lake"
+   },
+   "変身": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "herself into a duck swimming in the middle of it",
+    "evidence_B": "herself into a duck swimming in the middle of it"
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "結婚": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the faithful maiden held her wedding with her sweetheart Roland",
+    "evidence_B": "the faithful maiden held her wedding with her sweetheart Roland"
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "死": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "cut her own child's head off",
+    "evidence_B": "cut her own child's head off"
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "we must fly in all haste",
+    "evidence_B": "we must fly in all haste"
+   },
+   "帰還": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "But when Roland got home",
+    "evidence_B": "when Roland got home"
+   },
+   "罰": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "she had to dance till she lay dead on the ground",
+    "evidence_B": "she had to dance till she lay dead on the ground"
+   },
+   "策略": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the other pushed her gently to the front, and took ... the back",
+    "evidence_B": "the other pushed her gently to the front"
+   }
+  },
+  "DE-2591-061": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "you must travel on with your husband",
+    "evidence_B": "you must travel on with your husband"
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "変身": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 楽師・兵士は王の変装で変身ではない",
+    "evidence_B": "迷い: 楽師・兵士に扮しただけで姿が変わるわけではない"
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the chamberlains came and brought her the most beautiful robes",
+    "evidence_B": "the chamberlains came and brought her the most beautiful robes"
+   },
+   "結婚": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "she was married to the fiddler",
+    "evidence_B": "the parson was sent for, and she was married to the fiddler"
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: to show you the folly of your ill-treatment of me は矯正が主目的",
+    "evidence_B": "迷い: 目的は高慢を治すことと語られ、仕返しとは明言されない"
+   },
+   "契約": {
+    "A": 0,
+    "B": 1,
+    "evidence_A": "迷い: 王の誓い(first comer)は一方的な誓いで取り引きではない",
+    "evidence_B": "I have sworn to give you to the first comer"
+   },
+   "死": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 0,
+    "B": 1,
+    "evidence_A": "迷い: run away しかけて連れ戻される",
+    "evidence_B": "She sprang to the door to run away"
+   },
+   "帰還": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "罰": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "I have done all this only to cure you of your silly pride",
+    "evidence_B": "to cure you of your silly pride"
+   },
+   "策略": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "I am the fiddler who has lived with you in the hut",
+    "evidence_B": "I am the fiddler who has lived with you in the hut"
+   }
+  },
+  "DE-77905-051": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Also machte er sich auf",
+    "evidence_B": "erbot sich der jüngste, auszuziehen und das Wasser zu holen"
+   },
+   "試練": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "hol von dem Wasser des Lebens bevor es zwölf schlägt",
+    "evidence_B": "hol von dem Wasser des Lebens bevor es zwölf schlägt"
+   },
+   "助力者": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "so will ich dir Auskunft geben",
+    "evidence_B": "so will ich dir Auskunft geben"
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "mit dem Schwert kannst du ganze Heere schlagen",
+    "evidence_B": "mit dem Schwert kannst du ganze Heere schlagen"
+   },
+   "変身": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "drei Wagen mit Gold und Edelsteinen für seinen jüngsten Sohn",
+    "evidence_B": "nahm die Rute und das Brot"
+   },
+   "結婚": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "ward die Hochzeit gehalten mit großer Glückseligkeit",
+    "evidence_B": "ward die Hochzeit gehalten mit großer Glückseligkeit"
+   },
+   "王位": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "er wär ihr Erlöser und der Herr des Königreichs",
+    "evidence_B": "er wär ihr Erlöser und der Herr des Königreichs"
+   },
+   "財宝": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "drei Wagen mit Gold und Edelsteinen",
+    "evidence_B": "drei Wagen mit Gold und Edelsteinen für seinen jüngsten Sohn"
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 兄たちは rachsüchtig だが受けた害への仕返しではない",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 1,
+    "B": 0,
+    "evidence_A": "da geb ich dir mein königliches Kleid, gib mir dafür dein schlechtes",
+    "evidence_B": ""
+   },
+   "死": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 1,
+    "B": 0,
+    "evidence_A": "damit schlug er die Heere seiner Feinde",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "sie hatten sich aufs Meer gesetzt und waren fortgeschifft",
+    "evidence_B": "der Prinz aber ging weiter in den Wald hinein"
+   },
+   "帰還": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Als sie nun daheim ankamen",
+    "evidence_B": "Als sie nun daheim ankamen"
+   },
+   "罰": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "dahin habe ich sie verwünscht, weil sie so übermütig waren",
+    "evidence_B": "dahin habe ich sie verwünscht, weil sie so übermütig waren"
+   },
+   "策略": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "gossen sie das Wasser des Lebens aus dem Becher",
+    "evidence_B": "gossen sie das Wasser des Lebens aus dem Becher"
+   }
+  },
+  "ES-31481-017": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "took the high-road to the next town",
+    "evidence_B": "turned away from his native village and took the high-road"
+   },
+   "試練": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "if you have the courage to meet the wicked magician",
+    "evidence_B": "you may then rescue me if you have the courage to meet the wicked magician"
+   },
+   "助力者": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "you must tell him that there were once seven wives",
+    "evidence_B": "you must tell him that there were once seven wives"
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": "迷い: 魔法使いは言葉で屈服するが怪物ではなく倒されてもいない"
+   },
+   "魔法の品": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 黄金の船や衣装は不思議だが品として使われるとは言い難い",
+    "evidence_B": ""
+   },
+   "変身": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the lovely princess had been turned into a white swan",
+    "evidence_B": "the lovely princess had been turned into a white swan"
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 水の杯を手渡す程度で贈り物とは言い難い",
+    "evidence_B": ""
+   },
+   "結婚": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "after they had been married and crowned",
+    "evidence_B": "after they had been married and crowned"
+   },
+   "王位": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the princess, who was now queen",
+    "evidence_B": "the magician Rank has unwillingly raised the poor fisherman to be king"
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "if you will induce the spirits ... I will give you",
+    "evidence_B": "Give me the princess first, and then I will free you of your wives"
+   },
+   "死": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Pedro continued running till he left the beach far behind",
+    "evidence_B": "Pedro continued running till he left the beach far behind"
+   },
+   "帰還": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "hurried towards his village as fast as his legs would carry",
+    "evidence_B": "hurried towards his village as fast as his legs would carry him"
+   },
+   "罰": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "策略": {
+    "A": 1,
+    "B": 0,
+    "evidence_A": "seven wives who had only one husband, and they are waiting outside",
+    "evidence_B": "迷い: 庭師が鳩を持ち去るが欺きとして明示されない"
+   }
+  },
+  "FR-29021-006": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "試練": {
+    "A": 0,
+    "B": 1,
+    "evidence_A": "迷い: 靴を履かせる tryal は課題というより身元の確認",
+    "evidence_B": "he would marry her whose foot this slipper would just fit"
+   },
+   "助力者": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "be but a good girl, and I will contrive that thou shalt go",
+    "evidence_B": "be but a good girl, and I will contrive that thou shalt go"
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "she struck it with her wand",
+    "evidence_B": "she struck it with her wand"
+   },
+   "変身": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the pumpkin was instantly turned into a fine coach",
+    "evidence_B": "the pumpkin was instantly turned into a fine coach"
+   },
+   "禁忌の破り": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "she quite forgot what her godmother had recommended",
+    "evidence_B": "she quite forgot what her godmother had recommended to her"
+   },
+   "贈与": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "she gave her a pair of glass-slippers",
+    "evidence_B": "she gave her a pair of glass-slippers"
+   },
+   "結婚": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "a few days after, married her",
+    "evidence_B": "a few days after, married her"
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 王子と結婚するのみ(became a queen は教訓詩の中)",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 0,
+    "B": 1,
+    "evidence_A": "迷い: 真夜中前に帰る約束はあるが禁忌として扱った",
+    "evidence_B": "She promised her godmother, she would not fail of leaving"
+   },
+   "死": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "she then rose up, and fled as nimble as a deer",
+    "evidence_B": "she then rose up, and fled as nimble as a deer"
+   },
+   "帰還": {
+    "A": 1,
+    "B": 0,
+    "evidence_A": "Being got home, she ran to seek out her godmother",
+    "evidence_B": "迷い: 舞踏会からの帰宅のみで遠出からの帰還ではない"
+   },
+   "罰": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "策略": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "as if she had been just awaked out of her sleep",
+    "evidence_B": "stretching herself as if she had been just awaked"
+   }
+  },
+  "GB-7439-019": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "walking near this wood in his journey to Wales",
+    "evidence_B": "the prince set out with two horses"
+   },
+   "試練": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "You must show me that handkerchief to-morrow morning",
+    "evidence_B": "You must show me that handkerchief to-morrow morning"
+   },
+   "助力者": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Jack's cap of knowledge informed him how it was to be obtained",
+    "evidence_B": "Jack's cap of knowledge informed him how it was to be obtained"
+   },
+   "怪物退治": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "gave him a most weighty knock with his pickaxe ... killed him",
+    "evidence_B": "killed him on the spot"
+   },
+   "魔法の品": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "The coat will keep you invisible",
+    "evidence_B": "The coat will keep you invisible"
+   },
+   "変身": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "transformed her into a white hind",
+    "evidence_B": "transformed into birds and beasts returned to their proper shapes"
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "presented him with a sword and a belt",
+    "evidence_B": "presented him with a sword and a belt"
+   },
+   "結婚": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "So married they were",
+    "evidence_B": "So married they were"
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "search the cave, which he found contained much treasure",
+    "evidence_B": "search the cave, which he found contained much treasure"
+   },
+   "復讐": {
+    "A": 0,
+    "B": 1,
+    "evidence_A": "迷い: Blunderbore は復讐を誓い Jack を捕らえるが報復は果たされず",
+    "evidence_B": "vowed to be revenged on Jack ... took Jack on his shoulders"
+   },
+   "契約": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "he desired to be his servant. This being agreed upon",
+    "evidence_B": "desired to be his servant. This being agreed upon"
+   },
+   "死": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "ripping open his belly, fell down dead",
+    "evidence_B": "slew them both"
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "drove his sword up to the hilt in the giant's back",
+    "evidence_B": "began to lay about him with his iron club"
+   },
+   "逃走": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the conjurer, mounting up into the air, was carried away",
+    "evidence_B": "the conjurer, mounting up into the air, was carried away"
+   },
+   "帰還": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "soon after went to the court of King Arthur",
+    "evidence_B": "soon after went to the court of King Arthur"
+   },
+   "罰": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "private and secret malice ... ripping open his belly, fell down dead",
+    "evidence_B": "knowing their wicked reign was at an end"
+   },
+   "策略": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "laid a billet in the bed in his stead",
+    "evidence_B": "he laid a billet in the bed in his stead"
+   }
+  },
+  "GB-9368-001": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "I have fled from Ireland",
+    "evidence_B": "I have fled from Ireland ... I came to this secret desert place"
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "変身": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "herewith present thee with this land",
+    "evidence_B": "I, on my part, herewith present thee with this land"
+   },
+   "結婚": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "死": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "I have fled from Ireland",
+    "evidence_B": "I have fled from Ireland"
+   },
+   "帰還": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "罰": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "策略": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   }
+  },
+  "GH-66923-010": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 海岸へ行くと言ったが実際には行かなかった",
+    "evidence_B": "迷い: 海岸へ行くと言ったが実際には出かけていない"
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "they helped to make a rubber-man",
+    "evidence_B": "they helped to make a rubber-man"
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "変身": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "he changed into a spider",
+    "evidence_B": "he changed into a spider"
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "結婚": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 豊作は自ら育てた収穫で財宝の獲得とは言いにくい",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "死": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "took refuge in a dark corner of the ceiling",
+    "evidence_B": "took refuge in a dark corner of the ceiling"
+   },
+   "帰還": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "罰": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "There Egya Anansi had to stay till daybreak",
+    "evidence_B": "so ashamed to be caught in the act of greediness"
+   },
+   "策略": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "I have to go to the coast on very urgent business",
+    "evidence_B": "he thought of a plan whereby he alone would profit"
+   }
+  },
+  "GL-28932-036": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 橇で出かけたが遠くへの旅立ちか不明",
+    "evidence_B": ""
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "変身": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "禁忌の破り": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "And this he did although it was forbidden",
+    "evidence_B": "this he did although it was forbidden"
+   },
+   "贈与": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "結婚": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "死": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "far out on the ice, torn to pieces",
+    "evidence_B": "found him, far out on the ice, torn to pieces"
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "帰還": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "罰": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "how her father had been punished for his ill-doing",
+    "evidence_B": "how her father had been punished for his ill-doing"
+   },
+   "策略": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   }
+  },
+  "IE-2892-003": {
+   "特殊出生": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "two small whelps, to which the hound had given birth",
+    "evidence_B": "two small whelps, to which the hound had given birth"
+   },
+   "旅立ち": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Iollan set out then for Faery",
+    "evidence_B": "Iollan set out then for Faery"
+   },
+   "試練": {
+    "A": 1,
+    "B": 0,
+    "evidence_A": "if he could not discover her within a certain period",
+    "evidence_B": "迷い: 期限内に妻を見つける条件はあるが課題として遂行されない"
+   },
+   "助力者": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "she broke the enchantment that was on the hound",
+    "evidence_B": "she broke the enchantment that was on the hound"
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "drew a hazel rod from beneath her cloak and struck it",
+    "evidence_B": "drew a hazel rod from beneath her cloak and struck it"
+   },
+   "変身": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "she changed into the appearance of a hound",
+    "evidence_B": "she changed into the appearance of a hound"
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Fionn sent him a special pup",
+    "evidence_B": "Fionn sent him a special pup"
+   },
+   "結婚": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "When Iollan and Tuiren were married they went to Ulster",
+    "evidence_B": "When Iollan and Tuiren were married they went to Ulster"
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "she went away well satisfied with her revenge",
+    "evidence_B": "she went away well satisfied with her revenge"
+   },
+   "契約": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "He bound Iollan to return the lady",
+    "evidence_B": "I give that pledge, said Iollan"
+   },
+   "死": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "帰還": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "returned to her own people in the Shi",
+    "evidence_B": "returned to her own people in the Shi"
+   },
+   "罰": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "策略": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "she changed her shape into that of Fionn's female runner",
+    "evidence_B": "she changed her shape into that of Fionn's female runner"
+   }
+  },
+  "IE-2892-006": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "I went into Britain",
+    "evidence_B": "I went into Britain, said Goll, and your father followed me"
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "I liberated fifteen prisoners, and one of them was Fionn",
+    "evidence_B": "whenever Fionn was in a tight corner it was Goll that plucked him out"
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 1,
+    "evidence_A": "迷い: 地獄の悪魔の軍勢を攻めたと後日談で述べるのみ",
+    "evidence_B": "he who attacked the hosts of great devils and brought Fionn ... out"
+   },
+   "魔法の品": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "変身": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "gave him rare and costly presents",
+    "evidence_B": "gave him rare and costly presents"
+   },
+   "結婚": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the load of three men of doubly refined gold",
+    "evidence_B": "the load of three men of doubly refined gold"
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Goll agreed that the affair should be submitted to that court",
+    "evidence_B": "Goll agreed that the affair should be submitted to that court"
+   },
+   "死": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "eleven hundred of men and women were dead",
+    "evidence_B": "eleven hundred of men and women were dead"
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "The two then fell into grips, and went lurching and punching",
+    "evidence_B": "The two then fell into grips, and went lurching and punching"
+   },
+   "逃走": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "took out of his dungeon the men who had lain there",
+    "evidence_B": "I took out of his dungeon the men ... I liberated fifteen prisoners"
+   },
+   "帰還": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "罰": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "策略": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   }
+  },
+  "IN-38488-016": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "crossed the oceans and thirteen rivers",
+    "evidence_B": "crossed the oceans and thirteen rivers"
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "I will undertake to put that lady into your arms",
+    "evidence_B": "I will undertake to put that lady into your arms"
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "applied the precious balm ... The king opened his eyes and saw",
+    "evidence_B": "applied the precious balm ... The king opened his eyes"
+   },
+   "変身": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "禁忌の破り": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "forgetful of the instructions of the hiraman, whipped the horse again",
+    "evidence_B": "Did I not tell you not to whip the horse more than once?"
+   },
+   "贈与": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "produced the precious bird and obtained the reward",
+    "evidence_B": "produced the precious bird and obtained the reward"
+   },
+   "結婚": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "The king and the lady were united together in wedlock",
+    "evidence_B": "The king and the lady were united together in wedlock"
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "tell down the sum of ten thousand rupees to the fowler",
+    "evidence_B": "tell down the sum of ten thousand rupees to the fowler"
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 王が后たちを追放するのは罰として描かれ報復とは区別しにくい",
+    "evidence_B": "迷い: 王が王妃たちを追放したのは罰として扱う"
+   },
+   "契約": {
+    "A": 0,
+    "B": 1,
+    "evidence_A": "",
+    "evidence_B": "The bird will tell its own price"
+   },
+   "死": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the poor queens were all devoured by wild beasts",
+    "evidence_B": "the poor queens were all devoured by wild beasts"
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "it escaped through the water-passage",
+    "evidence_B": "it escaped through the water-passage"
+   },
+   "帰還": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "all reached the king's capital safe and sound",
+    "evidence_B": "all reached the king's capital safe and sound"
+   },
+   "罰": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "ordered them to be driven away from the palace",
+    "evidence_B": "ordered them to be driven away from the palace"
+   },
+   "策略": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "If you wish to know my opinion you must set me free",
+    "evidence_B": "dropping khai after khai ... up to the door of the bedchamber"
+   }
+  },
+  "IN-58816-002": {
+   "特殊出生": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "give one each to the Ranees, and they would each have a son",
+    "evidence_B": "give one each to the Ranees, and they would each have a son"
+   },
+   "旅立ち": {
+    "A": 1,
+    "B": 0,
+    "evidence_A": "the man at once set out in search of the old Fakir",
+    "evidence_B": ""
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "sprinkle this on the children, and they will live",
+    "evidence_B": "Go quickly and sprinkle this on the children, and they will live"
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the old Fakir gave him his staff",
+    "evidence_B": "the old Fakir gave him his staff ... hit it twice"
+   },
+   "変身": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "a mango tree sprang from the grave of each brother",
+    "evidence_B": "a mango tree sprang from the grave of each brother"
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the old Fakir gave him his staff",
+    "evidence_B": "the old Fakir gave him his staff"
+   },
+   "結婚": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "if ... she would promise to kill it, they would give her",
+    "evidence_B": "if ... she would promise to kill it, they would give her a great reward"
+   },
+   "死": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "all seven fell down and died",
+    "evidence_B": "all seven fell down and died"
+   },
+   "再生": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the children came to life again",
+    "evidence_B": "the children came to life again"
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "帰還": {
+    "A": 0,
+    "B": 1,
+    "evidence_A": "",
+    "evidence_B": "So the Rajah returned to his Palace"
+   },
+   "罰": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "forthwith ordered them all to be killed",
+    "evidence_B": "forthwith ordered them all to be killed"
+   },
+   "策略": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "told the Ranee that she had given birth to a piece of iron",
+    "evidence_B": "told the Ranee that she had given birth to a piece of iron"
+   }
+  },
+  "IN-58816-052": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "変身": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": "迷い: 穴が池になるのは人の変身ではない"
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "結婚": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "死": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "a Bunjara slew his two children",
+    "evidence_B": "a Bunjara slew his two children"
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 水面に子らの頭が見えたという伝聞で生き返りとは言えない",
+    "evidence_B": "迷い: 子の頭が水から現れたのは It is said の伝聞"
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "帰還": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "罰": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "策略": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   }
+  },
+  "JM-72735-002": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 虎と獅子はだまされて縄を解いただけ",
+    "evidence_B": ""
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "変身": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "結婚": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 1,
+    "B": 0,
+    "evidence_A": "dem mak up de fire bu'n up de water ... dashey upon Tiger",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "死": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 1,
+    "B": 0,
+    "evidence_A": "Tiger jump 'pon Anansi",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Anansi get rid of him an' come off",
+    "evidence_B": "Anansi get rid of him an' come off"
+   },
+   "帰還": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "罰": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 罰は身代わりの虎・獅子に下り、悪事の当人ではない",
+    "evidence_B": "迷い: アナンシは捕まり縛られるが罰を受ける前に逃げる"
+   },
+   "策略": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Lion loose Anansi an' Anansi tied Lion to the tree",
+    "evidence_B": "Lion loose Anansi an' Anansi tied Lion to the tree"
+   }
+  },
+  "JM-72735-032": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "変身": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "禁忌の破り": {
+    "A": 1,
+    "B": 0,
+    "evidence_A": "anyone talk one another, that man will drop down dead",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "結婚": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Anansi and But made agreement that they wasn't to talk one another",
+    "evidence_B": "Anansi and But made agreement that they wasn't to talk"
+   },
+   "死": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "As Hog say so, drop down dead",
+    "evidence_B": "Hog say so, drop down dead"
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "帰還": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "罰": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "So Anansi drop down dead",
+    "evidence_B": "So Anansi drop down dead"
+   },
+   "策略": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "he's going to fix himself into a place where people mus' talk him",
+    "evidence_B": "Governor pass law an' say famine coming"
+   }
+  },
+  "JM-72735-040": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 1,
+    "B": 0,
+    "evidence_A": "takee up t'rowee, I show you whe' him deh",
+    "evidence_B": ""
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "変身": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "run to de river-side turn a white little stone",
+    "evidence_B": "Goat ... turn a white little stone"
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "結婚": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Anansi make bargain with Assono",
+    "evidence_B": "Anansi make bargain with Assono"
+   },
+   "死": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Assono so vex with Anansi that he eat him up",
+    "evidence_B": "he eat him up same place"
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 小さな口論のみで取っ組み合いはない",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Dog and Goat run thru' the other door",
+    "evidence_B": "Dog and Goat run thru' the other door"
+   },
+   "帰還": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "罰": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 食われたのは怒りによるもので悪事への報いか不明",
+    "evidence_B": "迷い: アッソノが腹を立ててアナンシを食うが悪事への報いか不明瞭"
+   },
+   "策略": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Brar Dog, see Brar Goat pass?",
+    "evidence_B": "takee up t'rowee, I show you whe' him deh"
+   }
+  },
+  "JM-72735-110": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "promised her that if anybody will come from home",
+    "evidence_B": "the father drew a revolver and shot him"
+   },
+   "怪物退治": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the father drew a revolver and shot him",
+    "evidence_B": "shot him. Jack has to put him in the oven"
+   },
+   "魔法の品": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "変身": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "結婚": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "married them both for life",
+    "evidence_B": "married them both for life"
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "The two of them arrange that she will keep singing",
+    "evidence_B": "The two of them arrange that she will keep singing"
+   },
+   "死": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the father drew a revolver and shot him",
+    "evidence_B": "the father drew a revolver and shot him"
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": "迷い: 娘は救出されるが自ら逃げる描写はない"
+   },
+   "帰還": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "The father took Jack and the girl back to his house",
+    "evidence_B": "The father took Jack and the girl back to his house"
+   },
+   "罰": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "策略": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "No, Master, not yet hot.",
+    "evidence_B": "Jack, is the oven hot?—No, Master, not yet hot"
+   }
+  },
+  "JP-29287-035": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 1,
+    "B": 0,
+    "evidence_A": "led up the bank of a stream through the woods to the house",
+    "evidence_B": ""
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "I am sorry for you, and will take you out of the hole",
+    "evidence_B": "I am sorry for you, and will take you out of the hole"
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "変身": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "sent him home in gorgeous array",
+    "evidence_B": "gave you these beautiful clothes"
+   },
+   "結婚": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the badger-goddess came down to the village, and married the good man",
+    "evidence_B": "the badger-goddess came down to the village, and married the good man"
+   },
+   "王位": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "who became the senior of all the chiefs",
+    "evidence_B": "who became the senior of all the chiefs"
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "instructions for deceiving and killing his enemy, the senior chief",
+    "evidence_B": "instructions for deceiving and killing his enemy, the senior chief"
+   },
+   "契約": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "死": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "buried in like fashion up to the neck, but soon died",
+    "evidence_B": "soon died of the effects"
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 1,
+    "B": 0,
+    "evidence_A": "will take you out of the hole. This he did",
+    "evidence_B": ""
+   },
+   "帰還": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "So the man went back to the village",
+    "evidence_B": "So the man went back to the village"
+   },
+   "罰": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the senior chief caused himself to be buried ... soon died",
+    "evidence_B": "caused himself to be buried ... but soon died"
+   },
+   "策略": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "told him the lies in which the badger-goddess had instructed him",
+    "evidence_B": "told him the lies in which the badger-goddess had instructed him"
+   }
+  },
+  "JP-4018-022": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "she sent Eiko to the South Pole",
+    "evidence_B": "she sent Eiko to the South Pole to beg Shikuyu"
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "As soon as his feet touched the flood it divided",
+    "evidence_B": "It was none other than I who came to your rescue"
+   },
+   "怪物退治": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "he dashed his head against the rocks of Mount Shu and died",
+    "evidence_B": "dashed his head against the rocks of Mount Shu and died"
+   },
+   "魔法の品": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "wonderful chariots which could whirl through the air by magic power",
+    "evidence_B": "wonderful chariots which could whirl through the air by magic power"
+   },
+   "変身": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "turning into a large and beautiful white crane",
+    "evidence_B": "turning into a large and beautiful white crane"
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "She showered all manner of gifts and honors upon Shikuyu",
+    "evidence_B": "She showered all manner of gifts and honors upon Shikuyu"
+   },
+   "結婚": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "王位": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Jokwa, the dead Emperor's sister, mounted the throne",
+    "evidence_B": "Jokwa, the dead Emperor's sister, mounted the throne"
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "死": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "died on the spot",
+    "evidence_B": "dashed his head against the rocks of Mount Shu and died"
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "they attacked him from the right and from the left",
+    "evidence_B": "the two fought together for some time"
+   },
+   "逃走": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "suddenly wheeling his horse round, he fled from the fray",
+    "evidence_B": "he fled from the fray"
+   },
+   "帰還": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Shikuyu did as he was asked, and returned with Eiko",
+    "evidence_B": "returned with Eiko to the Empress"
+   },
+   "罰": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "策略": {
+    "A": 0,
+    "B": 1,
+    "evidence_A": "迷い: 退却を装ったが見破られ、だませていない",
+    "evidence_B": "he pretended to retreat ... to throw Hako off his guard"
+   }
+  },
+  "KR-51002-053": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 1,
+    "B": 0,
+    "evidence_A": "I went as magistrate to Keumsan county in Chulla Province",
+    "evidence_B": "迷い: 郡守として赴任に同行するが家を出る冒険とは言いにくい"
+   },
+   "試練": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "five years after my farewell to Ta-hong that I won my honours",
+    "evidence_B": "five years after my farewell to Ta-hong that I won my honours"
+   },
+   "助力者": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Then he ordered a servant to call her",
+    "evidence_B": "Then he ordered a servant to call her"
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "変身": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "結婚": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "she was brought and made a member of our family, really my only wife",
+    "evidence_B": "she was brought and made a member of our family, really my only wife"
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Let us make a compact never to be broken",
+    "evidence_B": "Let us make a compact never to be broken"
+   },
+   "死": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "a day or two later she died",
+    "evidence_B": "a day or two later she died"
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 身を隠した計画は危険からの脱出とまでは言いにくい",
+    "evidence_B": ""
+   },
+   "帰還": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "罰": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "策略": {
+    "A": 1,
+    "B": 0,
+    "evidence_A": "she called herself my concubine so as to be safe",
+    "evidence_B": "迷い: 身を守るため妾と名乗らせたが、誰かをだます筋ではない"
+   }
+  },
+  "LK-56614-046": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the seven went away",
+    "evidence_B": "Having gone on and on, they went to the house of a Rakshasa"
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "having torn up the letter, wrote another letter",
+    "evidence_B": "wrote another letter, \"Mother, having taken care of the Prince"
+   },
+   "怪物退治": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the Prince cut and killed the Yaka with his sword",
+    "evidence_B": "the Prince cut and killed the Yaka with his sword"
+   },
+   "魔法の品": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "rubbed it on the eyes of those seven persons, and their eyes became well",
+    "evidence_B": "rubbed it on the eyes ... and their eyes became well"
+   },
+   "変身": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the Rakshasi gave them a little paddy",
+    "evidence_B": "the Rakshasi having tied up a packet of it gave him it"
+   },
+   "結婚": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "went with the King to his palace, and became his Queens",
+    "evidence_B": "married the Princess, and remained there"
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 王の娘と結婚して留まるが、王になったとは書かれない",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "死": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "boiled her the Rakshasa ate his own daughter",
+    "evidence_B": "having boiled her the Rakshasa ate his own daughter"
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the Prince cut and killed the Yaka",
+    "evidence_B": "the Prince cut and killed the Yaka with his sword"
+   },
+   "逃走": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "all the Princesses escaped together during the night",
+    "evidence_B": "all the Princesses escaped together during the night"
+   },
+   "帰還": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the Prince having taken it back, rubbed it on the eyes",
+    "evidence_B": "having taken it back, rubbed it on the eyes"
+   },
+   "罰": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "策略": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "took the seven white cloths ... and put them on the Princesses",
+    "evidence_B": "took the seven white cloths ... and put them on the Princesses"
+   }
+  },
+  "LK-56614-051": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "gone to the Lower Twelve Pattus ... to seek for coconuts",
+    "evidence_B": "gone to the Lower Twelve Pattus ... to seek for coconuts"
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 0,
+    "B": 1,
+    "evidence_A": "迷い: 運び手は手伝いを引き受けるが壺を割り目的を果たさない",
+    "evidence_B": "The man agreed to help him, and took the load"
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "変身": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 1,
+    "B": 0,
+    "evidence_A": "the father-in-law made ready a cart load of goods, and giving them",
+    "evidence_B": ""
+   },
+   "結婚": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "gave him his daughter [in marriage]",
+    "evidence_B": "gave him his daughter [in marriage]"
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Take this pingo load ... I will give you four tuttu",
+    "evidence_B": "Take this pingo load ... I will give you four tuttu"
+   },
+   "死": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "帰還": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "In the end the man returned home",
+    "evidence_B": "In the end the man returned home"
+   },
+   "罰": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "策略": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   }
+  },
+  "NG-34655-014": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "変身": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 1,
+    "B": 0,
+    "evidence_A": "the tortoise gave him some of the dried kernels and shrimps",
+    "evidence_B": ""
+   },
+   "結婚": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Will you lend me yours for a few days? I will return them",
+    "evidence_B": "Will you lend me yours for a few days? I will return them"
+   },
+   "死": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "slid down the elephant's trunk on to the ground and hid himself",
+    "evidence_B": "slid down the elephant's trunk on to the ground and hid himself"
+   },
+   "帰還": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "罰": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "策略": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "he was eating one of his own eyeballs",
+    "evidence_B": "the elephant perceived that the tortoise had deceived him"
+   }
+  },
+  "NO-8933-015": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "threw his sledge-hammer over his shoulder and set off",
+    "evidence_B": "he threw his sledge-hammer over his shoulder and set off"
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "So our Lord gave him three wishes.",
+    "evidence_B": "So our Lord gave him three wishes"
+   },
+   "怪物退治": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "laid the purse on the anvil, and let fly at it",
+    "evidence_B": "laid the purse on the anvil, and let fly at it"
+   },
+   "魔法の品": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "creep into the steel purse ... may stay in it",
+    "evidence_B": "any one whom I ask to creep into the steel purse ... may stay"
+   },
+   "変身": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "smithied a lovely young maiden out of her",
+    "evidence_B": "laid her in the furnace, and smithied a lovely young maiden out of her"
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "So our Lord gave him three wishes.",
+    "evidence_B": "So our Lord gave him three wishes"
+   },
+   "結婚": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "He had made a bargain with the Devil",
+    "evidence_B": "He had made a bargain with the Devil"
+   },
+   "死": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "it went no better with the poor old woman than with the horse's legs",
+    "evidence_B": "it went no better with the poor old woman than with the horse's legs"
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "away went the Devil as fast as he could",
+    "evidence_B": "away went the Devil as fast as he could lay legs to the ground"
+   },
+   "帰還": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "罰": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 悪魔を懲らしめるが悪事への罰とは言い難い",
+    "evidence_B": "迷い: 鍛冶屋は馬の代金を払うが罰としては弱い"
+   },
+   "策略": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "creep into this steel purse ... the Smith snapped to the clasp",
+    "evidence_B": "you can just climb up into the pear-tree, and pluck yourself a pear"
+   }
+  },
+  "NO-8933-056": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 油の付いた方が犯人という判定は課題とは言い難い",
+    "evidence_B": "迷い: 頬の脂で犯人を決める試しは課題の遂行ではない"
+   },
+   "助力者": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "変身": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "結婚": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "he whose cheeks and chaps are greasiest when we wake, he is the thief",
+    "evidence_B": "bought a firkin of butter together; they were to have it at Yule"
+   },
+   "死": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "帰還": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "罰": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "策略": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "greased his chaps and cheeks with it",
+    "evidence_B": "crept back to the Bear, and greased his chaps and cheeks"
+   }
+  },
+  "PL-36668-007": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "drove a long way into the forest ... left her there alone",
+    "evidence_B": "drove a long way into the forest ... left her there"
+   },
+   "試練": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "of that cloth you must make me a shirt",
+    "evidence_B": "You must spin it into thread ... make me a shirt"
+   },
+   "助力者": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Give me the keys, mistress, I will jingle them for you",
+    "evidence_B": "Give me the keys, mistress, I will jingle them for you"
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 御者なしの金の馬車は不思議だが力を持つ品として使われる描写は弱い",
+    "evidence_B": "迷い: 織機や御者なしの馬車は不思議だが品としての力の使用ではない"
+   },
+   "変身": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the bear became a handsome young king",
+    "evidence_B": "the bear became a handsome young king"
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "adorned his beloved with a gown of cloth-of-gold",
+    "evidence_B": "adorned his beloved with a gown of cloth-of-gold"
+   },
+   "結婚": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "where the marriage soon took place",
+    "evidence_B": "where the marriage soon took place"
+   },
+   "王位": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the bear became a handsome young king, with a golden sceptre",
+    "evidence_B": "the bear became a handsome young king, with a golden sceptre"
+   },
+   "財宝": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "dressed in cloth of gold, and adorned with jewels",
+    "evidence_B": "diamond ear-rings, a necklace set with various precious stones"
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": "迷い: 熊の申し出を娘が断った"
+   },
+   "契約": {
+    "A": 0,
+    "B": 1,
+    "evidence_A": "迷い: if the shirt is ready I will reward you は課題の条件で取り引きとは言いにくい",
+    "evidence_B": "I am hungry, give me food; And to you will I be good"
+   },
+   "死": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "She gave one shriek, fell, and expired instantly",
+    "evidence_B": "She gave one shriek, fell, and expired instantly"
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "帰還": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "in drove the carriage ... his daughter sat inside",
+    "evidence_B": "in drove the carriage ... his daughter sat inside"
+   },
+   "罰": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "fell face downward on the grave--and was turned to stone",
+    "evidence_B": "fell face downward on the grave--and was turned to stone"
+   },
+   "策略": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   }
+  },
+  "PT-34431-014": {
+   "特殊出生": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "He was no larger than a little bean",
+    "evidence_B": "a son was born ... no larger than a little bean"
+   },
+   "旅立ち": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "変身": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "結婚": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "brought home the huge sacks full of gold",
+    "evidence_B": "brought home the huge sacks full of gold"
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "死": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "When the goat was dead he threw it out",
+    "evidence_B": "When the goat was dead he threw it out into the street"
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "they dropped their bags of gold and ran away",
+    "evidence_B": "dropped their bags of gold and ran away as fast as they could"
+   },
+   "帰還": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "he saw his own mother's light in the window",
+    "evidence_B": "he saw his own mother's light in the window"
+   },
+   "罰": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "策略": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   }
+  },
+  "PT-34431-019": {
+   "特殊出生": {
+    "A": 0,
+    "B": 1,
+    "evidence_A": "迷い: 額に金の星のある双子だが不思議な誕生とまでは書かれていない",
+    "evidence_B": "twin sons were born ... They had gold stars on their foreheads"
+   },
+   "旅立ち": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Go find the king's sisters-in-law",
+    "evidence_B": "Go find the king's sisters-in-law"
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "変身": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "結婚": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the youngest one wedded the listening king himself",
+    "evidence_B": "the youngest one wedded the listening king himself"
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 王との結婚で王妃になるが支配者の位ではない",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "死": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the good miller and his wife died",
+    "evidence_B": "the good miller and his wife died"
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 1,
+    "B": 0,
+    "evidence_A": "The beautiful green-and-gold parrot had escaped from the children's arms",
+    "evidence_B": ""
+   },
+   "帰還": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 子らは宮廷に戻るが自ら出かけた者の帰還ではない",
+    "evidence_B": "迷い: 双子が宮殿に戻るが自ら出かけた者ではない"
+   },
+   "罰": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: You shall now receive the punishment と宣告のみで執行の描写なし",
+    "evidence_B": "迷い: You shall now receive the punishment と宣告のみで執行は語られない"
+   },
+   "策略": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   }
+  },
+  "RO-20552-005": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 1,
+    "B": 0,
+    "evidence_A": "it ran off down the high-road",
+    "evidence_B": ""
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "変身": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 1,
+    "B": 0,
+    "evidence_A": "it shook out on the sheet a pile of ducats",
+    "evidence_B": ""
+   },
+   "結婚": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the old man was very rich",
+    "evidence_B": "shook out on the sheet a pile of ducats"
+   },
+   "復讐": {
+    "A": 1,
+    "B": 0,
+    "evidence_A": "The rooster swallowed all the money and left the chests empty",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "死": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "beat till she flogged it to death",
+    "evidence_B": "flogged it to death"
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Then it escaped from the room",
+    "evidence_B": "gave the stone a push, came out safe and sound"
+   },
+   "帰還": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "till he reached the old man's house",
+    "evidence_B": "till he reached the old man's house"
+   },
+   "罰": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the stupid old soul remained as poor as a church-mouse",
+    "evidence_B": "the stupid old soul remained as poor as a church-mouse"
+   },
+   "策略": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 雌鶏が「fooled her」とあるが意図的なだましではない",
+    "evidence_B": ""
+   }
+  },
+  "RU-62509-048": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Go and sell the Father by St. Elias' all your standing corn",
+    "evidence_B": "St. Nicholas at once went off to the peasant"
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "変身": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: in the guise of wanderers は変装",
+    "evidence_B": "迷い: in the guise of wanderers は扮装で変身とまでは言えない"
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "結婚": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "all his granaries and lofts were full up with rye",
+    "evidence_B": "all his granaries and lofts were full up with rye"
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: エリヤの雹は名の日を祝わぬことへの懲らしめで受けた害への報復とは言い難い",
+    "evidence_B": "迷い: エリヤの雹は名の日を祝わない農夫への仕返しとも読めるが明言なし"
+   },
+   "契約": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "They haggled and bargained, and at last agreed",
+    "evidence_B": "They haggled and bargained, and at last agreed"
+   },
+   "死": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "帰還": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "罰": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 雹は神父の畑に落ち悪事の報いではない",
+    "evidence_B": "迷い: 農夫は悪事を働いておらず、雹は報いとして成立しなかった"
+   },
+   "策略": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "I am going to light the rouble taper to the Prophet Elijah",
+    "evidence_B": "Go and sell the Father by St. Elias' all your standing corn"
+   }
+  },
+  "TR-64807-002": {
+   "特殊出生": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "gave half the apple to his consort ... there was a little prince",
+    "evidence_B": "gave half the apple ... in exactly nine months ... a little prince"
+   },
+   "旅立ち": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "pursued his way over mountains and valleys",
+    "evidence_B": "pursued his way over mountains and valleys"
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the devil-son took the King's son with him",
+    "evidence_B": "the least of the ninety devils ... said that he knew"
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "drew out a needle, pricked the damsel ... changed into a bird",
+    "evidence_B": "drew out a needle, pricked the damsel ... changed into a bird"
+   },
+   "変身": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "gave him a tap, and turned him into a pitcher",
+    "evidence_B": "turned him into a pitcher of water"
+   },
+   "禁忌の破り": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "do not cut open these oranges where there is no water",
+    "evidence_B": "dost not cut open these oranges in any place where there is no water"
+   },
+   "贈与": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the dervish took from his bosom an apple, gave it",
+    "evidence_B": "took from his bosom an apple, gave it to the Padishah"
+   },
+   "結婚": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "he took the damsel to his palace ... held high festival",
+    "evidence_B": "held high festival with the Peri for forty days"
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 老婆の予言が水差しを割られた仕返しかは明示されない",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 1,
+    "B": 0,
+    "evidence_A": "by dint of rich gifts persuaded him to say",
+    "evidence_B": "迷い: 水のない所で切らないと約束したが筋の中心は禁忌の破り"
+   },
+   "死": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "brought the bird, killed it, and fed the sick lady",
+    "evidence_B": "brought the bird, killed it"
+   },
+   "再生": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the bird's feather ... turned into a most lovely damsel",
+    "evidence_B": "twice killed by the black woman ... turned into a most lovely damsel"
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "帰還": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "took her straight home to his father's house",
+    "evidence_B": "took her straight home to his father's house"
+   },
+   "罰": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "put to death the black slave-girl",
+    "evidence_B": "put to death the black slave-girl"
+   },
+   "策略": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "of course the sun has tanned me black",
+    "evidence_B": "by dint of rich gifts persuaded him to say"
+   }
+  },
+  "TR-64807-005": {
+   "特殊出生": {
+    "A": 0,
+    "B": 1,
+    "evidence_A": "迷い: 金髪と月・星の印を持つ子だが出生そのものは通常の出産",
+    "evidence_B": "brought forth two little children like shining stars"
+   },
+   "旅立ち": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the golden-haired youth set off next morning for the garden",
+    "evidence_B": "set off next morning for the garden of the fairy queen"
+   },
+   "試練": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "he will go to the garden of the Queen of the Peris, and bring thee",
+    "evidence_B": "go to the garden of the Queen of the Peris, and bring thee from thence a branch"
+   },
+   "助力者": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "she made the youth sit down beside her and taught him the way",
+    "evidence_B": "she made the youth sit down beside her and taught him the way"
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 魔女は処刑されるが怪物ではなく罰として扱う",
+    "evidence_B": "迷い: 悪魔の娘の老婆は処刑されるが怪物退治とは言いにくい"
+   },
+   "魔法の品": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "she saw the whole world in it",
+    "evidence_B": "She snatched at the mirror ... she saw the whole world in it"
+   },
+   "変身": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "till he became a tombstone like the rest",
+    "evidence_B": "till he became a tombstone like the rest"
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: look not behind thee は守られた",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "they persuaded her with gifts and promises",
+    "evidence_B": "they persuaded her with gifts and promises"
+   },
+   "結婚": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the youngest he took for himself",
+    "evidence_B": "the youngest he took for himself"
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "as many precious stones heaped up there as were to be found",
+    "evidence_B": "as many precious stones heaped up there as were to be found"
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "persuaded her with gifts and promises to meddle in the matter",
+    "evidence_B": "persuaded her with gifts and promises to meddle in the matter"
+   },
+   "死": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "one morning they lay dead there",
+    "evidence_B": "one morning they lay dead there"
+   },
+   "再生": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "when she watered the stone youth, life and motion came back",
+    "evidence_B": "when she watered the stone youth, life and motion came back"
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "He snatched up the enchanted mirror, and was hastening away",
+    "evidence_B": "He snatched up the enchanted mirror, and was hastening away"
+   },
+   "帰還": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "dragged it all the way to his sister's hut",
+    "evidence_B": "returned home to the Peri and his own sister"
+   },
+   "罰": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the old witch was mercilessly destroyed by lingering tortures",
+    "evidence_B": "the old witch was mercilessly destroyed by lingering tortures"
+   },
+   "策略": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the wicked old woman exchanged the children for the pups",
+    "evidence_B": "the wicked old woman exchanged the children for the pups"
+   }
+  },
+  "US-18450-020": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Aiai left that place and went among the different islands",
+    "evidence_B": "went among the different islands of the group"
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "one of whom made friends with him and asked him to his house",
+    "evidence_B": "called upon him to destroy by fire all those"
+   },
+   "怪物退治": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "threw three ala stones at it and killed it",
+    "evidence_B": "threw three ala stones at it and killed it"
+   },
+   "魔法の品": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "We can get fish up here from this stone",
+    "evidence_B": "a large fishhook called manaiaakalani"
+   },
+   "変身": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Their bodies were changed by some miraculous power and entered the sea",
+    "evidence_B": "Their bodies were changed by some miraculous power and entered the sea"
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Ku-ula gave him but one fish, an ulua",
+    "evidence_B": "I hereby confer upon you all my power and knowledge"
+   },
+   "結婚": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "this was his chance for revenge",
+    "evidence_B": "the first stroke of Ku-ula's revenge on the King"
+   },
+   "契約": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "死": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Kamohoalii, the King of Hana, died",
+    "evidence_B": "Kamohoalii, the King of Hana, died"
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "a big shark came to Wailau and gave it battle",
+    "evidence_B": "a big shark came to Wailau and gave it battle"
+   },
+   "逃走": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "a small cave that opened to receive and rescue him",
+    "evidence_B": "a small cave that opened to receive and rescue him"
+   },
+   "帰還": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "罰": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "The man from Molokai ... consumed by the fire",
+    "evidence_B": "The man from Molokai ... was reached also and consumed by the fire"
+   },
+   "策略": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "told the King what Ku-ula had said but not in the same way",
+    "evidence_B": "told the King what Ku-ula had said but not in the same way"
+   }
+  },
+  "US-22072-017": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Wai-o-naisa was ordered off upon a secret expedition",
+    "evidence_B": "Wai-o-naisa was ordered off upon a secret expedition"
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "変身": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "a soft plumage began to cover her delicate limbs",
+    "evidence_B": "a bird arose from the bush they had surrounded"
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "結婚": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 1,
+    "B": 0,
+    "evidence_A": "true to her plighted faith",
+    "evidence_B": ""
+   },
+   "死": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Wai-o-naisa had fallen in a fight with the Menomones",
+    "evidence_B": "Wai-o-naisa had fallen in a fight with the Menomones"
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "fallen in a fight with the Menomones",
+    "evidence_B": "had fallen in a fight with the Menomones"
+   },
+   "逃走": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "a bird arose from the bush ... it fled before them",
+    "evidence_B": "it fled before them"
+   },
+   "帰還": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "罰": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "策略": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   }
+  },
+  "US-22072-020": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "set out to visit the icy castles",
+    "evidence_B": "set out to visit the icy castles"
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "his petition was not disregarded. The spirits told him",
+    "evidence_B": "The spirits told him to fill his mushkemoots or sacks"
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "変身": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "禁忌の破り": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "he turned his head to see who it was",
+    "evidence_B": "quite forgetting the directions given him, he turned his head"
+   },
+   "贈与": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "he found them filled with fish",
+    "evidence_B": "he found them filled with fish"
+   },
+   "結婚": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "死": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "帰還": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the morning when he brought the fish home",
+    "evidence_B": "the morning when he brought the fish home"
+   },
+   "罰": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "he is condemned every year ... to run over the hills",
+    "evidence_B": "he is condemned every year ... to run over the hills"
+   },
+   "策略": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   }
+  },
+  "US-22072-021": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "told the hunter ... all he had heard and seen",
+    "evidence_B": "told the hunter, while she was out getting wood, all he had heard"
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 光る鎖は拘束の印だが品として使われるとは言い難い",
+    "evidence_B": ""
+   },
+   "変身": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "it took human shape, and the boy recognised ... the lost mother",
+    "evidence_B": "a gull arose ... it took human shape"
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "結婚": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "she became the water-tiger's wife",
+    "evidence_B": "she became the water-tiger's wife"
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "死": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": "迷い: 妻は湖に落とされるが水の虎のもとで生きている"
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "flew out of the lodge, and was never heard of more",
+    "evidence_B": "the old woman leaped up, flew out of the lodge"
+   },
+   "帰還": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Then he took his wife and child home.",
+    "evidence_B": "Then he took his wife and child home"
+   },
+   "罰": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 老婆は逃げ去るのみで罰は明示されない",
+    "evidence_B": "迷い: 老婆は逃げ去るだけで罰は明示されない"
+   },
+   "策略": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the old woman slyly cut the cords",
+    "evidence_B": "the old woman slyly cut the cords, and let her drop"
+   }
+  },
+  "US-24569-002": {
+   "特殊出生": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "in the pod of this pea the first man lay coiled up",
+    "evidence_B": "in the pod of this pea the first man lay"
+   },
+   "旅立ち": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 鴉が空へ飛び去り戻るが家・故郷からの旅とは言えない",
+    "evidence_B": ""
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 1,
+    "B": 0,
+    "evidence_A": "Here is what I made for you to eat",
+    "evidence_B": "迷い: ワタリガラスが食べ物を与えるが目的を助ける筋ではない"
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 仮面は鴉の体の一部とも読める",
+    "evidence_B": ""
+   },
+   "変身": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "pushed up its beak like a mask ... changed at once into a man",
+    "evidence_B": "pushed up its beak like a mask ... changed at once into a man"
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "held out two salmonberries and two heathberries",
+    "evidence_B": "held out two salmonberries and two heathberries"
+   },
+   "結婚": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "死": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "帰還": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "罰": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "策略": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   }
+  },
+  "US-24569-009": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 木で補った半身が生き返るのは誕生ではない",
+    "evidence_B": "迷い: 半身と木彫りから二人の女ができるが子の誕生ではない"
+   },
+   "旅立ち": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "started and traveled southward till he came to the woman's house",
+    "evidence_B": "started and traveled southward till he came to the woman's house"
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "変身": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "結婚": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "he stopped and became her husband",
+    "evidence_B": "stopped and became her husband"
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 0,
+    "B": 1,
+    "evidence_A": "迷い: 自慢を聞いて怒り妻を奪うが受けた害への報復とは言い難い",
+    "evidence_B": "It angered the son to hear the husband gloating"
+   },
+   "契約": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "死": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "the woman being torn in two",
+    "evidence_B": "ended in the woman being torn in two"
+   },
+   "再生": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "After these parts were fitted on they came to life",
+    "evidence_B": "After these parts were fitted on they came to life"
+   },
+   "争い": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "tugged and pulled until it ended in the woman being torn",
+    "evidence_B": "tugged and pulled until it ended in the woman being torn"
+   },
+   "逃走": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "帰還": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "罰": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "策略": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   }
+  },
+  "XJ-26711-005": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "On and on she walked, much farther into the woods",
+    "evidence_B": "On and on she walked, much farther into the woods than ever before"
+   },
+   "試練": {
+    "A": 1,
+    "B": 0,
+    "evidence_A": "Many girls have tried to put on that shoe",
+    "evidence_B": "迷い: 靴を履けるかの試しはあるが課題とまでは言えない"
+   },
+   "助力者": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "he promptly decided to help the girl",
+    "evidence_B": "he promptly decided to help the girl"
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "The magic slippers guided her.",
+    "evidence_B": "The magic slippers guided her"
+   },
+   "変身": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "taking some jewels from a treasure ... he put them inside",
+    "evidence_B": "taking some jewels from a treasure ... he put them inside"
+   },
+   "結婚": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "telling her he had married again",
+    "evidence_B": "I have sworn to make the wearer my bride"
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "taking some jewels from a treasure of which he was the guardian",
+    "evidence_B": "taking some jewels from a treasure of which he was the guardian"
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "死": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Her mother died the day she was born",
+    "evidence_B": "Her mother died the day she was born"
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "帰還": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "罰": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "shall punish such pranks played on me",
+    "evidence_B": "shall punish such pranks ... filled the bucket with slimy toads"
+   },
+   "策略": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "The jewels are ours. We hid them in the well",
+    "evidence_B": "The jewels are ours. We hid them in the well for safety"
+   }
+  },
+  "ZA-35557-012": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": "迷い: 空飛ぶ獅子は飛べなくなるが倒されても殺されてもいない"
+   },
+   "魔法の品": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 骨が翼の力と結びつくが品として使われるわけではない",
+    "evidence_B": ""
+   },
+   "変身": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "結婚": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "契約": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "死": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: ライオンが跳びかかるが届かず戦いにならない",
+    "evidence_B": ""
+   },
+   "逃走": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Kabloops! he had dived into the dam",
+    "evidence_B": "Brother Bullfrog said, 'Ho!' and dived in--kabloops!"
+   },
+   "帰還": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "at last he had to get up and walk home",
+    "evidence_B": "at last he had to get up and walk home"
+   },
+   "罰": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "策略": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "You fly away a little and stretch your wings. I will sit here",
+    "evidence_B": "You fly away a little and stretch your wings. I will sit here"
+   }
+  },
+  "ZA-35557-013": {
+   "特殊出生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "旅立ち": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "試練": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "助力者": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "tell him you know he can't fly",
+    "evidence_B": "tell him you know he can't fly"
+   },
+   "怪物退治": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "魔法の品": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "変身": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "禁忌の破り": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "贈与": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "結婚": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "王位": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "財宝": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "復讐": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "wait till I catch Oom Reijer. He'll be sorry",
+    "evidence_B": "wait till I catch Oom Reijer. He'll be sorry"
+   },
+   "契約": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "死": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "Jakhals caught it in his mouth and carried it off to his hole to eat",
+    "evidence_B": "Oom Jakhals has eaten two of my little children"
+   },
+   "再生": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "争い": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "迷い: 一方的な襲撃で取っ組み合いではない",
+    "evidence_B": "迷い: ジャッカルの一方的な不意打ちで取っ組み合いではない"
+   },
+   "逃走": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "帰還": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "罰": {
+    "A": 0,
+    "B": 0,
+    "evidence_A": "",
+    "evidence_B": ""
+   },
+   "策略": {
+    "A": 1,
+    "B": 1,
+    "evidence_A": "I want your valuable advice about the wind",
+    "evidence_B": "he had cheated Oom Reijer"
+   }
+  }
+ }
+}
