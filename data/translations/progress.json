@@ -1,10 +1,10 @@
 {
- "translated": 412,
+ "translated": 458,
  "total": 1113,
- "fraction": 0.3702,
- "translated_words": 507634,
+ "fraction": 0.4115,
+ "translated_words": 549321,
  "total_words": 1578386,
- "word_fraction": 0.3216,
+ "word_fraction": 0.348,
  "translation_type": "AI_GENERATED",
  "model": "claude-opus-5",
  "by_region": {
@@ -38,7 +38,7 @@
   },
   "グリーンランド(イヌイット)": {
    "total": 51,
-   "done": 5
+   "done": 51
   },
   "イングランド": {
    "total": 43,
