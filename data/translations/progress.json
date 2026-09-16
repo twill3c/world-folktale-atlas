@@ -1,10 +1,10 @@
 {
- "translated": 505,
+ "translated": 553,
  "total": 1113,
- "fraction": 0.4537,
- "translated_words": 637440,
+ "fraction": 0.4969,
+ "translated_words": 682605,
  "total_words": 1578386,
- "word_fraction": 0.4039,
+ "word_fraction": 0.4325,
  "translation_type": "AI_GENERATED",
  "model": "claude-opus-5",
  "by_region": {
@@ -30,7 +30,7 @@
   },
   "朝鮮半島": {
    "total": 53,
-   "done": 5
+   "done": 53
   },
   "ヒマラヤ山麓": {
    "total": 53,
