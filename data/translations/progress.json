@@ -1,10 +1,10 @@
 {
- "translated": 329,
+ "translated": 364,
  "total": 1113,
- "fraction": 0.2956,
- "translated_words": 430340,
+ "fraction": 0.327,
+ "translated_words": 468819,
  "total_words": 1578386,
- "word_fraction": 0.2726,
+ "word_fraction": 0.297,
  "translation_type": "AI_GENERATED",
  "model": "claude-opus-5",
  "by_region": {
@@ -50,7 +50,7 @@
   },
   "ナイジェリア南部": {
    "total": 40,
-   "done": 5
+   "done": 40
   },
   "西アフリカ(ゴールドコースト)": {
    "total": 36,
