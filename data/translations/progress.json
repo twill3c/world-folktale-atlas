@@ -1,10 +1,10 @@
 {
- "translated": 553,
+ "translated": 591,
  "total": 1113,
- "fraction": 0.4969,
- "translated_words": 682605,
+ "fraction": 0.531,
+ "translated_words": 732018,
  "total_words": 1578386,
- "word_fraction": 0.4325,
+ "word_fraction": 0.4638,
  "translation_type": "AI_GENERATED",
  "model": "claude-opus-5",
  "by_region": {
@@ -42,7 +42,7 @@
   },
   "イングランド": {
    "total": 43,
-   "done": 5
+   "done": 43
   },
   "アイヌ": {
    "total": 40,
