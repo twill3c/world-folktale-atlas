@@ -37,6 +37,27 @@
 | `test_embedding_two_implementations_agree` | G-06 | 二実装照合。最大絶対差 < 1e-4 |
 | `test_cross_lingual_p_at_1` | G-05 / H-01 | 独英グリムの同一話対応(目次の題名で対応づける)。閾値 0.50 は事前登録 |
 
+## 2.3 出来事・モチーフの NLI 推定(`tests/test_nli.py` — L-DL1 で追加)
+
+判定(H-04a/b が成立したか)は assert しない。落ちたら画面に書く主張である。
+
+| ケース | SPEC | 期待値の出所 |
+|---|---|---|
+| `test_chunks_rejoin_to_the_original_words` | H-04 | 重なりなしのチャンクは取りこぼしも重複も無い(不変量) |
+| `test_story_score_is_the_max_over_chunks` | H-04 | 登録した集約(チャンクの最大値) |
+| `test_auc_matches_sklearn_including_ties` | H-04 | 二実装照合(scikit-learn)。同点を必ず含む入力 |
+| `test_kappa_perfect_and_chance` | H-04 | κ の定義(完全一致 1・偶然 0) |
+| `test_control_sentences_do_not_copy_the_hypothesis` | G-11 | 陽性対照が字面の一致を当てるだけにならない |
+| `test_nli_model_reads_obvious_entailment_and_contradiction` | H-04 | 2026-09-17 のモデル選定に使った 3 例。含意(英・独)と否定を対で置く |
+| `test_gold_is_the_registered_sample_and_complete` | H-04 | 正解集の話が登録した選び方の出力そのもの・全項目に二人の答え |
+| `test_every_story_has_every_label` | H-04 | 全話 × 21 ラベル、`assigned` はしきい値から導く |
+| `test_g11_positive_control_fires` | G-11 | SPEC §3 の登録値(≥ 0.80)。30 組以上 |
+| `test_g12_negative_control_is_near_chance` | G-12 | SPEC §3 の登録値(0.40〜0.60) |
+| `test_h04a_is_not_judged_without_a_working_positive_control` | H-04 | 仕掛けが効いていないときは判定を出さない |
+| `test_g13_nli_distribution_is_not_broken` | G-13 / HC-227 | G-10 と同じ閾値 |
+
+成果物(`nli_labels.json` / `nli_eval.json`)が無いときは skip せず落とす。skip にすると「作り忘れ」と「合格」が同じ緑になる。
+
 ## 2.5 和訳の取り込み検査(`etl/build_translations.py` — 落ちたら取り込まない)
 
 | ID | 検査 | 期待値の出所 |

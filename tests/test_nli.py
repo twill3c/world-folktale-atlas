@@ -126,11 +126,15 @@ def test_every_story_has_every_label(stories):
             assert r["assigned"] == (r["score"] >= d["threshold"])
 
 
-def test_g11_positive_control_fires(ev):
-    """G-11: 一文を差し込むと立つ。立たなければ、H-04a の判定は仕掛けが効いていないまま出ている。"""
+def test_g11_positive_control_was_measured_with_enough_pairs(ev):
+    """G-11: 陽性対照が 30 組以上で測られ、合否が登録値(≥ 0.80)から導かれている。
+
+    合否そのものは assert しない(2026-09-17 は 0.633 で不合格)。落ちたときに守るべきことは
+    下の二つの検査が見る —— H-04a を判定しないこと、話の画面に出さないこと。
+    """
     pc = ev["positive_control"]
     assert pc["n"] >= 30, pc["n"]
-    assert pc["passed"], pc["rate"]
+    assert pc["passed"] == (pc["rate"] >= pc["min"])
 
 
 def test_g12_negative_control_is_near_chance(ev):
@@ -146,12 +150,32 @@ def test_h04a_is_not_judged_without_a_working_positive_control(ev):
         assert len(ev["h04a"]["eligible_labels"]) >= 5
 
 
-def test_g13_nli_distribution_is_not_broken(ev):
-    """G-13(HC-227): どの言語も丸ごと無付与でなく、一つのラベルが全体を占めていない。
+def test_distribution_check_catches_saturation_and_emptiness():
+    """G-13 の検査器自身の対照(HC-041)。全部に付ける/何も付けない/正常、の三つ。
 
-    閾値は G-10 と同じ(無付与率 ≤ 0.40 / 最頻ラベル ≤ 0.25)。
+    全部に付ける形は L-DL1 の実測(中央値 21 個中 21 個)。これを最初の二条件は通していた。
     """
-    d = ev["distribution"]
-    for lang, v in d["by_language"].items():
-        assert v["無付与率"] <= 0.40, (lang, v)
-    assert d["最頻ラベルの占有率"] <= 0.25, d["最頻ラベル"]
+    from ml.nli_eval import distribution
+    stories = [{"language": "en" if i % 2 else "de", "book_id": "B"} for i in range(40)]
+    full = np.ones((40, 21), dtype=bool)
+    empty = np.zeros((40, 21), dtype=bool)
+    rng = np.random.default_rng(1)
+    ok = rng.random((40, 21)) < 0.2
+    ok[:, 0] = True                      # どの話も空にならない
+    assert distribution(stories, full)["壊れている理由"]
+    assert distribution(stories, empty)["壊れている理由"]
+    assert distribution(stories, ok)["壊れている理由"] == []
+
+
+def test_g13_story_pages_show_nli_only_when_judged_and_not_broken(ev):
+    """G-13: H-04a が成立し、かつ付与分布が壊れていないときだけ話の画面へ出す。
+
+    出所: SPEC §3 H-04 の「落ちたときにすること」。公開データの側で確かめる(export を通った後の姿)。
+    """
+    expect = ev["h04a"]["passed"] is True and not ev["distribution"]["壊れている理由"]
+    assert ev["show_on_story_pages"] == expect
+    pub = ROOT / "public" / "data" / "stories"
+    files = sorted(pub.glob("*.json"))
+    assert files, "公開データが無い"
+    shown = {json.loads(f.read_text(encoding="utf-8")).get("nli") is not None for f in files[::50]}
+    assert shown == {expect}, (shown, expect)

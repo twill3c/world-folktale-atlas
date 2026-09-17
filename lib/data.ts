@@ -128,6 +128,54 @@ export type Story = {
     id: string; title: string; region: string; lang: string;
     score: number; same_book: boolean;
   }[];
+  /** NLI 推定。H-04a が通ったときだけ入る(SPEC §3)。落ちたら null */
+  nli: {
+    model_id: string;
+    threshold: number;
+    labels: { label: string; score: number; position: number; assigned: boolean }[];
+  } | null;
+};
+
+type AucRow = {
+  label: string; n: number; positives: number; eligible: boolean;
+  auc_nli: number | null; auc_baseline: number | null;
+};
+
+export type NliEval = {
+  gold: {
+    n_stories: number; n_items: number; agreed_items: number;
+    kappa_overall: number; kappa_by_label: Record<string, number | null>;
+    annotators: Record<string, string>;
+  };
+  positive_control: { n: number; rate: number; min: number; passed: boolean };
+  negative_control: { macro_auc_permuted: number; band: [number, number]; passed: boolean };
+  h04a: {
+    eligible_labels: string[]; macro_auc_nli: number; macro_auc_baseline: number;
+    diff: number; ci95: [number, number]; passed: boolean | null; note?: string;
+    per_label: AucRow[];
+  };
+  macro_f1_at_threshold: { nli: number; baseline: number };
+  h04b: {
+    n_pairs: number; agreement_pairs: number; agreement_shuffled_mean: number;
+    p: number; alpha: number; passed: boolean;
+  };
+  length_confound: {
+    short_fp_rate: number; long_fp_rate: number; ratio: number | null;
+    flag_on_screen: boolean; cuts_words: [number, number];
+  };
+  distribution: {
+    by_language: Record<string, { n: number; 無付与率: number; 平均付与数: number }>;
+    label_counts: Record<string, number>;
+    最頻ラベル: string; 最頻ラベルの占有率: number;
+    全ラベル付与率: number; 壊れている理由: string[];
+  };
+  truncated_chunks: [number, number];
+  diagnostics_post_hoc: {
+    対照文だけを前提にした含意確率: Record<string, number>;
+    "対照文だけでも 0.5 未満のラベル数": number;
+    "チャンクの含意確率(言語別)": Record<string, { チャンク数: number; 平均: number; "0.5 以上の割合": number }>;
+  };
+  show_on_story_pages: boolean;
 };
 
 export type Cluster = {
@@ -195,6 +243,7 @@ export const getStory = (id: string): Story => read<Story>(`stories/${id}.json`)
 export const getClusters = (): Clusters => read<Clusters>("clusters.json");
 export const getGates = (): Gates => read<Gates>("gates.json");
 export const getBooks = (): BooksFile => read<BooksFile>("books.json");
+export const getNliEval = (): NliEval => read<NliEval>("nli_eval.json");
 export const getRegions = (): Record<string, {
   n_stories: number;
   themes: Record<string, number>;

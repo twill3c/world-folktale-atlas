@@ -99,11 +99,15 @@ def load_stories() -> list[dict]:
     return [json.loads(l) for l in STORIES.read_text(encoding="utf-8").splitlines() if l]
 
 
-def run_all(threads: int = 4) -> None:
+def run_all(threads: int = 4, reverse: bool = False) -> None:
+    """`reverse` は後ろから進む。二つのプロセスで前後から挟むと、出会った所で
+    キャッシュ済みの話を飛ばして止まる(結果は決定的なので、重なって書いても同じ値)。"""
     from etl.build_corpus import corpus_fingerprint, require_fresh_corpus
     require_fresh_corpus("ml/nli.py")  # HC-233
     fp = corpus_fingerprint()
     stories = load_stories()
+    if reverse:
+        stories = stories[::-1]
     nli = NLI(threads=threads)
     CACHE.mkdir(parents=True, exist_ok=True)
     t0, done = time.time(), 0
@@ -163,4 +167,5 @@ if __name__ == "__main__":
         d = export()
         print(f"→ {OUT}  チャンク {d['n_chunks']} / 切り詰め {d['n_truncated_chunks']}")
     else:
-        run_all(threads=int(sys.argv[1]) if len(sys.argv) > 1 else 4)
+        run_all(threads=int(sys.argv[1]) if len(sys.argv) > 1 else 4,
+                reverse=len(sys.argv) > 2 and sys.argv[2] == "reverse")

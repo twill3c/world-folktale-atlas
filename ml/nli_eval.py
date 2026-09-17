@@ -269,9 +269,59 @@ def distribution(stories: list[dict], A: np.ndarray) -> dict:
         return out
     counts = Counter({KEYS[j]: int(A[:, j].sum()) for j in range(len(LABELS))})
     top, n = counts.most_common(1)[0]
-    return {"by_language": group("language"), "by_book": group("book_id"),
-            "label_counts": dict(counts.most_common()),
-            "最頻ラベル": top, "最頻ラベルの占有率": round(n / max(1, sum(counts.values())), 3)}
+    d = {"by_language": group("language"), "by_book": group("book_id"),
+         "label_counts": dict(counts.most_common()),
+         "最頻ラベル": top, "最頻ラベルの占有率": round(n / max(1, sum(counts.values())), 3),
+         "全ラベル付与率": round(float((A.sum(1) == A.shape[1]).mean()), 3)}
+    d["壊れている理由"] = broken_reasons(d)
+    return d
+
+
+#: 付与分布が壊れているとみなす条件。前の二つは G-10 と同じで、L-DL1 で**測る前に**置いた。
+#: 後ろの二つは**結果を見てから足した**(2026-09-17)。NLI が中央値で 21 個中 21 個を付け、
+#: 独語グリム 62 話は付与率 1.0 だったのに、前の二つは緑のまま通った。
+#: 全部に付ける壊れ方は、無付与率にも最頻ラベルの占有率にも現れない。
+DIST_LIMITS = {"無付与率": 0.40, "最頻ラベルの占有率": 0.25,
+               "全ラベル付与率": 0.25, "言語間の平均付与数の差": 3.0}
+
+
+def broken_reasons(d: dict) -> list[str]:
+    out = []
+    for lang, v in d["by_language"].items():
+        if v["無付与率"] > DIST_LIMITS["無付与率"]:
+            out.append(f"{lang} の無付与率 {v['無付与率']}")
+    if d["最頻ラベルの占有率"] > DIST_LIMITS["最頻ラベルの占有率"]:
+        out.append(f"最頻ラベルの占有率 {d['最頻ラベルの占有率']}")
+    if d["全ラベル付与率"] > DIST_LIMITS["全ラベル付与率"]:
+        out.append(f"全ラベルに付けた話の割合 {d['全ラベル付与率']}")
+    means = [v["平均付与数"] for v in d["by_language"].values()]
+    if max(means) - min(means) > DIST_LIMITS["言語間の平均付与数の差"]:
+        out.append(f"言語ごとの平均付与数 {sorted(means)}")
+    return out
+
+
+def diagnostics(stories_by_id: dict, nli) -> dict:
+    """**事後の診断。判定には使わない。** 陽性対照が落ちた理由を切り分けるために測る。
+
+    (1) 陽性対照の一文だけを前提にしたとき、自分の仮説文の含意確率(長い本文に埋もれたのか、
+        そもそも読み取れないのか)
+    (2) チャンクの含意確率の言語別の分布(言語で偏っているか)
+    """
+    from ml.nli import CACHE
+    alone = nli.entailment([(CONTROL_SENTENCES[x["key"]], x["hypothesis"]) for x in LABELS])
+    per_lang: dict[str, list[np.ndarray]] = {}
+    for sid, s in stories_by_id.items():
+        c = json.loads((CACHE / f"{sid}.json").read_text(encoding="utf-8"))
+        per_lang.setdefault(s["language"], []).append(np.array(c["scores"]))
+    return {
+        "対照文だけを前提にした含意確率": {k: round(float(v), 3) for k, v in zip(KEYS, alone)},
+        "対照文だけでも 0.5 未満のラベル数": int((alone < 0.5).sum()),
+        "チャンクの含意確率(言語別)": {
+            lang: {"チャンク数": int(np.concatenate(v).shape[0]),
+                   "平均": round(float(np.concatenate(v).mean()), 3),
+                   "0.5 以上の割合": round(float((np.concatenate(v) >= 0.5).mean()), 3)}
+            for lang, v in sorted(per_lang.items())},
+    }
 
 
 def main() -> int:
@@ -297,7 +347,8 @@ def main() -> int:
 
     res_a = h04a(N_all[rows], B_all[rows], G)
     neg = negative_control(N_all[rows], G, res_a["eligible_labels"])
-    pos_ctl = positive_control(by_id, ids, G, NLI())
+    nli = NLI()
+    pos_ctl = positive_control(by_id, ids, G, nli)
 
     f1s = {}
     for name, M in (("nli", A_all[rows]), ("baseline", Bbin_all[rows])):
@@ -327,7 +378,11 @@ def main() -> int:
         "length_confound": length_confound(ids, G, A_all[rows], by_id),
         "distribution": distribution(stories, A_all),
         "truncated_chunks": [doc["n_truncated_chunks"], doc["n_chunks"]],
+        "diagnostics_post_hoc": diagnostics(by_id, nli),
     }
+    # 話の画面に出すかどうか。登録した H-04a の成立に加え、付与分布が壊れていないこと
+    out["show_on_story_pages"] = bool(out["h04a"]["passed"] is True
+                                      and not out["distribution"]["壊れている理由"])
     OUT.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
     brief = {k: v for k, v in out.items() if k not in ("distribution",)}
     brief["h04a"] = {k: v for k, v in out["h04a"].items() if k != "per_label"}

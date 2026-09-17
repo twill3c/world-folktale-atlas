@@ -86,6 +86,12 @@ def main() -> int:
     books = json.loads(BOOKS.read_text(encoding="utf-8"))
 
     translations, translation_progress = load_translations()
+
+    # NLI 推定(SPEC §3 H-04)。**H-04a が通ったときだけ話の画面へ出す**(登録どおり)。
+    # 判定そのものは通っても落ちても /gates/ に出す
+    nli_eval = json.loads((ANALYSIS / "nli_eval.json").read_text(encoding="utf-8"))
+    nli_labels = json.loads((ANALYSIS / "nli_labels.json").read_text(encoding="utf-8"))
+    nli_show = nli_eval["show_on_story_pages"] is True
     cluster_of = {p["story_id"]: p["cluster"] for p in space["points"]}
     xy = {p["story_id"]: [p["x"], p["y"]] for p in space["points"]}
 
@@ -154,6 +160,8 @@ def main() -> int:
                          ("analysis_version", "embedding_model", "themes", "motifs",
                           "animals", "nature", "events", "tension", "characters")},
             "neighbors": nb,
+            "nli": ({"model_id": nli_labels["model_id"], "threshold": nli_labels["threshold"],
+                     "labels": nli_labels["stories"][s["story_id"]]} if nli_show else None),
         }
         (PUB / "stories" / f"{s['story_id']}.json").write_text(
             json.dumps(payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
@@ -179,7 +187,7 @@ def main() -> int:
     }, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
 
     for name, obj in (("clusters", clusters), ("space", space), ("regions", regions),
-                      ("gates", gates), ("books", books)):
+                      ("gates", gates), ("books", books), ("nli_eval", nli_eval)):
         (PUB / f"{name}.json").write_text(
             json.dumps(obj, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
 

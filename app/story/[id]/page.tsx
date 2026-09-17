@@ -171,6 +171,30 @@ export default async function StoryPage({ params }: { params: Promise<{ id: stri
             </p>
           </div>
 
+          {s.nli && (
+            <div className="card panel--estimate" style={{ marginBottom: ".8rem" }}>
+              <h3 style={{ marginTop: 0, fontSize: ".95rem" }}>起きた出来事(NLI 推定)</h3>
+              {s.nli.labels.some((x) => x.assigned) ? (
+                <p style={{ display: "flex", flexWrap: "wrap", gap: ".35rem", margin: 0 }}>
+                  {s.nli.labels.filter((x) => x.assigned)
+                    .sort((x, y) => x.position - y.position)
+                    .map((x) => (
+                      <span key={x.label} className="tag tag--estimate"
+                        title={`含意確率 ${x.score.toFixed(2)} ／ 本文の ${Math.round(x.position * 100)}% あたり`}>
+                        {x.label}
+                        <span className="muted" style={{ fontSize: ".75em" }}>{x.score.toFixed(2)}</span>
+                      </span>
+                    ))}
+                </p>
+              ) : <p className="muted small" style={{ margin: 0 }}>しきい値を超えた出来事は無かった。</p>}
+              <p className="muted small" style={{ margin: ".6rem 0 0" }}>
+                本文を 300 語ずつに切り、NLI モデルに「この出来事が起きたと言えるか」を問うた確率の最大値。
+                {s.nli.threshold} 以上を並べ、本文の中で最も強く出た位置の順にしてある。
+                当たり具合は <Link href="/gates/">測ったこと</Link> の H-04 にある。
+              </p>
+            </div>
+          )}
+
           <div className="card panel--source" style={{ marginBottom: ".8rem" }}>
             <h3 style={{ marginTop: 0, fontSize: ".95rem" }}>本文にあった動物・自然(数え上げ)</h3>
             <LabelRow items={a.animals.slice(0, 8)} kind="count" />

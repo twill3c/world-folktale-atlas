@@ -1,4 +1,5 @@
-import { getBooks, getClusters, getGates, getIndex } from "@/lib/data";
+import { getBooks, getClusters, getGates, getIndex, getNliEval } from "@/lib/data";
+import NliSection from "./NliSection";
 
 export const metadata = { title: "測ったこと ｜ 世界民話AIアトラス" };
 
@@ -205,6 +206,8 @@ export default function GatesPage() {
         <strong>コーパスに入れていない</strong>。取れた分だけ採ると、その本だけ話の切れ目が
         違うことになり、以後の類似度がその差を測ってしまうからである。
       </p>
+
+      <NliSection e={getNliEval()} />
 
       <h2>群のまとまり具合</h2>
       <p style={{ maxWidth: "72ch" }}>
