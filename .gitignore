@@ -27,3 +27,4 @@ Thumbs.db
 
 .vercel
 data/nli_cache/
+data/shape_cache/
