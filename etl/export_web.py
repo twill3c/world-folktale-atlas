@@ -160,9 +160,12 @@ def main() -> int:
                          ("analysis_version", "embedding_model", "themes", "motifs",
                           "animals", "nature", "events", "tension", "characters")},
             "neighbors": nb,
-            "nli": ({"model_id": nli_labels["model_id"], "threshold": nli_labels["threshold"],
-                     "labels": nli_labels["stories"][s["story_id"]]} if nli_show else None),
         }
+        # 出さないときは鍵ごと置かない(1,113 個の公開ファイルを無意味に書き換えない)
+        if nli_show:
+            payload["nli"] = {"model_id": nli_labels["model_id"],
+                              "threshold": nli_labels["threshold"],
+                              "labels": nli_labels["stories"][s["story_id"]]}
         (PUB / "stories" / f"{s['story_id']}.json").write_text(
             json.dumps(payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
 

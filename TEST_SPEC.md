@@ -51,10 +51,11 @@
 | `test_nli_model_reads_obvious_entailment_and_contradiction` | H-04 | 2026-09-17 のモデル選定に使った 3 例。含意(英・独)と否定を対で置く |
 | `test_gold_is_the_registered_sample_and_complete` | H-04 | 正解集の話が登録した選び方の出力そのもの・全項目に二人の答え |
 | `test_every_story_has_every_label` | H-04 | 全話 × 21 ラベル、`assigned` はしきい値から導く |
-| `test_g11_positive_control_fires` | G-11 | SPEC §3 の登録値(≥ 0.80)。30 組以上 |
+| `test_g11_positive_control_was_measured_with_enough_pairs` | G-11 | 30 組以上で測り、合否が登録値(≥ 0.80)から導かれている。**合否そのものは assert しない**(2026-09-17 は 0.633 で不合格) |
 | `test_g12_negative_control_is_near_chance` | G-12 | SPEC §3 の登録値(0.40〜0.60) |
 | `test_h04a_is_not_judged_without_a_working_positive_control` | H-04 | 仕掛けが効いていないときは判定を出さない |
-| `test_g13_nli_distribution_is_not_broken` | G-13 / HC-227 | G-10 と同じ閾値 |
+| `test_distribution_check_catches_saturation_and_emptiness` | G-13 / HC-041 | 検査器自身の対照。全部に付ける形は L-DL1 の実測(中央値 21 個中 21 個)で、G-10 と同じ二条件はこれを通していた |
+| `test_g13_story_pages_show_nli_only_when_judged_and_not_broken` | G-13 | SPEC §3 H-04「落ちたときにすること」。公開データの側で確かめる |
 
 成果物(`nli_labels.json` / `nli_eval.json`)が無いときは skip せず落とす。skip にすると「作り忘れ」と「合格」が同じ緑になる。
 

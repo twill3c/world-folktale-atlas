@@ -34,14 +34,18 @@ export default function NliSection({ e }: { e: NliEval }) {
         <table>
           <tbody>
             <tr>
-              <th>陽性対照 — 「ない」話の中央に、その出来事が起きたと書いた一文を差し込むと立つ割合</th>
-              <td className="num">{pct(e.positive_control.rate)}({e.positive_control.n} 組、基準 ≥ {pct(e.positive_control.min)})</td>
-              <td>{e.positive_control.passed ? "✓" : "✗"}</td>
+              <th>{e.positive_control.passed ? "✓" : "✗"} 陽性対照</th>
+              <td>
+                <strong>{pct(e.positive_control.rate)}</strong>(基準 ≥ {pct(e.positive_control.min)}、{e.positive_control.n} 組)。
+                「ない」話の中央に、その出来事が起きたと書いた一文を差し込むと札が立つ割合
+              </td>
             </tr>
             <tr>
-              <th>陰性対照 — ラベルの列を入れ替えたときの macro-AUC</th>
-              <td className="num">{e.negative_control.macro_auc_permuted.toFixed(3)}(帯 {e.negative_control.band.join("〜")})</td>
-              <td>{e.negative_control.passed ? "✓" : "✗"}</td>
+              <th>{e.negative_control.passed ? "✓" : "✗"} 陰性対照</th>
+              <td>
+                <strong>{e.negative_control.macro_auc_permuted.toFixed(3)}</strong>(帯 {e.negative_control.band.join("〜")})。
+                ラベルの列を入れ替えたときの macro-AUC
+              </td>
             </tr>
           </tbody>
         </table>
@@ -64,6 +68,8 @@ export default function NliSection({ e }: { e: NliEval }) {
           ? "登録どおり成立したので、話の画面に NLI の推定を出している(破線の札・推定の区分)。"
           : "登録どおり、話の画面の推定は差し替えていない。"}
         AUC は「ある話」と「ない話」を一つずつ取り出したとき、ある話のほうに高い点が付く確率で、0.5 が当てずっぽうにあたる。
+        参考の F1 は NLI のほうが高いが、<strong>ほとんどの札を付けてしまうと F1 は上がる</strong>(下の「付与の分布」)ので、
+        当たりの証拠には読まない。
       </p>
       <details>
         <summary className="small">ラベルごとの AUC を見る</summary>
@@ -132,7 +138,7 @@ export default function NliSection({ e }: { e: NliEval }) {
           チャンクごとの含意確率が 0.5 以上になった割合は{" "}
           {Object.entries(e.diagnostics_post_hoc["チャンクの含意確率(言語別)"]).map(([k, v]) =>
             `${k === "de" ? "ドイツ語" : k === "en" ? "英語" : k} ${pct(v["0.5 以上の割合"])}`).join("、")}。
-          仮説文は英語で、<strong>言語をまたぐと系統的に高く出る</strong>。
+          仮説文は英語で、<strong>ドイツ語の本文では系統的に高く出た</strong>(ほかの言語は収録していないので測れない)。
           話の中の最大値を取るので、長い話とドイツ語の話はほとんどの札が立つ。
         </li>
       </ul>

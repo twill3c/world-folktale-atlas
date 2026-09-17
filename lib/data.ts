@@ -128,12 +128,12 @@ export type Story = {
     id: string; title: string; region: string; lang: string;
     score: number; same_book: boolean;
   }[];
-  /** NLI 推定。H-04a が通ったときだけ入る(SPEC §3)。落ちたら null */
-  nli: {
+  /** NLI 推定。H-04a が通り付与分布も壊れていないときだけ入る(SPEC §3)。それ以外は鍵ごと無い */
+  nli?: {
     model_id: string;
     threshold: number;
     labels: { label: string; score: number; position: number; assigned: boolean }[];
-  } | null;
+  };
 };
 
 type AucRow = {
