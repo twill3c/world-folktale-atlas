@@ -99,6 +99,18 @@ def test_g15_negative_control_falls_to_chance(ev):
     assert nc["passed"] == (nc["p_at_1"] <= nc["max"])
 
 
+def test_g16_order_free_control_is_measured_and_reported(ev):
+    """G-16: 順番を使わない突き合わせの結果が測られ、「順番が効いていると言えるか」が導かれている。
+
+    出所: 2026-09-18 の実測。位置を合わせて比べる陰性対照は通ったが、順番を一切使わない
+    突き合わせでも同じだけ当たった。**この対照が無いと「筋の形」を測ったと言えない。**
+    """
+    of = ev["order_free_control_post_hoc"]
+    assert of["n_queries"] >= 10 and of["pool_size"] >= 100, of
+    shape_p = ev["h05a"]["形だけ(コーパスの英語全話の中から)"]["p_at_1"]
+    assert of["順番が効いていると言えるか"] == (shape_p > of["p_at_1"])
+
+
 def test_h05_is_not_judged_without_a_working_positive_control(ev):
     if not ev["positive_control"]["passed"]:
         assert ev["h05a"]["passed"] is None and ev["h05b"]["passed"] is None
@@ -111,11 +123,18 @@ def test_story_pages_show_shape_neighbours_only_when_it_passed(ev):
     expect = bool(ev["positive_control"]["passed"] and ev["negative_control"]["passed"]
                   and ev["h05a"]["passed"])
     assert ev["show_on_story_pages"] == expect
+    from ml.shape import MIN_WINDOWS, windows
     files = sorted((ROOT / "public" / "data" / "stories").glob("*.json"))
     assert files, "公開データが無い"
-    shown = {json.loads(f.read_text(encoding="utf-8")).get("shape_neighbors") is not None
-             for f in files[::50]}
-    assert shown == {expect}, (shown, expect)
+    seen = set()
+    for f in files[::20]:
+        d = json.loads(f.read_text(encoding="utf-8"))
+        has = d.get("shape_neighbors") is not None
+        # 形を持てない短い話(窓が 4 つ未満)は、成立していても鍵ごと無いのが正しい
+        eligible = len(windows(d["text"])) >= MIN_WINDOWS
+        assert has == (expect and eligible), (f.name, has, expect, eligible)
+        seen.add(eligible)
+    assert seen == {True, False}, "短い話と長い話の両方を見ていない"
 
 
 def test_shape_eligibility_is_reported(ev):

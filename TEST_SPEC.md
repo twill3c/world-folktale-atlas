@@ -59,6 +59,21 @@
 
 成果物(`nli_labels.json` / `nli_eval.json`)が無いときは skip せず落とす。skip にすると「作り忘れ」と「合格」が同じ緑になる。
 
+## 2.4 筋の形(`tests/test_shape.py` — L-DL2 で追加)
+
+| ケース | SPEC | 期待値の出所 |
+|---|---|---|
+| `test_windows_cover_the_text_without_loss_or_overlap` | H-05 | 窓は取りこぼしも重複も無い(不変量)。ずらして切り直しても同じ |
+| `test_shape_removes_the_constant_part_and_normalises` | H-05 | 登録した定義。**動きが無い話は形を持たない** —— 弾かないと丸め誤差を正規化して雑音が形になる(2026-09-18 に検査が先に捕まえた) |
+| `test_shape_similarity_matches_the_pairwise_definition` | H-05 | 二経路一致(行列と 1 組ずつ) |
+| `test_shuffling_windows_changes_the_shape_but_not_the_content` | G-15 / HC-070 | 陰性対照の仕掛けが前提どおり働くことの表明 |
+| `test_g14_positive_control_holds` | G-14 | SPEC §3 の登録値(P@1 ≥ 0.90) |
+| `test_g15_negative_control_falls_to_chance` | G-15 | SPEC §3 の登録値(P@1 ≤ 0.10) |
+| `test_g16_order_free_control_is_measured_and_reported` | G-16 | 2026-09-18 の実測。位置を合わせない突き合わせでも P@1 1.000 |
+| `test_h05_is_not_judged_without_a_working_positive_control` | H-05 | 仕掛けが効いていないときは判定を出さない |
+| `test_story_pages_show_shape_neighbours_only_when_it_passed` | H-05 | 落ちたら画面に出さない。短い話(窓 4 つ未満)は成立していても鍵ごと無い |
+| `test_shape_eligibility_is_reported` | H-05 | 形を持てない話の数を判定と一緒に出す |
+
 ## 2.5 和訳の取り込み検査(`etl/build_translations.py` — 落ちたら取り込まない)
 
 | ID | 検査 | 期待値の出所 |

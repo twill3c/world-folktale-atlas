@@ -25,6 +25,8 @@ from ml.shape import (MIN_WINDOWS, POINTS, WINDOW, cache_path, load_shapes,  # n
 EMB = ROOT / "data" / "embeddings" / "story_embeddings.npy"
 PAIRS = ROOT / "ml" / "grimm_pairs.json"
 OUT = ROOT / "data" / "analysis" / "shape_eval.json"
+NEIGHBORS = ROOT / "data" / "analysis" / "shape_neighbors.json"
+TOP_K = 6
 
 SEED = 20260918
 N_PERM = 10000
@@ -87,6 +89,33 @@ def book_effect(sim: np.ndarray, books: np.ndarray, eligible: np.ndarray) -> dic
             "mean_same_book": round(float(s[same].mean()), 4),
             "mean_cross_book": round(float(s[~same].mean()), 4),
             "cohen_d": round(cohen_d(s[same], s[~same]), 4)}
+
+
+def order_free_control(win: dict, ids: list[str], queries: list[int], targets: list[int],
+                       pool: list[int]) -> dict:
+    """**順番を使わない**突き合わせ(L-DL2 で、結果を見てから足した対照)。
+
+    窓の集合どうしを、位置を合わせずに「互いの最も近い相手」で比べる。これでも同じ話を
+    引き当てられるなら、効いているのは**順番ではなく、話を刻んで細かく比べていること**である。
+    事前登録の陰性対照(窓の順番を壊す)は、位置を合わせて比べる限りの話しか言えない。
+    """
+    def centred_unit(v: np.ndarray) -> np.ndarray:
+        d = v - v.mean(axis=0, keepdims=True)
+        return d / np.clip(np.linalg.norm(d, axis=1, keepdims=True), 1e-9, None)
+
+    cache = {j: centred_unit(win[ids[j]]) for j in set(pool) | set(queries)}
+    hit = 0
+    for q, t in zip(queries, targets):
+        A = cache[q]
+        best, arg = -9.0, None
+        for j in pool:
+            S = A @ cache[j].T
+            v = (S.max(axis=1).mean() + S.max(axis=0).mean()) / 2
+            if v > best:
+                best, arg = v, j
+        hit += arg == t
+    return {"p_at_1": round(hit / len(queries), 4), "n_queries": len(queries),
+            "pool_size": len(pool)}
 
 
 def main() -> int:
@@ -172,12 +201,19 @@ def main() -> int:
     h05c = {"形": c_shape, "話全体の Embedding": c_whole,
             "passed": bool(c_shape["cohen_d"] < c_whole["cohen_d"])}
 
+    win = {s["story_id"]: np.load(cache_path(s["story_id"], 0)) for s in stories}
+    of = order_free_control(win, ids, de_k, en_k, english_pool)
+    of["順番が効いていると言えるか"] = bool(a_english["p_at_1"] > of["p_at_1"])
+    of["note"] = ("結果を見てから足した対照。位置を合わせずに窓どうしを突き合わせても同じ話を引き当てられるなら、"
+                  "効いているのは順番ではなく、話を刻んで細かく比べていることである")
+
     judged = pos_ctl["passed"]
     out = {
         "window_words": WINDOW, "points": POINTS, "min_windows": MIN_WINDOWS,
         "n_stories": len(stories), "n_with_shape": int(ok.sum()),
         "n_windows": int(sum(len(np.load(cache_path(s["story_id"], 0))) for s in stories)),
         "positive_control": pos_ctl, "negative_control": neg_ctl,
+        "order_free_control_post_hoc": of,
         "h05a": h05a if judged else {**h05a, "passed": None,
                                      "note": "陽性対照が落ちたので判定しない"},
         "h05b": h05b if judged else {**h05b, "passed": None,
@@ -186,6 +222,21 @@ def main() -> int:
     }
     out["show_on_story_pages"] = bool(judged and neg_ctl["passed"] and out["h05a"]["passed"])
     OUT.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
+
+    # 形の近傍は、判定に関わらず作っておく(出すかどうかは export 側が show_on_story_pages で決める)
+    nb: dict[str, list] = {}
+    for i, s in enumerate(stories):
+        if not ok[i]:
+            continue
+        row = S_shape[i].copy()
+        row[~ok] = -2.0
+        row[i] = -2.0
+        nb[s["story_id"]] = [
+            {"story_id": ids[j], "score": round(float(S_shape[i, j]), 4),
+             "same_book": bool(books[j] == books[i])}
+            for j in np.argsort(-row)[:TOP_K]
+        ]
+    NEIGHBORS.write_text(json.dumps(nb, ensure_ascii=False), encoding="utf-8")
     print(json.dumps(out, ensure_ascii=False, indent=1))
     return 0
 

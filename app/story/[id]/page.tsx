@@ -288,6 +288,41 @@ export default async function StoryPage({ params }: { params: Promise<{ id: stri
         </table>
       </div>
 
+      {s.shape_neighbors && s.shape_neighbors.length > 0 && (
+        <>
+          <h2>話を刻んで比べた近傍</h2>
+          <p className="muted small" style={{ maxWidth: "72ch" }}>
+            話を 150 語ずつの窓に切り、<strong>話の平均を引いてから</strong>窓ごとに比べたときの近傍。
+            話をまるごと 1 本のベクトルにする上の一覧より、独英グリムの同じ話をよく当てた
+            (<Link href="/gates/">測ったこと</Link> の H-05)。
+            <strong>「筋の順番が似ている」ではない</strong> —— 順番をまったく使わない突き合わせでも同じだけ当たったので、
+            効いているのは刻んで細かく比べていることである。
+          </p>
+          <div className="tablewrap">
+            <table>
+              <thead>
+                <tr><th className="num">#</th><th>題名</th><th>文化圏</th><th className="num">類似度</th><th>出典</th></tr>
+              </thead>
+              <tbody>
+                {s.shape_neighbors.map((n, i) => (
+                  <tr key={n.id}>
+                    <td className="num">{i + 1}</td>
+                    <td><Link href={`/story/${n.id}/`}>{n.title}</Link></td>
+                    <td>{n.region}</td>
+                    <td className="num">{n.score.toFixed(3)}</td>
+                    <td>
+                      {n.same_book
+                        ? <span className="tag tag--source">同じ本</span>
+                        : <span className="tag tag--source" style={{ borderColor: "var(--accent-2)", color: "var(--accent-2)" }}>別の本</span>}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
+
       <p style={{ marginTop: "1.2rem" }}>
         <Link href={`/compare/?ids=${s.story_id}`}>この話を並べて読む →</Link>
       </p>

@@ -92,6 +92,11 @@ def main() -> int:
     nli_eval = json.loads((ANALYSIS / "nli_eval.json").read_text(encoding="utf-8"))
     nli_labels = json.loads((ANALYSIS / "nli_labels.json").read_text(encoding="utf-8"))
     nli_show = nli_eval["show_on_story_pages"] is True
+
+    # 筋の形(SPEC §3 H-05)。こちらも登録どおり、成立したときだけ話の画面へ出す
+    shape_eval = json.loads((ANALYSIS / "shape_eval.json").read_text(encoding="utf-8"))
+    shape_nb = json.loads((ANALYSIS / "shape_neighbors.json").read_text(encoding="utf-8"))
+    shape_show = shape_eval["show_on_story_pages"] is True
     cluster_of = {p["story_id"]: p["cluster"] for p in space["points"]}
     xy = {p["story_id"]: [p["x"], p["y"]] for p in space["points"]}
 
@@ -166,6 +171,13 @@ def main() -> int:
             payload["nli"] = {"model_id": nli_labels["model_id"],
                               "threshold": nli_labels["threshold"],
                               "labels": nli_labels["stories"][s["story_id"]]}
+        if shape_show and s["story_id"] in shape_nb:
+            payload["shape_neighbors"] = [
+                {"id": n["story_id"], "title": by_id[n["story_id"]]["title"],
+                 "region": by_id[n["story_id"]]["culture_region"],
+                 "lang": by_id[n["story_id"]]["language"],
+                 "score": n["score"], "same_book": n["same_book"]}
+                for n in shape_nb[s["story_id"]]]
         (PUB / "stories" / f"{s['story_id']}.json").write_text(
             json.dumps(payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
 
@@ -190,7 +202,8 @@ def main() -> int:
     }, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
 
     for name, obj in (("clusters", clusters), ("space", space), ("regions", regions),
-                      ("gates", gates), ("books", books), ("nli_eval", nli_eval)):
+                      ("gates", gates), ("books", books), ("nli_eval", nli_eval),
+                      ("shape_eval", shape_eval)):
         (PUB / f"{name}.json").write_text(
             json.dumps(obj, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
 

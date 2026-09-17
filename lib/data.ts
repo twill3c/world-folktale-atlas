@@ -128,12 +128,51 @@ export type Story = {
     id: string; title: string; region: string; lang: string;
     score: number; same_book: boolean;
   }[];
+  /** 話を刻んで比べた近傍。H-05a が通ったときだけ入る(SPEC §3)。それ以外は鍵ごと無い */
+  shape_neighbors?: {
+    id: string; title: string; region: string; lang: string;
+    score: number; same_book: boolean;
+  }[];
   /** NLI 推定。H-04a が通り付与分布も壊れていないときだけ入る(SPEC §3)。それ以外は鍵ごと無い */
   nli?: {
     model_id: string;
     threshold: number;
     labels: { label: string; score: number; position: number; assigned: boolean }[];
   };
+};
+
+type Retrieval = {
+  n_queries: number; pool_size: number; p_at_1: number; p_at_5: number;
+  mrr: number; median_rank: number; chance_p_at_1: number;
+};
+
+export type ShapeEval = {
+  window_words: number; points: number; min_windows: number;
+  n_stories: number; n_with_shape: number; n_windows: number;
+  positive_control: Retrieval & { min: number; passed: boolean };
+  negative_control: Retrieval & { max: number; passed: boolean };
+  order_free_control_post_hoc: {
+    p_at_1: number; n_queries: number; pool_size: number;
+    順番が効いていると言えるか: boolean; note: string;
+  };
+  h05a: {
+    "形だけ(英語版グリムの中から)": Retrieval;
+    "形だけ(コーパスの英語全話の中から)": Retrieval;
+    "話全体の Embedding(同じ相手の中から・対照)": Retrieval;
+    "順列検定 p": number; 閾値: number; alpha: number;
+    使った対: number; 形を持たないため外した対: number;
+    passed: boolean | null; note?: string;
+  };
+  h05b: {
+    mrr_whole: number; mrr_combined: number; diff: number; ci95: [number, number];
+    pool_size: number; n_pairs: number; passed: boolean | null; note?: string;
+  };
+  h05c: {
+    形: { cohen_d: number; mean_same_book: number; mean_cross_book: number };
+    "話全体の Embedding": { cohen_d: number; mean_same_book: number; mean_cross_book: number };
+    passed: boolean;
+  };
+  show_on_story_pages: boolean;
 };
 
 type AucRow = {
@@ -244,6 +283,7 @@ export const getClusters = (): Clusters => read<Clusters>("clusters.json");
 export const getGates = (): Gates => read<Gates>("gates.json");
 export const getBooks = (): BooksFile => read<BooksFile>("books.json");
 export const getNliEval = (): NliEval => read<NliEval>("nli_eval.json");
+export const getShapeEval = (): ShapeEval => read<ShapeEval>("shape_eval.json");
 export const getRegions = (): Record<string, {
   n_stories: number;
   themes: Record<string, number>;
