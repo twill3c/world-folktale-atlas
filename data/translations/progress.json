@@ -1,10 +1,10 @@
 {
- "translated": 607,
+ "translated": 620,
  "total": 1113,
- "fraction": 0.5454,
- "translated_words": 786627,
+ "fraction": 0.5571,
+ "translated_words": 842490,
  "total_words": 1578386,
- "word_fraction": 0.4984,
+ "word_fraction": 0.5338,
  "translation_type": "AI_GENERATED",
  "model": "claude-opus-5",
  "by_region": {
@@ -102,7 +102,7 @@
   },
   "ルーマニア": {
    "total": 18,
-   "done": 5
+   "done": 18
   },
   "南アフリカ": {
    "total": 15,
