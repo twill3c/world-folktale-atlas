@@ -116,10 +116,13 @@ def test_embeddings_are_not_shipped_to_browser():
     """
     if not PUB.exists():
         pytest.skip("public/data 未生成")
+    allowed = {"vectors.bin", "windows.bin"}   # L-DL4 で窓を足した。**名前で固定する**
     bad = [p.name for p in PUB.rglob("*")
            if p.suffix in {".npy", ".npz", ".faiss"}
-           or (p.suffix == ".bin" and p.name != "vectors.bin")]
+           or (p.suffix == ".bin" and p.name not in allowed)]
     assert not bad, f"配布物にベクトルが混ざっている: {bad}"
+    total = sum((PUB / n).stat().st_size for n in allowed if (PUB / n).exists())
+    assert total <= 6_000_000, f"配るベクトルの合計が上限を超えた: {total}"
 
 
 def test_index_has_no_story_text():

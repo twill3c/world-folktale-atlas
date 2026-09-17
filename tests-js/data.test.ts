@@ -71,18 +71,23 @@ describe.skipIf(!has)("ブラウザへ配るデータ", () => {
     expect(b.polygons.length).toBeGreaterThan(50);
   });
 
-  it("配るのは量子化したベクトル 1 本だけ(SPEC N-02・L-DL3 で改訂)", () => {
-    // 改訂前は「ベクトルを一切配らない」だった。意味検索(H-06)のために、
-    // int8 に量子化した vectors.bin **だけ**を許すよう緩めた。緩めた分は上限で締める。
+  it("配るのは量子化したベクトル二本だけ(SPEC N-02・L-DL3/L-DL4 で改訂)", () => {
+    // 改訂前は「ベクトルを一切配らない」だった。意味検索(H-06)のために vectors.bin を、
+    // 窓の単位で探すため(H-07)に windows.bin を許した。**緩めた先は名前と合計の上限で締める。**
+    const allowed = ["vectors.bin", "windows.bin"];
     const walk = (dir: string): string[] =>
       readdirSync(dir, { withFileTypes: true }).flatMap((d) =>
         d.isDirectory() ? walk(path.join(dir, d.name)) : [d.name]);
     const files = walk(PUB);
     for (const f of files) expect(f).not.toMatch(/\.(npy|npz|faiss)$/);
-    for (const f of files.filter((x) => x.endsWith(".bin"))) expect(f).toBe("vectors.bin");
-    const meta = read<{ n: number; dim: number; dtype: string; bytes: number }>("vectors.json");
-    expect(meta.dtype).toBe("int8");
-    expect(statSync(path.join(PUB, "vectors.bin")).size).toBe(meta.bytes);
-    expect(meta.bytes).toBeLessThanOrEqual(1_000_000);
+    for (const f of files.filter((x) => x.endsWith(".bin"))) expect(allowed).toContain(f);
+    let total = 0;
+    for (const name of allowed) {
+      const meta = read<{ dtype: string; bytes: number }>(name.replace(".bin", ".json"));
+      expect(meta.dtype).toBe("int8");
+      expect(statSync(path.join(PUB, name)).size).toBe(meta.bytes);
+      total += meta.bytes;
+    }
+    expect(total).toBeLessThanOrEqual(6_000_000);
   });
 });

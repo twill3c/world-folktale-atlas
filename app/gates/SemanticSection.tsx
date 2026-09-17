@@ -16,12 +16,15 @@ export default function SemanticSection({ e }: { e: SemanticEval }) {
   const g18 = e.g18_rank_preservation;
   const g19 = e.g19_cross_lingual_path;
   const g20 = e.g20_query_language_bias;
+  const g21 = e.g21_language_bias_gate;
+  const tie = e.g18_tie_diagnosis_post_hoc;
   return (
     <>
       <h2>{e.show_on_site ? "✓ 成立" : "✗ 不成立"} — H-06 日本語の文で民話を探せるか(ブラウザの中だけで)</h2>
       <p style={{ maxWidth: "72ch" }}>
-        問いの文をブラウザの中でベクトルにして、配ってある話のベクトル({e.load?.external_mb ? "" : ""}0.42 MB、int8)と
-        比べる仕組みを作って測った。サーバも API も使わない。
+        問いの文をブラウザの中でベクトルにして、配ってあるベクトルと比べる仕組みを作って測った。サーバも API も使わない。
+        L-DL3 では話をまるごと 1 本のベクトル(0.42 MB)にして比べ、L-DL4 で
+        <strong>150 語の窓 10,519 個</strong>(3.9 MB・int8)に替えて測り直した(話のスコアはその話の窓の最大値)。
         問いをベクトルにするモデル(<code>{e.model_id}</code> の量子化版)は huggingface.co から実行時に読む。
         実測では外部から {e.load?.external_mb} MB を {e.load?.seconds} 秒で読み込み、1 問 {e.query_ms?.median} ミリ秒だった
         ({e.browser}、{e.measured_at})。
@@ -38,14 +41,29 @@ export default function SemanticSection({ e }: { e: SemanticEval }) {
               <th>{g18.passed ? "✓" : "✗"} G-18 順位の保存</th>
               <td>同じ 20 問で、上位 10 件の重なり <strong>{g18.mean_overlap_at_10.toFixed(3)}</strong>(基準 ≥ {g18.thresholds.overlap})、
                 1 位の一致 <strong>{g18.top1_agreement.toFixed(3)}</strong>(基準 ≥ {g18.thresholds.top1})。
-                ブラウザで出る順位は、手元の fp32 で出る順位と同じものと見なせる</td>
+                {tie && (
+                  <> 1 位が食い違った {tie.disagreements.length} 問はいずれも<strong>僅差</strong>で、
+                    手元の fp32 でも 1 位と 2 位の差は {tie.disagreements.map((d) => d.gap_fp32.toFixed(4)).join("、")}
+                    (全問の中央値 {tie.median_gap_top1_top2.toFixed(4)})。
+                    <strong>窓の単位では、この指標は同点の割れ方を測ってしまう</strong>。それでも帯は動かさない</>)}</td>
             </tr>
             <tr>
               <th>{g19.passed ? "✓" : "✗"} G-19 日本語の問いから届くか</th>
               <td>和訳のある話の冒頭({g19.n} 件)を問いにして、その話自身が 1 位になったのは <strong>{pct(g19.p_at_1)}</strong>
                 (上位 10 では {pct(g19.p_at_10)}、偶然は {pct(g19.chance_p_at_1)})。登録した帯は {pct(g19.threshold)}。
-                <strong>届いてはいるが、登録した水準には足りない</strong></td>
+                {g19.whole_story_path && (
+                  <> 同じ問いを<strong>話まるごと 1 本</strong>のベクトルで探すと {pct(g19.whole_story_path.p_at_1)}
+                    (上位 10 で {pct(g19.whole_story_path.p_at_10)})だったので、
+                    <strong>窓にした分は上がった</strong>。それでも帯には届かない</>)}</td>
             </tr>
+            {g21 && (
+              <tr>
+                <th>{g21.passed ? "✓" : "✗"} G-21 問いの言語の偏り(帯つき)</th>
+                <td>「1 位が日本の話」になる率は 日本語 {pct(g21.top1_japan_rate_ja)}・英語 {pct(g21.top1_japan_rate_en)}、
+                  差 <strong>{pct(g21.difference)}</strong>(帯 ≤ {pct(g21.threshold)})。
+                  話まるごとの経路では差 75.0% だったので、<strong>窓にしただけで偏りは半分以下になった</strong></td>
+              </tr>
+            )}
             <tr>
               <th>✗ G-20 問いの言語の交絡</th>
               <td>同じ意味の問いを日本語と英語で書いて比べた。1 位が日本の話になったのは
@@ -56,16 +74,18 @@ export default function SemanticSection({ e }: { e: SemanticEval }) {
         </table>
       </div>
       <p style={{ maxWidth: "72ch" }}>
-        <strong>日本語で問うと、日本の話ばかりが返る。</strong>
-        意味の近さだけを測っているつもりでも、<strong>問いの言語が文化圏を引き寄せている</strong>。
+        <strong>日本語で問うと、日本の話が引き寄せられる。</strong>
+        意味の近さだけを測っているつもりでも、問いの言語が文化圏を引き寄せている。
         これは H-01 で測った「類似度の絶対値は言語を測り、順位は物語を測る」の、問いの側での現れである。
-        この状態で「意味で探す」を出すと、日本語の読み手には世界の民話ではなく日本の民話が並んで見える。
+        窓にしたことで偏りは半分以下になったが({pct(g21?.difference ?? 0)}、帯は {pct(g21?.threshold ?? 0)})、
+        まだ残っている。
       </p>
       <p style={{ maxWidth: "72ch" }}>
-        よって<strong>登録どおり、この機能は画面に出していない</strong>。
-        作った部品(量子化したベクトル・ブラウザ内の推論・検品の道具)はそのまま残してある。
-        直す道は「問いの言語ごとに基準線を引く」「英語に直してから問う」など幾つかあるが、
-        <strong>まだ測っていないので、いまは出さない</strong>。
+        よって<strong>登録どおり、この機能はまだ画面に出していない</strong>。
+        窓にして G-19 は {g19.whole_story_path && <>{pct(g19.whole_story_path.p_at_1)} → </>}{pct(g19.p_at_1)}、
+        言語の偏りは 75.0% → {pct(g21?.difference ?? 0)} と、どちらも良くなったが帯には届いていない。
+        次に測るのは<strong>問いの言語ごとに基準線を引く</strong>やり方である。
+        部品(量子化したベクトル・ブラウザ内の推論・検品の道具)はそのまま残してある。
       </p>
       {e.control_unrelated_query && (
         <p className="muted small" style={{ maxWidth: "72ch" }}>

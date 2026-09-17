@@ -85,8 +85,11 @@
 | `test_g20_query_language_bias_is_measured` | G-20 | 実測 2026-09-18(日本語 16/20・英語 1/20 が日本の話。コーパスは 2.0%) |
 | `test_query_sets_are_aligned_in_meaning_and_length` | G-20 | 対照が成り立つ前提(同じ意味・同じ数)を固定する |
 | `test_semantic_search_is_not_offered_when_it_did_not_pass` | H-06 | 落ちたら画面に出さない。**出力の HTML で確かめる** |
+| `test_shipped_windows_match_the_meta_and_the_cache` | H-07 / N-02 | 窓の数・大きさ・窓 → 話の対応が index.json の並びに収まる(L-DL4) |
 
-`tests-js/data.test.ts` の N-02 の検査も、改訂に合わせて「`vectors.bin` だけを許す」形に書き直した。
+`tests-js/data.test.ts` の N-02 の検査も、改訂に合わせて書き直した。
+L-DL3 では「`vectors.bin` だけを許す」、L-DL4 で「`vectors.bin` と `windows.bin` の二本・合計 6 MB まで」。
+**緩めるたびに、緩めた先を名前と上限で締める。**
 
 ## 2.5 和訳の取り込み検査(`etl/build_translations.py` — 落ちたら取り込まない)
 

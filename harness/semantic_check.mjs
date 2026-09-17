@@ -72,13 +72,17 @@ try {
   const loadMs = Date.now() - t0;
   console.log(`モデルと語彙の読み込み ${(loadMs / 1000).toFixed(1)} 秒 / 外部から ${(bytes / 1024 / 1024).toFixed(1)} MB`);
 
+  // 窓の単位(いまの経路)と、話まるごと 1 本(L-DL3 の経路)を**同じ問いで**測る
   const run = async (text, k) => page.evaluate(
     async ([t, kk]) => {
       const t1 = performance.now();
       const hits = await window.__semantic.searchText(t, kk);
+      const ms = Math.round(performance.now() - t1);
+      const whole = await window.__semantic.searchWholeStory(t, kk);
       const vector = await window.__semantic.embed(t);
-      return { top: hits.map((h) => h.id), scores: hits.map((h) => h.score), vector,
-               ms: Math.round(performance.now() - t1) };
+      return { top: hits.map((h) => h.id), scores: hits.map((h) => h.score),
+               windows: hits.map((h) => h.window ?? -1),
+               whole_top: whole.map((h) => h.id), vector, ms };
     }, [text, k]);
 
   const written = [];
@@ -86,13 +90,14 @@ try {
   for (const q of qs.written_queries) {
     const r = await run(q, 10);
     times.push(r.ms);
-    written.push({ query: q, top: r.top, scores: r.scores, vector: r.vector });
+    written.push({ query: q, top: r.top, scores: r.scores, windows: r.windows,
+                   whole_top: r.whole_top, vector: r.vector });
     process.stdout.write(".");
   }
   const cross = [];
   for (const c of qs.cross_lingual) {
     const r = await run(c.text, 10);
-    cross.push({ story_id: c.story_id, top: r.top, scores: r.scores });
+    cross.push({ story_id: c.story_id, top: r.top, scores: r.scores, whole_top: r.whole_top });
     process.stdout.write(",");
   }
   const ctrl = await run(qs.control_query, 10);
@@ -106,7 +111,7 @@ try {
   await writeFile(OUT, JSON.stringify({
     measured_at: new Date().toISOString().slice(0, 10),
     browser: `Chromium ${browser.version()}`,
-    model_id: "Xenova/multilingual-e5-small", dtype: "q8",
+    model_id: "Xenova/multilingual-e5-small", dtype: "q8", path: "windows",
     load: { seconds: Math.round(loadMs / 1000), external_mb: Number((bytes / 1024 / 1024).toFixed(1)) },
     query_ms: { median: times.sort((a, b) => a - b)[Math.floor(times.length / 2)],
                 max: Math.max(...times) },

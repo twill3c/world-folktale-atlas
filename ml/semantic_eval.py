@@ -34,7 +34,8 @@ OUT = ROOT / "data" / "analysis" / "semantic_eval.json"
 N_CROSS = 30          # 交差言語の問い(和訳の冒頭)
 OVERLAP_MIN = 0.80    # G-18(事前登録)
 TOP1_MIN = 0.80
-CROSS_P1_MIN = 0.50   # G-19(事前登録)
+CROSS_P1_MIN = 0.50   # G-19 / H-07a(L-DL3 で登録した帯を L-DL4 でもそのまま使う)
+LANG_BIAS_MAX = 0.25  # G-21(L-DL4 で登録)。日本語と英語で「1 位が日本の話」の率の差
 SEED = 20260918
 
 
@@ -81,7 +82,29 @@ def overlap(a: list[str], b: list[str]) -> float:
     return len(set(a) & set(b)) / max(1, len(a))
 
 
-def query_language_bias(stories: list[dict], vecs: np.ndarray, emb, qs: dict) -> dict:
+def window_matrix(stories: list[dict]) -> tuple[np.ndarray, np.ndarray]:
+    """手元の fp32 の窓ベクトルと、窓ごとの話の番号(L-DL2 のキャッシュをそのまま使う)。"""
+    from ml.shape import cache_path
+
+    mats, owner = [], []
+    for i, s in enumerate(stories):
+        v = np.load(cache_path(s["story_id"], 0))
+        mats.append(v)
+        owner.extend([i] * len(v))
+    return np.concatenate(mats).astype(np.float32), np.array(owner)
+
+
+def rank_by_windows(q: np.ndarray, W: np.ndarray, owner: np.ndarray, n_stories: int,
+                    k: int = 10) -> list[int]:
+    """問い 1 件について、窓の最大値で話を並べる(登録した集約)。"""
+    sims = W @ q
+    best = np.full(n_stories, -2.0, dtype=np.float32)
+    np.maximum.at(best, owner, sims)
+    return list(np.argsort(-best)[:k])
+
+
+def query_language_bias(stories: list[dict], vecs: np.ndarray, emb, qs: dict,
+                        W: np.ndarray | None = None, owner: np.ndarray | None = None) -> dict:
     """**問いの言語が、返ってくる話の文化圏を引き寄せるか**(L-DL3 で、結果を見てから足した対照)。
 
     同じ意味の問いを日本語と英語で書き、上位に出る文化圏の偏りを比べる。
@@ -95,7 +118,10 @@ def query_language_bias(stories: list[dict], vecs: np.ndarray, emb, qs: dict) ->
                  "n_japan_stories": share["日本"], "n_queries": len(qs["queries"])}
     for name, key in (("ja", "queries"), ("en", "queries_en")):
         Q = emb.encode(qs[key])
-        tops = [np.argsort(-(Q[i] @ vecs.T))[:10] for i in range(len(qs[key]))]
+        if W is None:
+            tops = [np.argsort(-(Q[i] @ vecs.T))[:10] for i in range(len(qs[key]))]
+        else:
+            tops = [rank_by_windows(Q[i], W, owner, len(stories)) for i in range(len(qs[key]))]
         t1 = Counter(regions[t[0]] for t in tops)
         t10 = Counter(regions[j] for t in tops for j in t)
         out[name] = {"top1_japan": t1["日本"], "top10_japan": t10["日本"],
@@ -119,9 +145,11 @@ def main() -> int:
     written = qs["queries"]
     assert [r["query"] for r in br["written"]] == written, "検品が流した問いが query_set.json と違う"
 
-    # ---- 手元(fp32・生のベクトル)の順位
+    # ---- 手元(fp32)の順位。**ブラウザと同じ経路(窓の最大値)で並べる**
+    W, owner = window_matrix(stories)
     qv = emb.encode(written)
-    ref_top = [[ids[j] for j in np.argsort(-(qv[i] @ vecs.T))[:10]] for i in range(len(written))]
+    ref_top = [[ids[j] for j in rank_by_windows(qv[i], W, owner, len(ids))]
+               for i in range(len(written))]
 
     # ---- G-17 二実装照合(問いのベクトル)
     cos = [float(np.dot(np.array(r["vector"], dtype=np.float32), qv[i]))
@@ -139,15 +167,20 @@ def main() -> int:
            "thresholds": {"overlap": OVERLAP_MIN, "top1": TOP1_MIN},
            "passed": bool(np.mean(ov) >= OVERLAP_MIN and np.mean(top1) >= TOP1_MIN)}
 
-    # ---- G-19 交差言語の経路
+    # ---- G-19 / H-07a 交差言語の経路。**窓と、話まるごと 1 本を同じ問いで並べて出す**
     cross = br["cross_lingual"]
-    hit1 = [r["top"][0] == r["story_id"] for r in cross]
-    hit10 = [r["story_id"] in r["top"][:10] for r in cross]
-    g19 = {"n": len(cross), "p_at_1": round(float(np.mean(hit1)), 4),
-           "p_at_10": round(float(np.mean(hit10)), 4),
+    def cross_rates(key: str) -> dict:
+        h1 = [r[key][0] == r["story_id"] for r in cross]
+        h10 = [r["story_id"] in r[key][:10] for r in cross]
+        return {"p_at_1": round(float(np.mean(h1)), 4), "p_at_10": round(float(np.mean(h10)), 4)}
+
+    win, whole = cross_rates("top"), cross_rates("whole_top")
+    g19 = {"n": len(cross), **win,
+           "whole_story_path": whole,
            "chance_p_at_1": round(1 / len(ids), 5), "threshold": CROSS_P1_MIN,
-           "passed": bool(np.mean(hit1) >= CROSS_P1_MIN),
-           "note": "問いは AI が作った和訳の冒頭。検索の質ではなく、経路が通っていることの検査"}
+           "passed": bool(win["p_at_1"] >= CROSS_P1_MIN),
+           "note": "問いは AI が作った和訳の冒頭。検索の質ではなく、経路が通っていることの検査。"
+                   "whole_story_path は L-DL3 の経路(話をまるごと 1 本にしたもの)を同じ問いで測ったもの"}
 
     # ---- 対照(無関係な問い)
     ctrl = br["control"]
@@ -157,14 +190,46 @@ def main() -> int:
                "max_score": round(max(ctrl["scores"][:10]), 4),
                "written_max_score": round(float(np.mean([max(r["scores"][:1]) for r in br["written"]])), 4)}
 
-    out = {"state": "測定済み",
+    # ---- G-18 が落ちたときの診断(**判定には使わない**)。
+    # 窓の単位では 1 位と 2 位の差が量子化の丸めより小さいことがある。
+    # そのとき「1 位の一致」は順位の質ではなく、同点の割れ方を測っている
+    gaps, tie_rows = [], []
+    for i, r in enumerate(br["written"]):
+        sims = W @ qv[i]
+        best = np.full(len(ids), -2.0, dtype=np.float32)
+        np.maximum.at(best, owner, sims)
+        order = np.argsort(-best)
+        gap = float(best[order[0]] - best[order[1]])
+        gaps.append(gap)
+        if ids[order[0]] != r["top"][0]:
+            top = [ids[j] for j in order[:10]]
+            tie_rows.append({"query": r["query"][:24], "gap_fp32": round(gap, 5),
+                             "browser_top1_rank_here":
+                                 (top.index(r["top"][0]) + 1) if r["top"][0] in top else None})
+    tie = {"median_gap_top1_top2": round(float(np.median(gaps)), 5),
+           "disagreements": tie_rows,
+           "note": "1 位が食い違った問いの、手元 fp32 における 1 位と 2 位の差。"
+                   "差が丸めより小さいなら、食い違いは同点の割れ方であって順位の質ではない"}
+
+    # ---- G-20 / G-21 問いの言語の偏り(窓の経路で測り直す)
+    g20 = query_language_bias(stories, vecs, emb, qs, W, owner)
+    diff = abs(g20["ja"]["top1_japan"] - g20["en"]["top1_japan"]) / g20["n_queries"]
+    g21 = {"top1_japan_rate_ja": round(g20["ja"]["top1_japan"] / g20["n_queries"], 4),
+           "top1_japan_rate_en": round(g20["en"]["top1_japan"] / g20["n_queries"], 4),
+           "difference": round(diff, 4), "threshold": LANG_BIAS_MAX,
+           "passed": bool(diff <= LANG_BIAS_MAX),
+           "note": "同じ意味の問いで「1 位が日本の話」になる率の差。L-DL4 で帯を登録した"}
+
+    out = {"state": "測定済み", "path": br.get("path", "windows"),
            "model_id": br["model_id"], "dtype": br["dtype"],
            "browser": br["browser"], "measured_at": br["measured_at"],
            "load": br["load"], "query_ms": br["query_ms"],
            "g17_two_implementations": g17, "g18_rank_preservation": g18,
            "g19_cross_lingual_path": g19, "control_unrelated_query": control,
-           "g20_query_language_bias": query_language_bias(stories, vecs, emb, qs),
-           "show_on_site": bool(g18["passed"] and g19["passed"])}
+           "g20_query_language_bias": g20,
+           "g21_language_bias_gate": g21,
+           "g18_tie_diagnosis_post_hoc": tie,
+           "show_on_site": bool(g18["passed"] and g19["passed"] and g21["passed"])}
     OUT.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
     print(json.dumps({k: v for k, v in out.items() if k != "control_unrelated_query"},
                      ensure_ascii=False, indent=1))

@@ -50,11 +50,26 @@ def test_shipped_vectors_match_the_meta_and_the_index():
 
 
 def test_no_other_binary_or_float_vectors_are_shipped():
-    """SPEC N-02(改訂)。配ってよいのは vectors.bin だけで、生のベクトル・索引は配らない。"""
+    """SPEC N-02(L-DL4 で再改訂)。配ってよいのは `vectors.bin` と `windows.bin` の二本、合計 6 MB まで。"""
+    allowed = {"vectors.bin", "windows.bin"}
     bad = [p.name for p in PUB.rglob("*")
            if p.suffix in {".npy", ".npz", ".faiss"}
-           or (p.suffix == ".bin" and p.name != "vectors.bin")]
+           or (p.suffix == ".bin" and p.name not in allowed)]
     assert bad == [], bad
+    total = sum((PUB / n).stat().st_size for n in allowed)
+    assert total <= 6_000_000, total
+
+
+def test_shipped_windows_match_the_meta_and_the_cache():
+    """窓の配布物が meta と一致し、窓 → 話の対応が index.json の並びに収まっている。"""
+    meta = load(PUB / "windows.json")
+    raw = (PUB / "windows.bin").read_bytes()
+    index = load(PUB / "index.json")
+    assert len(raw) == meta["n"] * meta["dim"] == meta["bytes"]
+    assert len(meta["owner"]) == len(meta["offset"]) == meta["n"]
+    assert max(meta["owner"]) == len(index["stories"]) - 1
+    assert sum(meta["n_windows_per_story"]) == meta["n"]
+    assert meta["min_cosine_to_float32"] >= 0.999
 
 
 def test_g18_and_g19_are_derived_from_the_registered_thresholds(ev):

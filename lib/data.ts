@@ -190,9 +190,20 @@ export type SemanticEval = {
     mean_overlap_at_10: number; top1_agreement: number; min_overlap_at_10: number;
     thresholds: { overlap: number; top1: number }; passed: boolean;
   };
+  path?: string;
   g19_cross_lingual_path?: {
     n: number; p_at_1: number; p_at_10: number; chance_p_at_1: number;
     threshold: number; passed: boolean; note: string;
+    whole_story_path?: { p_at_1: number; p_at_10: number };
+  };
+  g21_language_bias_gate?: {
+    top1_japan_rate_ja: number; top1_japan_rate_en: number; difference: number;
+    threshold: number; passed: boolean; note: string;
+  };
+  g18_tie_diagnosis_post_hoc?: {
+    median_gap_top1_top2: number;
+    disagreements: { query: string; gap_fp32: number; browser_top1_rank_here: number | null }[];
+    note: string;
   };
   control_unrelated_query?: {
     query: string; top: string[]; n_regions_in_top10: number; regions: string[];

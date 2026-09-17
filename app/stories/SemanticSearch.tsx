@@ -4,7 +4,10 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 
 import type { IndexStory } from "@/lib/data";
-import { loadModel, loadVectors, search, type Hit, type VectorPack } from "@/lib/semantic";
+import {
+  loadModel, loadVectors, loadWindows, search, searchWindows,
+  type Hit, type WindowPack,
+} from "@/lib/semantic";
 
 type State = "idle" | "loading" | "ready" | "error";
 
@@ -19,16 +22,16 @@ export default function SemanticSearch({ stories, show }: { stories: IndexStory[
   const [hits, setHits] = useState<Hit[] | null>(null);
   const [busy, setBusy] = useState(false);
   const [ms, setMs] = useState<number | null>(null);
-  const [pack, setPack] = useState<VectorPack | null>(null);
+  const [pack, setPack] = useState<WindowPack | null>(null);
   const [probe, setProbe] = useState(false);
 
   const byId = new Map(stories.map((s) => [s.id, s]));
 
   const prepare = useCallback(async () => {
     setState("loading");
-    setNote("話のベクトル(0.42 MB)を読み込み中…");
+    setNote("窓のベクトル(約 3.9 MB)を読み込み中…");
     try {
-      const p = await loadVectors();
+      const p = await loadWindows();
       setPack(p);
       setNote("問いをベクトルにするモデル(約 118 MB)を huggingface.co から読み込み中… 初回だけ時間がかかる");
       await loadModel((e) => {
@@ -50,7 +53,7 @@ export default function SemanticSearch({ stories, show }: { stories: IndexStory[
     const t0 = performance.now();
     try {
       const embed = await loadModel();
-      setHits(search(pack, await embed(q.trim()), 20));
+      setHits(searchWindows(pack, await embed(q.trim()), 20));
       setMs(Math.round(performance.now() - t0));
     } catch (e) {
       setState("error");
@@ -67,7 +70,13 @@ export default function SemanticSearch({ stories, show }: { stories: IndexStory[
     setProbe(true);
     (window as unknown as Record<string, unknown>).__semantic = {
       prepare, embed: async (text: string) => Array.from(await (await loadModel())(text)),
+      // 窓の単位(いまの経路)
       searchText: async (text: string, k = 10) => {
+        const p = await loadWindows();
+        return searchWindows(p, await (await loadModel())(text), k);
+      },
+      // 話まるごと 1 本(L-DL3 の経路・対照として同じ問いで測る)
+      searchWholeStory: async (text: string, k = 10) => {
         const p = await loadVectors();
         return search(p, await (await loadModel())(text), k);
       },
