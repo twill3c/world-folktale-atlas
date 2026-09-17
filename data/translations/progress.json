@@ -1,10 +1,10 @@
 {
- "translated": 591,
+ "translated": 607,
  "total": 1113,
- "fraction": 0.531,
- "translated_words": 732018,
+ "fraction": 0.5454,
+ "translated_words": 786627,
  "total_words": 1578386,
- "word_fraction": 0.4638,
+ "word_fraction": 0.4984,
  "translation_type": "AI_GENERATED",
  "model": "claude-opus-5",
  "by_region": {
@@ -86,7 +86,7 @@
   },
   "アナトリア": {
    "total": 21,
-   "done": 5
+   "done": 21
   },
   "イベリア半島": {
    "total": 21,
