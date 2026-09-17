@@ -79,7 +79,7 @@ try {
       const hits = await window.__semantic.searchText(t, kk);
       const ms = Math.round(performance.now() - t1);
       const whole = await window.__semantic.searchWholeStory(t, kk);
-      const vector = await window.__semantic.embed(t);
+      const vector = await window.__semantic.embedRaw(t);
       return { top: hits.map((h) => h.id), scores: hits.map((h) => h.score),
                windows: hits.map((h) => h.window ?? -1),
                whole_top: whole.map((h) => h.id), vector, ms };

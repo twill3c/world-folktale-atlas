@@ -203,8 +203,14 @@ export type SemanticEval = {
   g18_tie_diagnosis_post_hoc?: {
     median_gap_top1_top2: number;
     disagreements: { query: string; gap_fp32: number; browser_top1_rank_here: number | null }[];
+    tie_max?: number;
+    all_disagreements_are_ties?: boolean;
+    g18b_passed?: boolean;
     note: string;
   };
+  quality_gates_passed?: boolean;
+  stability_gates_passed?: boolean;
+  shown_despite_failed_gate?: boolean;
   control_unrelated_query?: {
     query: string; top: string[]; n_regions_in_top10: number; regions: string[];
     max_score: number; written_max_score: number;

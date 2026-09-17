@@ -69,7 +69,10 @@ export default function SemanticSearch({ stories, show }: { stories: IndexStory[
     if (!new URLSearchParams(window.location.search).has("probe")) return;
     setProbe(true);
     (window as unknown as Record<string, unknown>).__semantic = {
-      prepare, embed: async (text: string) => Array.from(await (await loadModel())(text)),
+      prepare,
+      // 差し引き後(画面と同じ)と、差し引き前(G-17 の二実装照合に使う)
+      embed: async (text: string) => Array.from(await (await loadModel())(text)),
+      embedRaw: async (text: string) => Array.from(await (await loadModel())(text, false)),
       // 窓の単位(いまの経路)
       searchText: async (text: string, k = 10) => {
         const p = await loadWindows();
@@ -78,7 +81,8 @@ export default function SemanticSearch({ stories, show }: { stories: IndexStory[
       // 話まるごと 1 本(L-DL3 の経路・対照として同じ問いで測る)
       searchWholeStory: async (text: string, k = 10) => {
         const p = await loadVectors();
-        return search(p, await (await loadModel())(text), k);
+        // 話まるごとの配布物は差し引いていないので、問いも差し引かない
+        return search(p, await (await loadModel())(text, false), k);
       },
     };
   }, [prepare]);
@@ -92,7 +96,8 @@ export default function SemanticSearch({ stories, show }: { stories: IndexStory[
         <p className="small" style={{ margin: 0 }}>
           日本語の文で「こういう話」と書いて探せる。
           <strong>問いはこの端末から出ない。</strong>サーバへ送らず、ブラウザの中で計算する。
-          はじめに話のベクトル(0.42 MB)と、問いをベクトルにするモデル(約 118 MB、huggingface.co から)を読み込む。
+          はじめに 150 語ごとの窓のベクトル(約 3.9 MB)と、問いをベクトルにするモデル
+          (約 118 MB、huggingface.co から)を読み込む。
           <button type="button" onClick={prepare} style={{ marginLeft: ".5rem" }}>読み込んで使う</button>
         </p>
       )}

@@ -15,7 +15,8 @@ export type VectorPack = { ids: string[]; dim: number; scale: number; data: Int8
 export type Hit = { id: string; score: number; window?: number };
 
 let vectorsPromise: Promise<VectorPack> | null = null;
-let modelPromise: Promise<(text: string) => Promise<Float32Array>> | null = null;
+/** `centred` は既定で true(配ってある窓と同じく、言語の平均を引いた形にする)。 */
+let modelPromise: Promise<(text: string, centred?: boolean) => Promise<Float32Array>> | null = null;
 
 async function fetchJson<T>(url: string): Promise<T> {
   const r = await fetch(url);
@@ -51,6 +52,38 @@ export function row(pack: VectorPack, i: number): Float32Array {
   return out;
 }
 
+/**
+ * 問いの言語の効果を差し引く(SPEC §3 H-08)。
+ * 配ってある窓は**すでに平均を引いてある**ので、問い側でも同じことをする。
+ * 言語は文字種で決める(かな・漢字があれば日本語)。ETL 側(`ml/debias.py`)と同じ規則である。
+ */
+const JA_CHARS = /[ぁ-ゟァ-ヶ一-龯]/;
+
+let meansPromise: Promise<Record<string, Float32Array>> | null = null;
+
+export function loadLanguageMeans(base = ""): Promise<Record<string, Float32Array>> {
+  meansPromise ??= (async () => {
+    const d = await fetchJson<{ means: Record<string, number[]> }>(`${base}/data/language_means.json`);
+    return Object.fromEntries(
+      Object.entries(d.means).map(([k, v]) => [k, Float32Array.from(v)]));
+  })();
+  return meansPromise;
+}
+
+export function centreQuery(q: Float32Array, mean: Float32Array): Float32Array {
+  const out = new Float32Array(q.length);
+  let n = 0;
+  for (let i = 0; i < q.length; i++) {
+    out[i] = q[i] - mean[i];
+    n += out[i] * out[i];
+  }
+  n = Math.sqrt(n) || 1;
+  for (let i = 0; i < q.length; i++) out[i] /= n;
+  return out;
+}
+
+export const languageOf = (text: string): string => (JA_CHARS.test(text) ? "ja" : "en");
+
 export function loadModel(onProgress?: (p: { file?: string; progress?: number }) => void) {
   modelPromise ??= (async () => {
     const t = await import("@huggingface/transformers");
@@ -59,9 +92,13 @@ export function loadModel(onProgress?: (p: { file?: string; progress?: number })
       dtype: "q8",
       progress_callback: onProgress as never,
     });
-    return async (text: string) => {
+    return async (text: string, centred = true) => {
       const out = await pipe(PREFIX + text, { pooling: "mean", normalize: true });
-      return Float32Array.from(out.data as Float32Array);
+      const v = Float32Array.from(out.data as Float32Array);
+      if (!centred) return v;
+      const means = await loadLanguageMeans();
+      const m = means[languageOf(text)];
+      return m ? centreQuery(v, m) : v;
     };
   })();
   return modelPromise;

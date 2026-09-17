@@ -18,6 +18,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
+from ml.debias import centre, load_means  # noqa: E402
 from ml.pack_vectors import dequantize, quantize  # noqa: E402
 from ml.shape import cache_path, load_stories  # noqa: E402
 
@@ -27,10 +28,16 @@ MAX_BYTES = 6_000_000 - 417_000   # N-02 の上限(vectors.bin と合わせて 6
 
 
 def build() -> dict:
+    """窓を **言語の平均を引いた形で**配る(SPEC §3 H-08)。
+
+    引き算をブラウザにさせず、配る前に済ませる。ブラウザ側は問いの文から
+    その言語の平均を引くだけでよい(`public/data/language_means.json`)。
+    """
     stories = load_stories()
+    means = load_means()
     vecs, owner, offset = [], [], []
     for i, s in enumerate(stories):
-        v = np.load(cache_path(s["story_id"], 0))
+        v = centre(np.load(cache_path(s["story_id"], 0)), means[s["language"]])
         vecs.append(v)
         owner.extend([i] * len(v))
         offset.extend(range(len(v)))
@@ -47,6 +54,9 @@ def build() -> dict:
         "n": int(q.shape[0]), "dim": int(q.shape[1]), "dtype": "int8", "scale": scale,
         "bytes": int(q.size), "min_cosine_to_float32": round(cos, 6),
         "aggregation": "話のスコア = その話の窓の最大値",
+        "centred": True,
+        "centred_note": "窓からその話の言語の平均を引いてある(SPEC §3 H-08)。"
+                        "問い側も同じ平均を引いてから比べること",
         "owner": owner, "offset": offset,
         "n_windows_per_story": [len(v) for v in vecs],
     }

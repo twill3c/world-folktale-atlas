@@ -36,6 +36,7 @@ OVERLAP_MIN = 0.80    # G-18(事前登録)
 TOP1_MIN = 0.80
 CROSS_P1_MIN = 0.50   # G-19 / H-07a(L-DL3 で登録した帯を L-DL4 でもそのまま使う)
 LANG_BIAS_MAX = 0.25  # G-21(L-DL4 で登録)。日本語と英語で「1 位が日本の話」の率の差
+TIE_MAX = 0.01        # G-18b(L-DL5 で登録)。1 位の食い違いを「僅差」と認める上限
 SEED = 20260918
 
 
@@ -104,7 +105,8 @@ def rank_by_windows(q: np.ndarray, W: np.ndarray, owner: np.ndarray, n_stories: 
 
 
 def query_language_bias(stories: list[dict], vecs: np.ndarray, emb, qs: dict,
-                        W: np.ndarray | None = None, owner: np.ndarray | None = None) -> dict:
+                        W: np.ndarray | None = None, owner: np.ndarray | None = None,
+                        means: dict | None = None) -> dict:
     """**問いの言語が、返ってくる話の文化圏を引き寄せるか**(L-DL3 で、結果を見てから足した対照)。
 
     同じ意味の問いを日本語と英語で書き、上位に出る文化圏の偏りを比べる。
@@ -118,6 +120,9 @@ def query_language_bias(stories: list[dict], vecs: np.ndarray, emb, qs: dict,
                  "n_japan_stories": share["日本"], "n_queries": len(qs["queries"])}
     for name, key in (("ja", "queries"), ("en", "queries_en")):
         Q = emb.encode(qs[key])
+        if means is not None:
+            from ml.debias import centre as _c, language_of as _l
+            Q = np.stack([_c(Q[i], means[_l(t)]) for i, t in enumerate(qs[key])])
         if W is None:
             tops = [np.argsort(-(Q[i] @ vecs.T))[:10] for i in range(len(qs[key]))]
         else:
@@ -145,14 +150,21 @@ def main() -> int:
     written = qs["queries"]
     assert [r["query"] for r in br["written"]] == written, "検品が流した問いが query_set.json と違う"
 
-    # ---- 手元(fp32)の順位。**ブラウザと同じ経路(窓の最大値)で並べる**
+    # ---- 手元(fp32)の順位。**ブラウザと同じ経路(窓の最大値・言語の平均を差し引き)で並べる**
+    from ml.debias import centre, language_of, load_means
     W, owner = window_matrix(stories)
-    qv = emb.encode(written)
+    means = load_means()
+    langs = np.array([s["language"] for s in stories])[owner]
+    for lang in ("en", "de"):
+        m = langs == lang
+        W[m] = centre(W[m], means[lang])
+    qv_raw = emb.encode(written)      # 差し引き前(G-17 の照合はこちらと比べる)
+    qv = np.stack([centre(qv_raw[i], means[language_of(t)]) for i, t in enumerate(written)])
     ref_top = [[ids[j] for j in rank_by_windows(qv[i], W, owner, len(ids))]
                for i in range(len(written))]
 
     # ---- G-17 二実装照合(問いのベクトル)
-    cos = [float(np.dot(np.array(r["vector"], dtype=np.float32), qv[i]))
+    cos = [float(np.dot(np.array(r["vector"], dtype=np.float32), qv_raw[i]))
            for i, r in enumerate(br["written"])]
     g17 = {"n": len(cos), "min_cosine": round(min(cos), 5),
            "mean_cosine": round(float(np.mean(cos)), 5),
@@ -206,13 +218,17 @@ def main() -> int:
             tie_rows.append({"query": r["query"][:24], "gap_fp32": round(gap, 5),
                              "browser_top1_rank_here":
                                  (top.index(r["top"][0]) + 1) if r["top"][0] in top else None})
+    all_ties = all(r["gap_fp32"] < TIE_MAX for r in tie_rows)
     tie = {"median_gap_top1_top2": round(float(np.median(gaps)), 5),
            "disagreements": tie_rows,
+           "tie_max": TIE_MAX,
+           "all_disagreements_are_ties": bool(all_ties),
+           "g18b_passed": bool(g18["mean_overlap_at_10"] >= OVERLAP_MIN and all_ties),
            "note": "1 位が食い違った問いの、手元 fp32 における 1 位と 2 位の差。"
                    "差が丸めより小さいなら、食い違いは同点の割れ方であって順位の質ではない"}
 
     # ---- G-20 / G-21 問いの言語の偏り(窓の経路で測り直す)
-    g20 = query_language_bias(stories, vecs, emb, qs, W, owner)
+    g20 = query_language_bias(stories, vecs, emb, qs, W, owner, means)
     diff = abs(g20["ja"]["top1_japan"] - g20["en"]["top1_japan"]) / g20["n_queries"]
     g21 = {"top1_japan_rate_ja": round(g20["ja"]["top1_japan"] / g20["n_queries"], 4),
            "top1_japan_rate_en": round(g20["en"]["top1_japan"] / g20["n_queries"], 4),
@@ -229,7 +245,14 @@ def main() -> int:
            "g20_query_language_bias": g20,
            "g21_language_bias_gate": g21,
            "g18_tie_diagnosis_post_hoc": tie,
-           "show_on_site": bool(g18["passed"] and g19["passed"] and g21["passed"])}
+           # 画面へ出す条件。検索の質の帯(G-19・G-21)は通し、順位の安定性の帯
+           # (G-18 / G-18b)は落ちている。**落ちたまま出すのは利用者の判断**(2026-09-18)で、
+           # 画面には落ちた数字と「1 位は入れ替わりうる」を明記する
+           "quality_gates_passed": bool(g19["passed"] and g21["passed"]),
+           "stability_gates_passed": bool(g18["passed"] and tie["g18b_passed"]),
+           "shown_despite_failed_gate": bool(g19["passed"] and g21["passed"]
+                                             and not (g18["passed"] and tie["g18b_passed"])),
+           "show_on_site": bool(g19["passed"] and g21["passed"])}
     OUT.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
     print(json.dumps({k: v for k, v in out.items() if k != "control_unrelated_query"},
                      ensure_ascii=False, indent=1))

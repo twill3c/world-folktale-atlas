@@ -72,14 +72,30 @@ def test_shipped_windows_match_the_meta_and_the_cache():
     assert meta["min_cosine_to_float32"] >= 0.999
 
 
-def test_g18_and_g19_are_derived_from_the_registered_thresholds(ev):
+def test_gate_verdicts_are_derived_from_the_registered_thresholds(ev):
+    """合否はすべて登録した帯から導かれる。**帯そのものは動かさない。**
+
+    画面へ出す条件は L-DL5 で改めた —— 検索の質の帯(G-19・G-21)で決め、
+    順位の安定性の帯(G-18・G-18b)は落ちたまま画面に併記する(利用者の判断、2026-09-18)。
+    """
     if ev["state"] != "測定済み":
         pytest.skip("未測定(harness/semantic_check.mjs を走らせる)")
     g18, g19 = ev["g18_rank_preservation"], ev["g19_cross_lingual_path"]
+    g21, tie = ev["g21_language_bias_gate"], ev["g18_tie_diagnosis_post_hoc"]
     assert g18["passed"] == (g18["mean_overlap_at_10"] >= g18["thresholds"]["overlap"]
                              and g18["top1_agreement"] >= g18["thresholds"]["top1"])
     assert g19["passed"] == (g19["p_at_1"] >= g19["threshold"])
-    assert ev["show_on_site"] == (g18["passed"] and g19["passed"])
+    assert g21["passed"] == (g21["difference"] <= g21["threshold"])
+    assert tie["all_disagreements_are_ties"] == all(
+        d["gap_fp32"] < tie["tie_max"] for d in tie["disagreements"])
+    assert tie["g18b_passed"] == (g18["mean_overlap_at_10"] >= g18["thresholds"]["overlap"]
+                                  and tie["all_disagreements_are_ties"])
+    assert ev["quality_gates_passed"] == (g19["passed"] and g21["passed"])
+    assert ev["stability_gates_passed"] == (g18["passed"] and tie["g18b_passed"])
+    assert ev["show_on_site"] == ev["quality_gates_passed"]
+    # 落ちた帯があるのに出すときは、そのことが公開データに立っている(画面がそれを書く)
+    assert ev["shown_despite_failed_gate"] == (
+        ev["quality_gates_passed"] and not ev["stability_gates_passed"])
 
 
 def test_g20_query_language_bias_is_measured(ev):
