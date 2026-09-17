@@ -175,6 +175,37 @@ export type ShapeEval = {
   show_on_story_pages: boolean;
 };
 
+export type SemanticEval = {
+  state: string;
+  show_on_site: boolean;
+  note?: string;
+  model_id?: string;
+  dtype?: string;
+  browser?: string;
+  measured_at?: string;
+  load?: { seconds: number; external_mb: number };
+  query_ms?: { median: number; max: number };
+  g17_two_implementations?: { n: number; min_cosine: number; mean_cosine: number; note: string };
+  g18_rank_preservation?: {
+    mean_overlap_at_10: number; top1_agreement: number; min_overlap_at_10: number;
+    thresholds: { overlap: number; top1: number }; passed: boolean;
+  };
+  g19_cross_lingual_path?: {
+    n: number; p_at_1: number; p_at_10: number; chance_p_at_1: number;
+    threshold: number; passed: boolean; note: string;
+  };
+  control_unrelated_query?: {
+    query: string; top: string[]; n_regions_in_top10: number; regions: string[];
+    max_score: number; written_max_score: number;
+  };
+  g20_query_language_bias?: {
+    corpus_share_japan: number; n_japan_stories: number; n_queries: number;
+    ja: { top1_japan: number; top10_japan: number; top1_regions: [string, number][] };
+    en: { top1_japan: number; top10_japan: number; top1_regions: [string, number][] };
+    note: string;
+  };
+};
+
 type AucRow = {
   label: string; n: number; positives: number; eligible: boolean;
   auc_nli: number | null; auc_baseline: number | null;
@@ -284,6 +315,7 @@ export const getGates = (): Gates => read<Gates>("gates.json");
 export const getBooks = (): BooksFile => read<BooksFile>("books.json");
 export const getNliEval = (): NliEval => read<NliEval>("nli_eval.json");
 export const getShapeEval = (): ShapeEval => read<ShapeEval>("shape_eval.json");
+export const getSemanticEval = (): SemanticEval => read<SemanticEval>("semantic_eval.json");
 export const getRegions = (): Record<string, {
   n_stories: number;
   themes: Record<string, number>;

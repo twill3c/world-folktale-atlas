@@ -74,6 +74,20 @@
 | `test_story_pages_show_shape_neighbours_only_when_it_passed` | H-05 | 落ちたら画面に出さない。短い話(窓 4 つ未満)は成立していても鍵ごと無い |
 | `test_shape_eligibility_is_reported` | H-05 | 形を持てない話の数を判定と一緒に出す |
 
+## 2.45 ブラウザ内の意味検索(`tests/test_semantic.py` — L-DL3 で追加)
+
+| ケース | SPEC | 期待値の出所 |
+|---|---|---|
+| `test_quantization_keeps_the_direction_of_every_vector` | N-02 / H-06 | 実測 2026-09-18(最小コサイン 0.999971)。下限 0.999 は配る前の確認として置く |
+| `test_shipped_vectors_match_the_meta_and_the_index` | N-02 | 行数・大きさ・上限 1 MB |
+| `test_no_other_binary_or_float_vectors_are_shipped` | N-02(改訂) | 緩めた先を名前で固定する(`vectors.bin` だけ) |
+| `test_g18_and_g19_are_derived_from_the_registered_thresholds` | G-18 / G-19 | 合否が登録値から導かれ、画面へ出す条件と一致する |
+| `test_g20_query_language_bias_is_measured` | G-20 | 実測 2026-09-18(日本語 16/20・英語 1/20 が日本の話。コーパスは 2.0%) |
+| `test_query_sets_are_aligned_in_meaning_and_length` | G-20 | 対照が成り立つ前提(同じ意味・同じ数)を固定する |
+| `test_semantic_search_is_not_offered_when_it_did_not_pass` | H-06 | 落ちたら画面に出さない。**出力の HTML で確かめる** |
+
+`tests-js/data.test.ts` の N-02 の検査も、改訂に合わせて「`vectors.bin` だけを許す」形に書き直した。
+
 ## 2.5 和訳の取り込み検査(`etl/build_translations.py` — 落ちたら取り込まない)
 
 | ID | 検査 | 期待値の出所 |

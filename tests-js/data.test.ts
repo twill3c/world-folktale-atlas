@@ -1,4 +1,4 @@
-import { readFileSync, existsSync, readdirSync } from "node:fs";
+import { readFileSync, existsSync, readdirSync, statSync } from "node:fs";
 import path from "node:path";
 
 import { describe, expect, it } from "vitest";
@@ -71,10 +71,18 @@ describe.skipIf(!has)("ブラウザへ配るデータ", () => {
     expect(b.polygons.length).toBeGreaterThan(50);
   });
 
-  it("配布物にベクトルが混ざっていない(SPEC N-02)", () => {
+  it("配るのは量子化したベクトル 1 本だけ(SPEC N-02・L-DL3 で改訂)", () => {
+    // 改訂前は「ベクトルを一切配らない」だった。意味検索(H-06)のために、
+    // int8 に量子化した vectors.bin **だけ**を許すよう緩めた。緩めた分は上限で締める。
     const walk = (dir: string): string[] =>
       readdirSync(dir, { withFileTypes: true }).flatMap((d) =>
         d.isDirectory() ? walk(path.join(dir, d.name)) : [d.name]);
-    for (const f of walk(PUB)) expect(f).not.toMatch(/\.(npy|npz|faiss|bin)$/);
+    const files = walk(PUB);
+    for (const f of files) expect(f).not.toMatch(/\.(npy|npz|faiss)$/);
+    for (const f of files.filter((x) => x.endsWith(".bin"))) expect(f).toBe("vectors.bin");
+    const meta = read<{ n: number; dim: number; dtype: string; bytes: number }>("vectors.json");
+    expect(meta.dtype).toBe("int8");
+    expect(statSync(path.join(PUB, "vectors.bin")).size).toBe(meta.bytes);
+    expect(meta.bytes).toBeLessThanOrEqual(1_000_000);
   });
 });

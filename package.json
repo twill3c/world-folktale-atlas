@@ -15,6 +15,7 @@
     "verify": "npm run typecheck && npm run test && npm run build"
   },
   "dependencies": {
+    "@huggingface/transformers": "^4.3.0",
     "next": "^15.5.24",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"

@@ -1,0 +1,12 @@
+{
+ "note": "話のベクトルを int8 に量子化したもの。行の並びは index.json の stories と同じ",
+ "model_id": "intfloat/multilingual-e5-small",
+ "prefix": "query: ",
+ "n": 1113,
+ "dim": 384,
+ "dtype": "int8",
+ "scale": 0.1575513780117035,
+ "dequantize": "v = q / 127 * scale のあと L2 正規化",
+ "bytes": 427392,
+ "min_cosine_to_float32": 0.999971
+}

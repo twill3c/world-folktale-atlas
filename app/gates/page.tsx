@@ -1,5 +1,8 @@
-import { getBooks, getClusters, getGates, getIndex, getNliEval, getShapeEval } from "@/lib/data";
+import {
+  getBooks, getClusters, getGates, getIndex, getNliEval, getSemanticEval, getShapeEval,
+} from "@/lib/data";
 import NliSection from "./NliSection";
+import SemanticSection from "./SemanticSection";
 import ShapeSection from "./ShapeSection";
 
 export const metadata = { title: "測ったこと ｜ 世界民話AIアトラス" };
@@ -207,6 +210,8 @@ export default function GatesPage() {
         <strong>コーパスに入れていない</strong>。取れた分だけ採ると、その本だけ話の切れ目が
         違うことになり、以後の類似度がその差を測ってしまうからである。
       </p>
+
+      <SemanticSection e={getSemanticEval()} />
 
       <ShapeSection e={getShapeEval()} />
 

@@ -108,10 +108,17 @@ def test_silhouette_is_reported_even_when_low():
 # ------------------------------------------------ 配るデータ
 
 def test_embeddings_are_not_shipped_to_browser():
-    """SPEC N-02: Embedding 本体をブラウザへ送らない。"""
+    """SPEC N-02(L-DL3 で改訂): 配ってよいのは int8 の `vectors.bin` 一本だけ。
+
+    改訂前は「ベクトルを一切配らない」だった。意味検索(H-06)のために緩めたので、
+    **緩めた先を名前で固定する** —— 生の float(`.npy`/`.npz`)と索引(`.faiss`)は今も禁止で、
+    `.bin` は `vectors.bin` 以外を許さない。
+    """
     if not PUB.exists():
         pytest.skip("public/data 未生成")
-    bad = [p.name for p in PUB.rglob("*") if p.suffix in {".npy", ".npz", ".faiss", ".bin"}]
+    bad = [p.name for p in PUB.rglob("*")
+           if p.suffix in {".npy", ".npz", ".faiss"}
+           or (p.suffix == ".bin" and p.name != "vectors.bin")]
     assert not bad, f"配布物にベクトルが混ざっている: {bad}"
 
 

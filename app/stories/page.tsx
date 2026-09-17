@@ -1,4 +1,5 @@
-import { getIndex, regionOrder } from "@/lib/data";
+import { getIndex, getSemanticEval, regionOrder } from "@/lib/data";
+import SemanticSearch from "./SemanticSearch";
 import StoryBrowser from "./StoryBrowser";
 
 export const metadata = { title: "民話をさがす ｜ 世界民話AIアトラス" };
@@ -18,6 +19,8 @@ export default function StoriesPage() {
         テーマとモチーフは <span className="tag tag--estimate">AI の推定</span> であり、
         原資料に書かれていたものではない。
       </p>
+      {/* 登録どおり、H-06 が成立したときだけ出す(SPEC §3)。検品の口は ?probe=1 側にある */}
+      <SemanticSearch stories={index.stories} show={getSemanticEval().show_on_site} />
       <StoryBrowser
         stories={index.stories}
         regions={regions}
