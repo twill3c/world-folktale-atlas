@@ -1,10 +1,10 @@
 {
- "translated": 656,
+ "translated": 673,
  "total": 1113,
- "fraction": 0.5894,
- "translated_words": 963028,
+ "fraction": 0.6047,
+ "translated_words": 1028494,
  "total_words": 1578386,
- "word_fraction": 0.6101,
+ "word_fraction": 0.6516,
  "translation_type": "AI_GENERATED",
  "model": "claude-opus-5",
  "by_region": {
@@ -82,7 +82,7 @@
   },
   "ベンガル": {
    "total": 22,
-   "done": 5
+   "done": 22
   },
   "アナトリア": {
    "total": 21,
