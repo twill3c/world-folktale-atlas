@@ -1,10 +1,10 @@
 {
- "translated": 804,
+ "translated": 872,
  "total": 1113,
- "fraction": 0.7224,
- "translated_words": 1096223,
+ "fraction": 0.7835,
+ "translated_words": 1171409,
  "total_words": 1578386,
- "word_fraction": 0.6945,
+ "word_fraction": 0.7422,
  "translation_type": "AI_GENERATED",
  "model": "claude-opus-5",
  "by_region": {
@@ -18,7 +18,7 @@
   },
   "スリランカ": {
    "total": 73,
-   "done": 5
+   "done": 73
   },
   "ロシア": {
    "total": 72,
