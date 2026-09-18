@@ -282,3 +282,40 @@ def test_topic_page_declares_the_book_overlap(topics):
     assert "トピックモデル(LDA)" in text
     if not topics["h12a_passed"]:
         assert "文化ごとの主題" in text, "落ちたのに、読み方の注意が画面に無い"
+
+
+# ------------------------------------------------ 語りの状態列(L-DL10)
+
+@pytest.fixture(scope="module")
+def states():
+    return load(ROOT / "data" / "analysis" / "narrative_states.json")
+
+
+def test_hmm_features_do_not_include_position():
+    """段落の位置を特徴に入れていない(入れれば状態は位置の言い換えになる)。"""
+    from ml.narrative_hmm import FEATURES, paragraph_features
+    assert not any("位置" in f for f in FEATURES)
+    a = paragraph_features("He ran. She cried.")
+    b = paragraph_features("He ran. She cried.")
+    assert a == b, "同じ段落は同じ特徴になる(位置に依存しない)"
+
+
+def test_hmm_learned_something_and_states_are_not_position_or_book(states):
+    """EM が尤度を上げ、状態が位置・本の言い換えでないことを測ってある(SPEC §3 H-13)。"""
+    assert states["loglik_improved"], "EM が尤度を上げていない(学習が動いていない)"
+    assert states["h13a_passed"] == (states["nmi"]["状態と位置の五分位"] <= states["nmi"]["帯"])
+    assert states["h13b_passed"] == (states["nmi"]["状態と本"] <= states["nmi"]["帯"])
+    assert states["n_paragraphs"] > 10_000
+
+
+def test_hmm_order_control_is_measured(states):
+    """並べ替えの対照が測られ、判定の条件が登録どおりに導かれている。
+
+    出所: 実測 2026-09-18。並べ替えると 0.632 で、並べ替える前の 0.626 より高い ——
+    **この指標は順番を見ていない**。
+    """
+    c, ctl = states["h13c"], states["control_shuffled_states"]
+    assert c["passed"] == (c["p"] < c["alpha"])
+    assert "pair_similarity" in ctl
+    assert states["show_on_site"] == (states["h13a_passed"] and states["h13b_passed"]
+                                      and c["passed"])

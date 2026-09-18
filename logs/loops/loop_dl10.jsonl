@@ -1,0 +1,1 @@
+{"v": "1.2", "ts": "2026-09-18T19:21:21+09:00", "project": "world-folktale-atlas", "loop_id": "loop_dl10", "event": "loop_start", "data": {"goal": "HMM(深層以前の系列モデル)で語りの状態列を出し、状態が位置や本の言い換えでないかを測ってから画面に出す", "spec_refs": ["F-09", "H-05", "H-13"], "scaffold_version": "1.30.0", "agent": "claude-code", "model": "claude-opus-5"}}

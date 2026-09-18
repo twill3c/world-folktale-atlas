@@ -102,6 +102,9 @@
 | `test_topic_book_overlap_is_compared_against_two_references` | H-12a | トピックと本の NMI を、e5 の群と無作為の分割と**並べて**測る(比べる相手の無い数は読めない) |
 | `test_topic_words_are_not_function_words_or_names` | H-12b | 上位語に機能語・固有名が混ざっていない(除外が効いている) |
 | `test_topic_page_declares_the_book_overlap` | H-12a | 落ちた判定が画面に出ている(出力の HTML で確かめる) |
+| `test_hmm_features_do_not_include_position` | H-13a | 段落の位置を特徴に入れていない(入れれば状態は位置の言い換えになる) |
+| `test_hmm_learned_something_and_states_are_not_position_or_book` | H-13a/b | EM が尤度を上げ、NMI の合否が帯から導かれている |
+| `test_hmm_order_control_is_measured` | H-13c | 並べ替えの対照が測られ、画面へ出す条件が三つの合否から導かれている |
 
 `tests-js/data.test.ts` の N-02 の検査も、改訂に合わせて書き直した。
 L-DL3 では「`vectors.bin` だけを許す」、L-DL4 で「`vectors.bin` と `windows.bin` の二本・合計 6 MB まで」。

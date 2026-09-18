@@ -1,7 +1,8 @@
 import Link from "next/link";
 
-import { getClassicEval, getTopics } from "@/lib/data";
+import { getClassicEval, getNarrativeStates, getTopics } from "@/lib/data";
 import CaMap from "./CaMap";
+import StateSection from "./StateSection";
 import TopicSection from "./TopicSection";
 
 export const metadata = { title: "古い道具で測る ｜ 世界民話AIアトラス" };
@@ -137,6 +138,8 @@ export default function ClassicPage() {
 
       <TopicSection t={getTopics()} />
 
+      <StateSection h={getNarrativeStates()} />
+
       <h2>この頁が言わないこと</h2>
       <ul style={{ maxWidth: "72ch" }}>
         <li><strong>「古い道具のほうが優れている」とは言わない。</strong>
@@ -149,7 +152,8 @@ export default function ClassicPage() {
           本との重なりが偶然の水準を超えていることを上で測ってある</li>
       </ul>
       <p className="muted small">
-        すべて `ml/classic.py` / `ml/classic_eval.py`。scikit-learn と numpy だけで動く。
+        すべて `ml/classic.py` / `ml/classic_eval.py` / `ml/topics.py` / `ml/narrative_hmm.py`。
+        scikit-learn と numpy だけで動く(HMM の EM も numpy で書いてある)。
       </p>
     </>
   );

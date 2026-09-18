@@ -312,6 +312,23 @@ export type Topics = {
   h12a_passed: boolean;
 };
 
+export type NarrativeStates = {
+  k: number; n_stories_with_states: number; n_paragraphs: number;
+  features: string[]; loglik_improved: boolean;
+  nmi: Record<string, number>;
+  h13a_passed: boolean; h13b_passed: boolean;
+  h13c: {
+    n_pairs: number; pair_similarity: number; shuffled_pairs_mean: number;
+    p: number; alpha: number; passed: boolean;
+  };
+  control_shuffled_states: { pair_similarity: number; note: string };
+  states: {
+    state: number; share: number; features: Record<string, number>;
+    self_transition: number; next: number;
+  }[];
+  show_on_site: boolean;
+};
+
 type AucRow = {
   label: string; n: number; positives: number; eligible: boolean;
   auc_nli: number | null; auc_baseline: number | null;
@@ -426,6 +443,7 @@ export const getAlignEval = (): AlignEval => read<AlignEval>("align_eval.json");
 export const getAlignDiagnosis = (): AlignDiagnosis => read<AlignDiagnosis>("align_diagnosis.json");
 export const getClassicEval = (): ClassicEval => read<ClassicEval>("classic_eval.json");
 export const getTopics = (): Topics => read<Topics>("topics.json");
+export const getNarrativeStates = (): NarrativeStates => read<NarrativeStates>("narrative_states.json");
 export const getRegions = (): Record<string, {
   n_stories: number;
   themes: Record<string, number>;
