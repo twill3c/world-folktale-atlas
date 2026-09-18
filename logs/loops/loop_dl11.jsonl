@@ -1,0 +1,1 @@
+{"v": "1.2", "ts": "2026-09-18T19:43:50+09:00", "project": "world-folktale-atlas", "loop_id": "loop_dl11", "event": "loop_start", "data": {"goal": "DL 十本の結果を「このアトラスについて」と /gates/ の入口にまとめ、読み手が全体像をたどれるようにする", "spec_refs": ["F-12", "F-14"], "scaffold_version": "1.30.0", "agent": "claude-code", "model": "claude-opus-5"}}

@@ -105,6 +105,7 @@
 | `test_hmm_features_do_not_include_position` | H-13a | 段落の位置を特徴に入れていない(入れれば状態は位置の言い換えになる) |
 | `test_hmm_learned_something_and_states_are_not_position_or_book` | H-13a/b | EM が尤度を上げ、NMI の合否が帯から導かれている |
 | `test_hmm_order_control_is_measured` | H-13c | 並べ替えの対照が測られ、画面へ出す条件が三つの合否から導かれている |
+| `test_about_page_lists_what_failed_as_well_as_what_passed` | SPEC §1 | 「このアトラスについて」に、通ったものと**通らなかったもの**が両方書いてある(L-DL11) |
 
 `tests-js/data.test.ts` の N-02 の検査も、改訂に合わせて書き直した。
 L-DL3 では「`vectors.bin` だけを許す」、L-DL4 で「`vectors.bin` と `windows.bin` の二本・合計 6 MB まで」。

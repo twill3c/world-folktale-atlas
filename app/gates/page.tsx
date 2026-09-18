@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import {
   getAlignDiagnosis, getAlignEval, getBooks, getClusters, getGates, getIndex, getNliEval, getSemanticEval, getShapeEval,
 } from "@/lib/data";
@@ -37,6 +39,17 @@ export default function GatesPage() {
         測定日 {g.generated_at} ／ モデル <code>{g.model_id}</code> ／
         Embedding 版 {g.embedding_version} ／ 対象 {g.n_stories} 話
       </p>
+      <div className="card" style={{ marginBottom: "1.4rem" }}>
+        <p className="small" style={{ margin: 0 }}>
+          <strong>この頁の並び</strong> ——
+          H-01 言語か物語か ／ G-07 本の効果 ／ H-03 地理と意味 ／
+          H-06 ブラウザ内の意味検索(公開している) ／ H-09 和訳対から学ぶ写像(採らず) ／
+          H-05 話を刻んで比べる(採用) ／ H-04 出来事の NLI 推定(外した) ／ 群のまとまり。
+          深層以前の道具(TF-IDF・Burrows の Delta・対応分析・LDA・HMM)は
+          <Link href="/classic/">古い道具で測る</Link>にある。
+          <strong>通らなかったものも、数字のまま置いてある。</strong>
+        </p>
+      </div>
 
       <h2>{g05.通過 ? "✓ 通過" : "✗ 不通過"} — H-01 多言語 Embedding は言語ではなく物語を見ているか</h2>
       <p style={{ maxWidth: "72ch" }}>

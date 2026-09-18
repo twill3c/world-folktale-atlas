@@ -127,10 +127,46 @@ export default function AboutPage() {
         <span className="tag tag--count">＃＝本文の語の数え上げ</span>
       </p>
 
+      <h2>機械に何ができて、何ができなかったか</h2>
+      <p style={{ maxWidth: "72ch" }}>
+        2026 年 9 月に、機械学習の手法を十通り試して測った。
+        <strong>合否は毎回、測る前に数字で登録した。</strong>
+        通らなかったものは画面から外し、なぜ通らなかったかを残してある
+        (<Link href="/gates/">測ったこと</Link> と <Link href="/classic/">古い道具で測る</Link>)。
+      </p>
+      <div className="tablewrap">
+        <table>
+          <thead><tr><th>試したこと</th><th>結果</th></tr></thead>
+          <tbody>
+            <tr><th>話を刻んで比べる(窓 150 語)</th>
+              <td>✓ 採用。独英の同じ話を英語 768 話から言い当てる。話をまるごと 1 本のベクトルにするより強い</td></tr>
+            <tr><th>問いの言語の効果を差し引く</th>
+              <td>✓ 採用。日本語で問うと日本の話ばかり返る偏りが半分以下になった。<strong>学習なしの引き算で足りた</strong></td></tr>
+            <tr><th>ブラウザの中だけで動く意味検索</th>
+              <td>△ 公開。検索の質の帯は通ったが、順位の安定性の帯は落ちたまま明記して出している</td></tr>
+            <tr><th>出来事・モチーフを NLI で推定</th>
+              <td>✗ 外した。小さいモデルは言い換えを読めず、話の半分で 21 個すべての札が立った</td></tr>
+            <tr><th>和訳対から写像を学ぶ(回転・リッジ・2 層の非線形)</th>
+              <td>✗ 採らず。取り分けた文化圏では引き算に勝てない。<strong>上限に当たっていて学習の余地が小さい</strong></td></tr>
+            <tr><th>筋の形・語りの状態列(HMM)</th>
+              <td>✗ 出さず。<strong>順番が効いていることを示せなかった</strong>(並べ替えても落ちない)</td></tr>
+            <tr><th>深層以前の道具(TF-IDF・Delta・対応分析)</th>
+              <td>✓ 掲載。同じ言語の中では TF-IDF が Embedding より当てる。本の効果は機能語に出る</td></tr>
+            <tr><th>トピックモデル(LDA)</th>
+              <td>✗ 主題として読ませない。トピックは本に寄る(ただし e5 の群のほうがもっと寄る)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style={{ maxWidth: "72ch" }}>
+        十通りのうち<strong>画面に残ったのは三つ</strong>である。
+        いちばん効いたのは学習ではなく、<strong>話を刻むことと、言語の平均を引くこと</strong>だった。
+      </p>
+
       <h2>作り方</h2>
       <p style={{ maxWidth: "72ch" }}>
         取得と分割は Python、Embedding は ONNX Runtime(CPU)、
         次元圧縮は UMAP、群わけは HDBSCAN。画面は Next.js の静的書き出し。
+        意味検索はブラウザの中だけで動く(問いの文は端末から出ない)。
         すべての手順とテストは
         <a href="https://github.com/twill3c/world-folktale-atlas">リポジトリ</a>にある。
       </p>

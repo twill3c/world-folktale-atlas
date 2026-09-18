@@ -319,3 +319,21 @@ def test_hmm_order_control_is_measured(states):
     assert "pair_similarity" in ctl
     assert states["show_on_site"] == (states["h13a_passed"] and states["h13b_passed"]
                                       and c["passed"])
+
+
+def test_about_page_lists_what_failed_as_well_as_what_passed():
+    """「このアトラスについて」に、通ったものと**通らなかったもの**が両方書いてある。
+
+    出所: SPEC §1(測って、答えが何であれ画面に出す)。落ちた主張を画面から消さないことを、
+    出力の HTML で確かめる。
+    """
+    html = ROOT / "out" / "about" / "index.html"
+    if not html.exists():
+        pytest.skip("out/ 未生成(npm run build)")
+    text = html.read_text(encoding="utf-8")
+    assert "機械に何ができて" in text
+    for phrase in ("採用", "外した", "採らず", "出さず"):
+        assert phrase in text, phrase
+    # 画面に残った数(三つ)を書いたら、その根拠も同じ頁にあること
+    assert "画面に残ったのは三つ" in text
+    assert "順番が効いていることを示せなかった" in text
