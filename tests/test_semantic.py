@@ -186,3 +186,55 @@ def test_diagnosis_separates_material_objective_and_capacity():
     r = d["remaining_failures_post_hoc"]
     assert r["n_failures"] <= r["n_queries"]
     assert 0.0 <= r["1 位が同じ本だった割合"] <= 1.0
+
+
+# ------------------------------------------------ 深層以前の道具(L-DL8)
+
+@pytest.fixture(scope="module")
+def classic():
+    return load(ROOT / "data" / "analysis" / "classic_eval.json")
+
+
+def test_classic_verdicts_follow_the_registered_thresholds(classic):
+    """合否が登録した帯から導かれている(SPEC §3 H-11)。合否そのものは assert しない。
+
+    出所: 2026-09-18 の実測。H-11a ✓(TF-IDF 0.915 > e5 0.804)・H-11b ✗(0.192 > 0.10)・
+    H-11c ✓(Delta 0.749)。
+    """
+    a, b, d = classic["h11a_half_split"], classic["h11b_cross_lingual"], classic["h11c_burrows_delta"]
+    assert a["passed"] == (a["best_classic"] >= a["e5"] - a["margin"])
+    assert b["passed"] == (max(b["classic"].values()) <= b["max_allowed"])
+    assert d["passed"] == (d["accuracy"] >= d["threshold"])
+    assert d["chance"] < d["accuracy"], "偶然の水準を上回っていることを併記する"
+
+
+def test_half_split_oracle_uses_no_human_labels(classic):
+    """半分割オラクルは「同じ話の後半」が正解で、人手のラベルを使わない(循環しない)。"""
+    from ml.classic_eval import halves
+
+    a = classic["h11a_half_split"]
+    assert a["n_stories"] >= 500
+    # 公開する値は 5 桁に丸めてあるので、丸め幅で比べる(桁を超える精度を要求しない)
+    assert a["chance_p_at_1"] == pytest.approx(1 / a["n_stories"], abs=5e-6)
+    first, second = halves(" ".join(f"w{i}" for i in range(11)))
+    assert first.split() + second.split() == [f"w{i}" for i in range(11)]
+
+
+def test_proper_noun_control_is_measured_and_changes_the_cross_lingual_result(classic):
+    """固有名を落とす対照が測られている。**古典が言語をまたげた理由**をここで分ける。
+
+    出所: 実測 2026-09-18。落とすと TF-IDF 0.192 → 0.077、BM25 0.115 → 0.000。
+    """
+    c = classic["control_without_proper_nouns_post_hoc"]
+    assert c["n_name_like_words"] > 100, "固有名の検出が動いていない(0 件は検査器の故障を疑う)"
+    for k, v in c["cross_lingual"].items():
+        assert v <= classic["h11b_cross_lingual"]["classic"][k]
+
+
+def test_correspondence_analysis_has_two_panels_and_declares_the_excluded_book(classic):
+    """対応分析は 2 枚あり、抜いた本を明示している(抜いた事実を書かずに見せない)。"""
+    ca = classic["correspondence_analysis"]
+    ca2 = classic["correspondence_analysis_without_outlier"]
+    assert len(ca["books"]) == ca2["n_books"] + 1
+    assert ca2["excluded"]["book_id"] not in {b["book_id"] for b in ca2["books"]}
+    assert sum(ca["inertia"]) <= 1.0 and all(x > 0 for x in ca["inertia"])

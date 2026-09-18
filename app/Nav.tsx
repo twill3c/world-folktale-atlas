@@ -13,6 +13,7 @@ const ITEMS: [string, string][] = [
   ["/regions/", "文化圏くらべ"],
   ["/translations/", "和訳のすすみ"],
   ["/gates/", "測ったこと"],
+  ["/classic/", "古い道具で測る"],
   ["/about/", "このアトラスについて"],
 ];
 

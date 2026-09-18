@@ -262,6 +262,42 @@ export type AlignDiagnosis = {
   settings: Record<string, number>;
 };
 
+export type CaPanel = {
+  n_books: number; n_words: number; inertia: [number, number];
+  books: { book_id: string; title: string; region: string; x: number; y: number }[];
+  words: { word: string; x: number; y: number }[];
+};
+
+export type ClassicEval = {
+  note: string;
+  min_words: number;
+  h11a_half_split: {
+    n_stories: number; chance_p_at_1: number;
+    results: Record<string, { p_at_1: number }>;
+    best_classic: number; e5: number; margin: number; passed: boolean;
+  };
+  h11b_cross_lingual: {
+    n_pairs: number; pool_size: number; chance_p_at_1: number;
+    classic: Record<string, number>; e5: number; max_allowed: number; passed: boolean;
+  };
+  h11c_burrows_delta: {
+    n_stories: number; n_books: number; n_words: number;
+    accuracy: number; chance: number; threshold: number; passed: boolean;
+    per_book: Record<string, { n: number; accuracy: number }>;
+  };
+  h11c_words: { word: string; spread: number; high: string; low: string }[];
+  control_without_proper_nouns_post_hoc: {
+    n_name_like_words: number;
+    half_split: Record<string, number>;
+    cross_lingual: Record<string, number>;
+    note: string;
+  };
+  correspondence_analysis: CaPanel;
+  correspondence_analysis_without_outlier: CaPanel & {
+    excluded: { book_id: string; title: string; region: string };
+  };
+};
+
 type AucRow = {
   label: string; n: number; positives: number; eligible: boolean;
   auc_nli: number | null; auc_baseline: number | null;
@@ -374,6 +410,7 @@ export const getShapeEval = (): ShapeEval => read<ShapeEval>("shape_eval.json");
 export const getSemanticEval = (): SemanticEval => read<SemanticEval>("semantic_eval.json");
 export const getAlignEval = (): AlignEval => read<AlignEval>("align_eval.json");
 export const getAlignDiagnosis = (): AlignDiagnosis => read<AlignDiagnosis>("align_diagnosis.json");
+export const getClassicEval = (): ClassicEval => read<ClassicEval>("classic_eval.json");
 export const getRegions = (): Record<string, {
   n_stories: number;
   themes: Record<string, number>;

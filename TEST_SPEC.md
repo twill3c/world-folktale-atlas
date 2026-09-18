@@ -91,6 +91,15 @@
 | `test_learned_map_is_not_shipped_when_not_adopted` | H-09 | 採らなかった写像は配らない |
 | `test_diagnosis_separates_material_objective_and_capacity` | H-10 | 三つの分けが測られ、微調整へ進む条件が容量の成立から導かれている(L-DL7) |
 
+## 2.46 深層以前の道具(`tests/test_semantic.py` の後半 — L-DL8 で追加)
+
+| ケース | SPEC | 期待値の出所 |
+|---|---|---|
+| `test_classic_verdicts_follow_the_registered_thresholds` | H-11 | 合否が登録した帯から導かれている(実測 2026-09-18: TF-IDF 0.915 / 交差言語 0.192 / Delta 0.749) |
+| `test_half_split_oracle_uses_no_human_labels` | H-11a | 半分割は「同じ話の後半」が正解で、割った両側をつなぐと元の語列に戻る |
+| `test_proper_noun_control_is_measured_and_changes_the_cross_lingual_result` | H-11b | 固有名の検出が動いていること(**0 件は検査器の故障を疑う** —— 実際に踏んだ)と、落とすと交差言語が下がること |
+| `test_correspondence_analysis_has_two_panels_and_declares_the_excluded_book` | H-11 | 抜いた本を明示した 2 枚目がある(抜いた事実を書かずに見せない) |
+
 `tests-js/data.test.ts` の N-02 の検査も、改訂に合わせて書き直した。
 L-DL3 では「`vectors.bin` だけを許す」、L-DL4 で「`vectors.bin` と `windows.bin` の二本・合計 6 MB まで」。
 **緩めるたびに、緩めた先を名前と上限で締める。**
