@@ -1,16 +1,16 @@
 {
- "translated": 673,
+ "translated": 804,
  "total": 1113,
- "fraction": 0.6047,
- "translated_words": 1028494,
+ "fraction": 0.7224,
+ "translated_words": 1096223,
  "total_words": 1578386,
- "word_fraction": 0.6516,
+ "word_fraction": 0.6945,
  "translation_type": "AI_GENERATED",
  "model": "claude-opus-5",
  "by_region": {
   "ジャマイカ": {
    "total": 136,
-   "done": 5
+   "done": 136
   },
   "ドイツ語圏": {
    "total": 126,
