@@ -223,6 +223,21 @@ export type SemanticEval = {
   };
 };
 
+export type AlignEval = {
+  held_out_regions: string[];
+  train_regions: string[];
+  n_train_pairs: number;
+  n_queries: number;
+  差し引きのみ: { p_at_1: number; p_at_10: number; n: number };
+  procrustes: { p_at_1: number; p_at_10: number; n: number };
+  ridge: { p_at_1: number; p_at_10: number; n: number };
+  grimm_p_at_1: Record<string, number>;
+  language_bias: Record<string, number>;
+  thresholds: { margin: number; grimm_floor: number; language_bias_max: number };
+  verdicts: Record<string, { gain: number; h09a: boolean; h09b: boolean; h09c: boolean; adopt: boolean }>;
+  adopt_any: boolean;
+};
+
 type AucRow = {
   label: string; n: number; positives: number; eligible: boolean;
   auc_nli: number | null; auc_baseline: number | null;
@@ -333,6 +348,7 @@ export const getBooks = (): BooksFile => read<BooksFile>("books.json");
 export const getNliEval = (): NliEval => read<NliEval>("nli_eval.json");
 export const getShapeEval = (): ShapeEval => read<ShapeEval>("shape_eval.json");
 export const getSemanticEval = (): SemanticEval => read<SemanticEval>("semantic_eval.json");
+export const getAlignEval = (): AlignEval => read<AlignEval>("align_eval.json");
 export const getRegions = (): Record<string, {
   n_stories: number;
   themes: Record<string, number>;

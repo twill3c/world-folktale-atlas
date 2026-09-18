@@ -205,7 +205,9 @@ def main() -> int:
                       ("gates", gates), ("books", books), ("nli_eval", nli_eval),
                       ("shape_eval", shape_eval),
                       ("semantic_eval", json.loads(
-                          (ANALYSIS / "semantic_eval.json").read_text(encoding="utf-8")))):
+                          (ANALYSIS / "semantic_eval.json").read_text(encoding="utf-8"))),
+                      ("align_eval", json.loads(
+                          (ANALYSIS / "align_eval.json").read_text(encoding="utf-8")))):
         (PUB / f"{name}.json").write_text(
             json.dumps(obj, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
 

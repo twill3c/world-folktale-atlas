@@ -1,6 +1,7 @@
 import {
-  getBooks, getClusters, getGates, getIndex, getNliEval, getSemanticEval, getShapeEval,
+  getAlignEval, getBooks, getClusters, getGates, getIndex, getNliEval, getSemanticEval, getShapeEval,
 } from "@/lib/data";
+import AlignSection from "./AlignSection";
 import NliSection from "./NliSection";
 import SemanticSection from "./SemanticSection";
 import ShapeSection from "./ShapeSection";
@@ -212,6 +213,8 @@ export default function GatesPage() {
       </p>
 
       <SemanticSection e={getSemanticEval()} />
+
+      <AlignSection e={getAlignEval()} />
 
       <ShapeSection e={getShapeEval()} />
 

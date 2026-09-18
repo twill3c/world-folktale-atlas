@@ -126,3 +126,42 @@ def test_semantic_search_is_not_offered_when_it_did_not_pass(ev):
         pytest.skip("out/ 未生成(npm run build)")
     text = html.read_text(encoding="utf-8")
     assert ("意味で探す(ブラウザの中だけで動く)" in text) == ev["show_on_site"]
+
+
+# ------------------------------------------------ 和訳対から学んだ写像(L-DL6)
+
+@pytest.fixture(scope="module")
+def align():
+    return load(ROOT / "data" / "analysis" / "align_eval.json")
+
+
+def test_align_is_judged_only_on_held_out_regions(align):
+    """学習した文化圏と判定に使った文化圏が交わらない(SPEC §3 H-09)。"""
+    assert set(align["train_regions"]) & set(align["held_out_regions"]) == set()
+    assert len(align["held_out_regions"]) >= 5
+    assert align["n_queries"] >= 30
+
+
+def test_align_verdicts_follow_the_registered_margin(align):
+    """採否が登録した条件から導かれている。**合否そのものは assert しない。**
+
+    出所: SPEC §3 H-09(未学習の文化圏で P@1 を 0.05 以上上回ること)。
+    2026-09-18 の実測では回転 −0.034・リッジ −0.293 で、どちらも採らなかった。
+    """
+    base = align["差し引きのみ"]["p_at_1"]
+    for name, v in align["verdicts"].items():
+        assert abs(v["gain"] - (align[name]["p_at_1"] - base)) < 1e-9
+        assert v["h09a"] == (v["gain"] >= align["thresholds"]["margin"])
+        assert v["h09b"] == (align["grimm_p_at_1"][name] >= align["thresholds"]["grimm_floor"])
+        assert v["h09c"] == (align["language_bias"][name] <= align["thresholds"]["language_bias_max"])
+        assert v["adopt"] == (v["h09a"] and v["h09b"] and v["h09c"])
+    assert align["adopt_any"] == any(v["adopt"] for v in align["verdicts"].values())
+
+
+def test_learned_map_is_not_shipped_when_not_adopted(align):
+    """採らなかった写像は配らない(公開データに写像が出ていない)。"""
+    if align["adopt_any"]:
+        pytest.skip("採用された場合は別の検査で見る")
+    assert not (PUB / "align_map.json").exists()
+    meta = load(PUB / "windows.json")
+    assert "map" not in meta and meta.get("centred") is True
