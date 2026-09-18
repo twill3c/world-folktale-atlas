@@ -238,3 +238,47 @@ def test_correspondence_analysis_has_two_panels_and_declares_the_excluded_book(c
     assert len(ca["books"]) == ca2["n_books"] + 1
     assert ca2["excluded"]["book_id"] not in {b["book_id"] for b in ca2["books"]}
     assert sum(ca["inertia"]) <= 1.0 and all(x > 0 for x in ca["inertia"])
+
+
+# ------------------------------------------------ トピックモデル(L-DL9)
+
+@pytest.fixture(scope="module")
+def topics():
+    return load(ROOT / "data" / "analysis" / "topics.json")
+
+
+def test_topic_book_overlap_is_compared_against_two_references(topics):
+    """トピックと本の重なりを、**e5 の群と無作為の分割と並べて**測ってある(SPEC §3 H-12)。
+
+    比べる相手の無い NMI は、大きいのか小さいのか言えない。
+    出所: 実測 2026-09-18。トピック 0.369 / e5 の群 0.690 / 無作為 0.123。
+    """
+    n = topics["nmi"]
+    for key in ("トピックと本", "e5 の群と本(同じ式・対照)", "無作為の分割と本(偶然の水準)"):
+        assert key in n and n[key] is not None
+    assert n["無作為の分割と本(偶然の水準)"] < n["トピックと本"], "偶然の水準を下回るなら測り方を疑う"
+    assert topics["h12a_passed"] == (
+        n["トピックと本"] <= topics["thresholds"]["nmi_max"]
+        and topics["n_topics_dominated_by_one_book"] <= topics["k"] // 2)
+
+
+def test_topic_words_are_not_function_words_or_names(topics):
+    """H-12b: 上位語が機能語・固有名ばかりになっていない(除外が効いている)。"""
+    from ml.classic import top_words
+    stories = [json.loads(l) for l in
+               (ROOT / "data" / "processed" / "stories.jsonl").read_text(encoding="utf-8").splitlines() if l]
+    stop = set(top_words([s["text"] for s in stories if s["language"] == "en"], 150))
+    for t in topics["topics"]:
+        assert not (set(t["words"][:8]) & stop), (t["topic"], t["words"][:8])
+        assert all(len(w) >= 3 for w in t["words"])
+
+
+def test_topic_page_declares_the_book_overlap(topics):
+    """落ちた判定が画面に出ている(出力の HTML で確かめる)。"""
+    html = ROOT / "out" / "classic" / "index.html"
+    if not html.exists():
+        pytest.skip("out/ 未生成")
+    text = html.read_text(encoding="utf-8")
+    assert "トピックモデル(LDA)" in text
+    if not topics["h12a_passed"]:
+        assert "文化ごとの主題" in text, "落ちたのに、読み方の注意が画面に無い"

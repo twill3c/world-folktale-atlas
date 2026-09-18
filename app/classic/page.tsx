@@ -1,7 +1,8 @@
 import Link from "next/link";
 
-import { getClassicEval } from "@/lib/data";
+import { getClassicEval, getTopics } from "@/lib/data";
 import CaMap from "./CaMap";
+import TopicSection from "./TopicSection";
 
 export const metadata = { title: "古い道具で測る ｜ 世界民話AIアトラス" };
 
@@ -134,6 +135,8 @@ export default function ClassicPage() {
         <strong>抜いた事実を書かずに二枚目だけを見せると、嘘になる。</strong>
       </p>
 
+      <TopicSection t={getTopics()} />
+
       <h2>この頁が言わないこと</h2>
       <ul style={{ maxWidth: "72ch" }}>
         <li><strong>「古い道具のほうが優れている」とは言わない。</strong>
@@ -142,6 +145,8 @@ export default function ClassicPage() {
           一冊が一つの文化圏に対応するので、文化の特徴と本の特徴は分けられない。
           ここで見えているのは訳者・編者の書き方である</li>
         <li>固有名を落とす対照は<strong>結果を見てから足した</strong>。前半の表の数字は落とす前のものである</li>
+        <li><strong>LDA のトピックを「文化ごとの主題」として読まない。</strong>
+          本との重なりが偶然の水準を超えていることを上で測ってある</li>
       </ul>
       <p className="muted small">
         すべて `ml/classic.py` / `ml/classic_eval.py`。scikit-learn と numpy だけで動く。

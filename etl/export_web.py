@@ -211,7 +211,9 @@ def main() -> int:
                       ("align_diagnosis", json.loads(
                           (ANALYSIS / "align_diagnosis.json").read_text(encoding="utf-8"))),
                       ("classic_eval", json.loads(
-                          (ANALYSIS / "classic_eval.json").read_text(encoding="utf-8")))):
+                          (ANALYSIS / "classic_eval.json").read_text(encoding="utf-8"))),
+                      ("topics", json.loads(
+                          (ANALYSIS / "topics.json").read_text(encoding="utf-8")))):
         (PUB / f"{name}.json").write_text(
             json.dumps(obj, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
 

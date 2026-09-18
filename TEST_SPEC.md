@@ -99,6 +99,9 @@
 | `test_half_split_oracle_uses_no_human_labels` | H-11a | 半分割は「同じ話の後半」が正解で、割った両側をつなぐと元の語列に戻る |
 | `test_proper_noun_control_is_measured_and_changes_the_cross_lingual_result` | H-11b | 固有名の検出が動いていること(**0 件は検査器の故障を疑う** —— 実際に踏んだ)と、落とすと交差言語が下がること |
 | `test_correspondence_analysis_has_two_panels_and_declares_the_excluded_book` | H-11 | 抜いた本を明示した 2 枚目がある(抜いた事実を書かずに見せない) |
+| `test_topic_book_overlap_is_compared_against_two_references` | H-12a | トピックと本の NMI を、e5 の群と無作為の分割と**並べて**測る(比べる相手の無い数は読めない) |
+| `test_topic_words_are_not_function_words_or_names` | H-12b | 上位語に機能語・固有名が混ざっていない(除外が効いている) |
+| `test_topic_page_declares_the_book_overlap` | H-12a | 落ちた判定が画面に出ている(出力の HTML で確かめる) |
 
 `tests-js/data.test.ts` の N-02 の検査も、改訂に合わせて書き直した。
 L-DL3 では「`vectors.bin` だけを許す」、L-DL4 で「`vectors.bin` と `windows.bin` の二本・合計 6 MB まで」。

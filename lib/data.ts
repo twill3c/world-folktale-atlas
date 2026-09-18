@@ -298,6 +298,20 @@ export type ClassicEval = {
   };
 };
 
+export type Topics = {
+  k: number; seed: number; n_stories: number; n_books: number;
+  vocab_size: number; n_stopwords_removed: number;
+  topics: {
+    topic: number; words: string[]; n_top_stories: number;
+    top_book: string; top_book_share: number; books_for_half_the_mass: number;
+    sample_titles: string[]; regions: string[];
+  }[];
+  nmi: Record<string, number | null>;
+  thresholds: { nmi_max: number; top_book_share_max: number };
+  n_topics_dominated_by_one_book: number;
+  h12a_passed: boolean;
+};
+
 type AucRow = {
   label: string; n: number; positives: number; eligible: boolean;
   auc_nli: number | null; auc_baseline: number | null;
@@ -411,6 +425,7 @@ export const getSemanticEval = (): SemanticEval => read<SemanticEval>("semantic_
 export const getAlignEval = (): AlignEval => read<AlignEval>("align_eval.json");
 export const getAlignDiagnosis = (): AlignDiagnosis => read<AlignDiagnosis>("align_diagnosis.json");
 export const getClassicEval = (): ClassicEval => read<ClassicEval>("classic_eval.json");
+export const getTopics = (): Topics => read<Topics>("topics.json");
 export const getRegions = (): Record<string, {
   n_stories: number;
   themes: Record<string, number>;
