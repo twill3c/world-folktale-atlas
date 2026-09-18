@@ -4,14 +4,14 @@
  "model_id": "Xenova/multilingual-e5-small",
  "dtype": "q8",
  "browser": "Chromium 153.0.8010.12",
- "measured_at": "2026-09-17",
+ "measured_at": "2026-09-18",
  "load": {
   "seconds": 9,
   "external_mb": 5.3
  },
  "query_ms": {
-  "median": 66,
-  "max": 138
+  "median": 59,
+  "max": 132
  },
  "g17_two_implementations": {
   "n": 20,
@@ -20,8 +20,8 @@
   "note": "量子化した側と fp32 の差。同一性ではなく、ずれの大きさを測っている"
  },
  "g18_rank_preservation": {
-  "mean_overlap_at_10": 0.845,
-  "top1_agreement": 0.65,
+  "mean_overlap_at_10": 0.85,
+  "top1_agreement": 0.7,
   "min_overlap_at_10": 0.7,
   "thresholds": {
    "overlap": 0.8,
@@ -49,42 +49,41 @@
    "GL-28932-004",
    "PT-34431-001",
    "LK-56614-006",
-   "US-18450-014"
+   "RU-62509-012"
   ],
-  "n_regions_in_top10": 9,
+  "n_regions_in_top10": 8,
   "regions": [
    "アゾレス諸島",
    "グリーンランド(イヌイット)",
    "スリランカ",
    "ハワイ",
-   "ヒマラヤ山麓",
    "ブラジル",
    "ベーリング海峡(アラスカ)",
    "ロシア",
    "南アフリカ"
   ],
-  "max_score": 0.2745,
-  "written_max_score": 0.2638
+  "max_score": 0.2752,
+  "written_max_score": 0.264
  },
  "g20_query_language_bias": {
   "corpus_share_japan": 0.0198,
   "n_japan_stories": 22,
   "n_queries": 20,
   "ja": {
-   "top1_japan": 4,
-   "top10_japan": 19,
+   "top1_japan": 3,
+   "top10_japan": 20,
    "top1_regions": [
     [
      "ドイツ語圏",
-     5
-    ],
-    [
-     "日本",
      4
     ],
     [
      "ベンガル",
-     2
+     3
+    ],
+    [
+     "日本",
+     3
     ]
    ]
   },
@@ -109,55 +108,50 @@
   "note": "英語の問いは日本語と同じ意味で書いた。1 位に出る文化圏が言語で入れ替わるなら、意味検索は問いの言語も測っている"
  },
  "g21_language_bias_gate": {
-  "top1_japan_rate_ja": 0.2,
+  "top1_japan_rate_ja": 0.15,
   "top1_japan_rate_en": 0.05,
-  "difference": 0.15,
+  "difference": 0.1,
   "threshold": 0.25,
   "passed": true,
   "note": "同じ意味の問いで「1 位が日本の話」になる率の差。L-DL4 で帯を登録した"
  },
  "g18_tie_diagnosis_post_hoc": {
-  "median_gap_top1_top2": 0.01219,
+  "median_gap_top1_top2": 0.01073,
   "disagreements": [
    {
     "query": "三人兄弟の末の子が知恵で王の難題を解く",
-    "gap_fp32": 0.00146,
+    "gap_fp32": 0.00048,
     "browser_top1_rank_here": 3
    },
    {
     "query": "約束を破って禁じられた部屋の扉を開けてしまう",
-    "gap_fp32": 5e-05,
-    "browser_top1_rank_here": 5
+    "gap_fp32": 0.00196,
+    "browser_top1_rank_here": 3
    },
    {
     "query": "死んだ母親が鳥になって子を見守る",
-    "gap_fp32": 0.01395,
+    "gap_fp32": 0.00436,
     "browser_top1_rank_here": 3
    },
    {
     "query": "欲張りな隣人が真似をして失敗する",
-    "gap_fp32": 0.00526,
-    "browser_top1_rank_here": 2
+    "gap_fp32": 0.0032,
+    "browser_top1_rank_here": 4
    },
    {
     "query": "村を襲う大蛇を若者が退治する",
-    "gap_fp32": 0.00203,
+    "gap_fp32": 0.0026,
     "browser_top1_rank_here": 3
    },
    {
     "query": "地下の国や別の世界へ降りていく",
-    "gap_fp32": 0.00442,
+    "gap_fp32": 0.00402,
     "browser_top1_rank_here": 4
-   },
-   {
-    "query": "米や魚が尽きない不思議な壺",
-    "gap_fp32": 0.00221,
-    "browser_top1_rank_here": 2
    }
   ],
   "tie_max": 0.01,
-  "all_disagreements_are_ties": false,
-  "g18b_passed": false,
+  "all_disagreements_are_ties": true,
+  "g18b_passed": true,
   "note": "1 位が食い違った問いの、手元 fp32 における 1 位と 2 位の差。差が丸めより小さいなら、食い違いは同点の割れ方であって順位の質ではない"
  },
  "quality_gates_passed": true,
