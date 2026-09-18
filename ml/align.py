@@ -12,6 +12,7 @@
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -30,6 +31,15 @@ TRANSLATIONS = ROOT / "data" / "translations" / "ja.jsonl"
 SEED = 20260918
 HELD_OUT_FRACTION = 1 / 3
 RIDGE_LAMBDA = 1.0
+
+
+def region_key(region: str) -> str:
+    """文化圏の名前から**実行をまたいで同じ**ファイル名を作る。
+
+    組み込みの `hash()` は実行ごとに乱数化されるので使えない(2026-09-18 に踏んだ)。
+    書いた実行の中だけは読めてしまうため、同じプロセスで完結する処理では気づけない。
+    """
+    return hashlib.sha1(region.encode("utf-8")).hexdigest()[:12]
 
 
 def pairs_by_region() -> dict[str, list[tuple[str, str, int]]]:
@@ -70,9 +80,11 @@ def embed_pairs() -> None:
     emb = Embedder()
     by_region = pairs_by_region()
     for region, rows in sorted(by_region.items()):
-        p = CACHE / f"{abs(hash(region)) % (10 ** 12)}.npz"
-        tag = CACHE / f"{abs(hash(region)) % (10 ** 12)}.json"
-        if p.exists():
+        p = CACHE / f"{region_key(region)}.npz"
+        tag = CACHE / f"{region_key(region)}.json"
+        # **入力の指紋を持たないキャッシュは古くなっても黙って使われる**(2026-09-18 に踏んだ)。
+        # 和訳が増えると対の数が変わるので、数が違えば作り直す
+        if p.exists() and tag.exists() and json.loads(tag.read_text(encoding="utf-8"))["n"] == len(rows):
             continue
         ja = [r[1] for r in rows]
         en = []
@@ -85,10 +97,13 @@ def embed_pairs() -> None:
         print(f"  {region} {len(rows)} 対", flush=True)
 
 
-def load_region(region: str) -> tuple[np.ndarray, np.ndarray]:
-    p = CACHE / f"{abs(hash(region)) % (10 ** 12)}.npz"
-    d = np.load(p)
-    return d["ja"], d["en"]
+def load_region(region: str, expect: int | None = None) -> tuple[np.ndarray, np.ndarray]:
+    """キャッシュを読む。`expect` を渡すと、いまの対の数と食い違ったところで落とす。"""
+    d = np.load(CACHE / f"{region_key(region)}.npz")
+    ja, en = d["ja"], d["en"]
+    if expect is not None and len(ja) != expect:
+        raise AssertionError(f"{region}: キャッシュ {len(ja)} 対 / いまの対 {expect} 対。作り直すこと")
+    return ja, en
 
 
 def fit_procrustes(X: np.ndarray, Y: np.ndarray) -> np.ndarray:

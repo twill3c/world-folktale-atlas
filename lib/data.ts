@@ -238,6 +238,30 @@ export type AlignEval = {
   adopt_any: boolean;
 };
 
+export type AlignDiagnosis = {
+  train_regions: string[];
+  held_out_regions: string[];
+  n_train_pairs: number;
+  n_held_pairs: number;
+  h10a_material: Record<string, number | boolean>;
+  h10b_paragraph_to_paragraph: Record<string, number>;
+  paragraph_to_story: Record<string, { p_at_1: number; p_at_10: number }>;
+  remaining_failures_post_hoc: {
+    n_failures: number; n_queries: number;
+    "1 位が同じ本だった割合": number; "1 位が同じ文化圏だった割合": number;
+    例: { 正解: string; "1 位": string; 同じ本: boolean; 正解の順位: number | null }[];
+    note: string;
+  };
+  grimm_p_at_1: Record<string, number>;
+  verdicts: {
+    h10a_材料は信号になる: boolean; h10b_目的の不一致: boolean;
+    h10c_容量が足りない: boolean; h10d_目的に合わせれば足りる: boolean;
+    gains: Record<string, number>;
+  };
+  colab_fine_tuning_warranted: boolean;
+  settings: Record<string, number>;
+};
+
 type AucRow = {
   label: string; n: number; positives: number; eligible: boolean;
   auc_nli: number | null; auc_baseline: number | null;
@@ -349,6 +373,7 @@ export const getNliEval = (): NliEval => read<NliEval>("nli_eval.json");
 export const getShapeEval = (): ShapeEval => read<ShapeEval>("shape_eval.json");
 export const getSemanticEval = (): SemanticEval => read<SemanticEval>("semantic_eval.json");
 export const getAlignEval = (): AlignEval => read<AlignEval>("align_eval.json");
+export const getAlignDiagnosis = (): AlignDiagnosis => read<AlignDiagnosis>("align_diagnosis.json");
 export const getRegions = (): Record<string, {
   n_stories: number;
   themes: Record<string, number>;

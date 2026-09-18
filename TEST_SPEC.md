@@ -86,6 +86,10 @@
 | `test_semantic_search_is_not_offered_when_it_did_not_pass` | H-06 | 落ちたら画面に出さない。**出力の HTML で確かめる** |
 | `test_shipped_windows_match_the_meta_and_the_cache` | H-07 / N-02 | 窓の数・大きさ・窓 → 話の対応が index.json の並びに収まる(L-DL4) |
 | `test_gate_verdicts_are_derived_from_the_registered_thresholds` | G-18/G-18b/G-19/G-21 | 合否と公開の条件が、登録した帯から導かれている(L-DL5 で改訂。**落ちた帯があるまま出すときは、その事実が公開データに立つ**) |
+| `test_align_is_judged_only_on_held_out_regions` | H-09 | 学習と判定の文化圏が交わらない(L-DL6) |
+| `test_align_verdicts_follow_the_registered_margin` | H-09 | 採否が登録した margin 0.05 から導かれている |
+| `test_learned_map_is_not_shipped_when_not_adopted` | H-09 | 採らなかった写像は配らない |
+| `test_diagnosis_separates_material_objective_and_capacity` | H-10 | 三つの分けが測られ、微調整へ進む条件が容量の成立から導かれている(L-DL7) |
 
 `tests-js/data.test.ts` の N-02 の検査も、改訂に合わせて書き直した。
 L-DL3 では「`vectors.bin` だけを許す」、L-DL4 で「`vectors.bin` と `windows.bin` の二本・合計 6 MB まで」。

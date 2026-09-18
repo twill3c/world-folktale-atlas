@@ -207,7 +207,9 @@ def main() -> int:
                       ("semantic_eval", json.loads(
                           (ANALYSIS / "semantic_eval.json").read_text(encoding="utf-8"))),
                       ("align_eval", json.loads(
-                          (ANALYSIS / "align_eval.json").read_text(encoding="utf-8")))):
+                          (ANALYSIS / "align_eval.json").read_text(encoding="utf-8"))),
+                      ("align_diagnosis", json.loads(
+                          (ANALYSIS / "align_diagnosis.json").read_text(encoding="utf-8")))):
         (PUB / f"{name}.json").write_text(
             json.dumps(obj, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
 

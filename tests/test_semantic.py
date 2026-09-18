@@ -165,3 +165,24 @@ def test_learned_map_is_not_shipped_when_not_adopted(align):
     assert not (PUB / "align_map.json").exists()
     meta = load(PUB / "windows.json")
     assert "map" not in meta and meta.get("centred") is True
+
+
+def test_diagnosis_separates_material_objective_and_capacity():
+    """H-10: 材料・目的・容量が別々に測られ、微調整へ進む条件が容量から導かれている。
+
+    出所: SPEC §3 H-10。2026-09-18 の実測では材料 0.892(信号あり)・容量 +0.017(帯 0.05 未満)で、
+    **Colab の微調整には進まない**と判定した。合否そのものは assert しない。
+    """
+    d = load(ROOT / "data" / "analysis" / "align_diagnosis.json")
+    assert set(d["train_regions"]) & set(d["held_out_regions"]) == set()
+    m = d["h10a_material"]
+    assert m["passed"] == (m["相互最近傍率"] >= 0.50)
+    g = d["verdicts"]["gains"]
+    story = d["paragraph_to_story"]
+    assert abs(g["段落→話(段落対で学習)"]
+               - (story["非線形(段落対で学習)"]["p_at_1"] - story["差し引きのみ"]["p_at_1"])) < 1e-9
+    assert d["colab_fine_tuning_warranted"] == d["verdicts"]["h10c_容量が足りない"]
+    # 残った誤りの正体を、判定と一緒に出している(言語のせいかどうかを読者が確かめられる)
+    r = d["remaining_failures_post_hoc"]
+    assert r["n_failures"] <= r["n_queries"]
+    assert 0.0 <= r["1 位が同じ本だった割合"] <= 1.0
