@@ -1,10 +1,10 @@
 {
- "translated": 939,
+ "translated": 992,
  "total": 1113,
- "fraction": 0.8437,
- "translated_words": 1265545,
+ "fraction": 0.8913,
+ "translated_words": 1390335,
  "total_words": 1578386,
- "word_fraction": 0.8018,
+ "word_fraction": 0.8809,
  "translation_type": "AI_GENERATED",
  "model": "claude-opus-5",
  "by_region": {
@@ -26,7 +26,7 @@
   },
   "ノルウェー": {
    "total": 58,
-   "done": 5
+   "done": 58
   },
   "朝鮮半島": {
    "total": 53,
