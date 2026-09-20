@@ -337,3 +337,31 @@ def test_about_page_lists_what_failed_as_well_as_what_passed():
     # 画面に残った数(三つ)を書いたら、その根拠も同じ頁にあること
     assert "画面に残ったのは三つ" in text
     assert "順番が効いていることを示せなかった" in text
+
+
+# ------------------------------------------------ 集約の比較(L-DL12)
+
+def test_rank_variants_are_compared_and_none_adopted_without_quality():
+    """集約を替える判定が、登録した三条件から導かれている(SPEC §3 H-14)。
+
+    出所: 実測 2026-09-21。②③④ はいずれも G-19 を下げ(0.800 → 0.567/0.633/0.267)、
+    H-14c で落ちたので採らなかった。**合否そのものは assert しない。**
+    """
+    r = load(ROOT / "data" / "analysis" / "rank_variants.json")
+    th = r["thresholds"]
+    for name, v in r["verdicts"].items():
+        res = r["results"][name]
+        assert v["h14a"] == (res["median_gap_top1_top2"] >= th["gap_target"])
+        assert v["h14b"] == (res["same_book_share_of_failures"] <= th["same_book_max"])
+        assert v["h14c"] == (res["g19_p_at_1"] >= th["g19_floor"]
+                             and res["language_bias"] <= th["language_bias_max"])
+        assert v["adopt"] == ((v["h14a"] or v["h14b"]) and v["h14c"])
+    assert r["adopt"] == next((n for n, v in r["verdicts"].items() if v["adopt"]), None)
+
+
+def test_shipped_aggregation_matches_the_adopted_variant():
+    """配っている集約が、判定で採ったものと一致する(採らなければ現行のまま)。"""
+    r = load(ROOT / "data" / "analysis" / "rank_variants.json")
+    meta = load(PUB / "windows.json")
+    if r["adopt"] is None:
+        assert meta["aggregation"] == "話のスコア = その話の窓の最大値"

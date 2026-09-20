@@ -1,10 +1,11 @@
 import Link from "next/link";
 
 import {
-  getAlignDiagnosis, getAlignEval, getBooks, getClusters, getGates, getIndex, getNliEval, getSemanticEval, getShapeEval,
+  getAlignDiagnosis, getAlignEval, getRankVariants, getBooks, getClusters, getGates, getIndex, getNliEval, getSemanticEval, getShapeEval,
 } from "@/lib/data";
 import AlignSection from "./AlignSection";
 import NliSection from "./NliSection";
+import RankVariantSection from "./RankVariantSection";
 import SemanticSection from "./SemanticSection";
 import ShapeSection from "./ShapeSection";
 
@@ -226,6 +227,8 @@ export default function GatesPage() {
       </p>
 
       <SemanticSection e={getSemanticEval()} />
+
+      <RankVariantSection r={getRankVariants()} />
 
       <AlignSection e={getAlignEval()} d={getAlignDiagnosis()} />
 

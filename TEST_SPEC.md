@@ -106,6 +106,8 @@
 | `test_hmm_learned_something_and_states_are_not_position_or_book` | H-13a/b | EM が尤度を上げ、NMI の合否が帯から導かれている |
 | `test_hmm_order_control_is_measured` | H-13c | 並べ替えの対照が測られ、画面へ出す条件が三つの合否から導かれている |
 | `test_about_page_lists_what_failed_as_well_as_what_passed` | SPEC §1 | 「このアトラスについて」に、通ったものと**通らなかったもの**が両方書いてある(L-DL11) |
+| `test_rank_variants_are_compared_and_none_adopted_without_quality` | H-14 | 四通りの集約の合否が登録した三条件から導かれている(L-DL12) |
+| `test_shipped_aggregation_matches_the_adopted_variant` | H-14 | 配っている集約が判定で採ったものと一致する(採らなければ現行のまま) |
 
 `tests-js/data.test.ts` の N-02 の検査も、改訂に合わせて書き直した。
 L-DL3 では「`vectors.bin` だけを許す」、L-DL4 で「`vectors.bin` と `windows.bin` の二本・合計 6 MB まで」。

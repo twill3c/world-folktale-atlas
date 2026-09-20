@@ -329,6 +329,19 @@ export type NarrativeStates = {
   show_on_site: boolean;
 };
 
+export type RankVariants = {
+  thresholds: Record<string, number>;
+  n_cross_queries: number; n_held_out_queries: number;
+  baseline: Record<string, number>;
+  results: Record<string, {
+    g19_p_at_1: number; g19_p_at_10: number; median_gap_top1_top2: number;
+    held_out_p_at_1: number; n_failures: number;
+    same_book_share_of_failures: number; language_bias: number;
+  }>;
+  verdicts: Record<string, { h14a: boolean; h14b: boolean; h14c: boolean; adopt: boolean }>;
+  adopt: string | null;
+};
+
 type AucRow = {
   label: string; n: number; positives: number; eligible: boolean;
   auc_nli: number | null; auc_baseline: number | null;
@@ -443,6 +456,7 @@ export const getAlignEval = (): AlignEval => read<AlignEval>("align_eval.json");
 export const getAlignDiagnosis = (): AlignDiagnosis => read<AlignDiagnosis>("align_diagnosis.json");
 export const getClassicEval = (): ClassicEval => read<ClassicEval>("classic_eval.json");
 export const getTopics = (): Topics => read<Topics>("topics.json");
+export const getRankVariants = (): RankVariants => read<RankVariants>("rank_variants.json");
 export const getNarrativeStates = (): NarrativeStates => read<NarrativeStates>("narrative_states.json");
 export const getRegions = (): Record<string, {
   n_stories: number;
