@@ -4,14 +4,14 @@
  "model_id": "Xenova/multilingual-e5-small",
  "dtype": "q8",
  "browser": "Chromium 153.0.8010.12",
- "measured_at": "2026-09-18",
+ "measured_at": "2026-09-21",
  "load": {
-  "seconds": 15,
+  "seconds": 21,
   "external_mb": 5.3
  },
  "query_ms": {
-  "median": 90,
-  "max": 240
+  "median": 96,
+  "max": 259
  },
  "g17_two_implementations": {
   "n": 20,
@@ -20,7 +20,7 @@
   "note": "量子化した側と fp32 の差。同一性ではなく、ずれの大きさを測っている"
  },
  "g18_rank_preservation": {
-  "mean_overlap_at_10": 0.855,
+  "mean_overlap_at_10": 0.87,
   "top1_agreement": 0.7,
   "min_overlap_at_10": 0.7,
   "thresholds": {
@@ -49,22 +49,21 @@
    "PT-34431-001",
    "GL-28932-004",
    "LK-56614-006",
-   "ZA-35557-006"
+   "RU-62509-012"
   ],
-  "n_regions_in_top10": 9,
+  "n_regions_in_top10": 8,
   "regions": [
    "アゾレス諸島",
    "グリーンランド(イヌイット)",
    "スリランカ",
    "ハワイ",
-   "フランス",
    "ベーリング海峡(アラスカ)",
    "ロシア",
    "南アフリカ",
    "日本"
   ],
-  "max_score": 0.2762,
-  "written_max_score": 0.2643
+  "max_score": 0.2766,
+  "written_max_score": 0.2639
  },
  "g20_query_language_bias": {
   "corpus_share_japan": 0.0198,
@@ -117,42 +116,42 @@
   "note": "同じ意味の問いで「1 位が日本の話」になる率の差。L-DL4 で帯を登録した"
  },
  "g18_tie_diagnosis_post_hoc": {
-  "median_gap_top1_top2": 0.0091,
+  "median_gap_top1_top2": 0.01031,
   "disagreements": [
    {
     "query": "三人兄弟の末の子が知恵で王の難題を解く",
-    "gap_fp32": 0.00447,
+    "gap_fp32": 0.00326,
     "browser_top1_rank_here": 3
    },
    {
     "query": "約束を破って禁じられた部屋の扉を開けてしまう",
-    "gap_fp32": 8e-05,
-    "browser_top1_rank_here": 4
+    "gap_fp32": 0.00308,
+    "browser_top1_rank_here": 5
    },
    {
     "query": "死んだ母親が鳥になって子を見守る",
-    "gap_fp32": 0.00855,
+    "gap_fp32": 0.0102,
     "browser_top1_rank_here": 3
    },
    {
     "query": "欲張りな隣人が真似をして失敗する",
-    "gap_fp32": 0.00014,
-    "browser_top1_rank_here": 5
+    "gap_fp32": 0.00504,
+    "browser_top1_rank_here": 8
    },
    {
     "query": "村を襲う大蛇を若者が退治する",
-    "gap_fp32": 0.00078,
-    "browser_top1_rank_here": 3
+    "gap_fp32": 0.00332,
+    "browser_top1_rank_here": 4
    },
    {
     "query": "地下の国や別の世界へ降りていく",
-    "gap_fp32": 0.00527,
+    "gap_fp32": 0.00381,
     "browser_top1_rank_here": 5
    }
   ],
   "tie_max": 0.01,
-  "all_disagreements_are_ties": true,
-  "g18b_passed": true,
+  "all_disagreements_are_ties": false,
+  "g18b_passed": false,
   "note": "1 位が食い違った問いの、手元 fp32 における 1 位と 2 位の差。差が丸めより小さいなら、食い違いは同点の割れ方であって順位の質ではない"
  },
  "quality_gates_passed": true,
