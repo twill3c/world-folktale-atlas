@@ -113,6 +113,18 @@
 L-DL3 では「`vectors.bin` だけを許す」、L-DL4 で「`vectors.bin` と `windows.bin` の二本・合計 6 MB まで」。
 **緩めるたびに、緩めた先を名前と上限で締める。**
 
+## 2.47 文化圏ごとの指標の分布(`tests/test_region_profiles.py` — L-DL13 で追加)
+
+| ケース | SPEC | 期待値の出所 |
+|---|---|---|
+| `test_quartiles_agree_with_numpy` | G-22(1) | 二経路一致。実測 2026-09-24 で最大差 7.1e-15 |
+| `test_whiskers_and_outliers_follow_the_registered_rule` | H-16 | ひげ 1.5 IQR・外れ値の定義(登録どおり)。n=1 の縮退も見る |
+| `test_metrics_are_counts_not_estimates` | H-16 | 指標は数え上げの 7 つだけ。推定を混ぜない |
+| `test_profiles_cover_the_whole_corpus` | G-22(4) | 文化圏・話数・本の数が実データと一致(本を足せば自動で増える) |
+| `test_small_samples_are_marked` | G-22(3) | 話数 10 未満に印 |
+| `test_page_states_that_regions_are_books` | H-16 | 「一冊が一つの文化圏」の注意が画面にある |
+| `test_profiles_are_shipped` | H-16 | 公開データに出ている |
+
 ## 2.5 和訳の取り込み検査(`etl/build_translations.py` — 落ちたら取り込まない)
 
 | ID | 検査 | 期待値の出所 |

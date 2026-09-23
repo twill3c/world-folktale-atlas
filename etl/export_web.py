@@ -217,7 +217,9 @@ def main() -> int:
                       ("narrative_states", json.loads(
                           (ANALYSIS / "narrative_states.json").read_text(encoding="utf-8"))),
                       ("rank_variants", json.loads(
-                          (ANALYSIS / "rank_variants.json").read_text(encoding="utf-8")))):
+                          (ANALYSIS / "rank_variants.json").read_text(encoding="utf-8"))),
+                      ("region_profiles", json.loads(
+                          (ANALYSIS / "region_profiles.json").read_text(encoding="utf-8")))):
         (PUB / f"{name}.json").write_text(
             json.dumps(obj, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
 

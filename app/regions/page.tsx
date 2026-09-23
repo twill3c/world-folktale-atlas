@@ -1,4 +1,5 @@
-import { getIndex, getRegions, regionOrder } from "@/lib/data";
+import { getIndex, getRegionProfiles, getRegions, regionOrder } from "@/lib/data";
+import BoxPlot from "./BoxPlot";
 
 export const metadata = { title: "文化圏くらべ ｜ 世界民話AIアトラス" };
 
@@ -18,6 +19,7 @@ export default function RegionsPage() {
   const regions = getRegions();
   const index = getIndex();
   const order = regionOrder(index).filter((r) => regions[r]);
+  const profiles = getRegionProfiles();
 
   const sections: [string, "themes" | "motifs" | "animals", string, string][] = [
     ["テーマ", "themes", "estimate", "説明文との近さで当てた推定である。言語の中で標準化してある"],
@@ -39,6 +41,27 @@ export default function RegionsPage() {
         「その編者が選んで、その訳者が訳した話たち」である。
         話数が 10 前後の文化圏では、1 話の増減が 10 ポイント動く。
       </p>
+
+      <section>
+        <h2>
+          分布で見る{" "}
+          <span className="tag tag--count" style={{ fontSize: ".7rem", verticalAlign: "middle" }}>
+            数え上げ
+          </span>
+        </h2>
+        <p style={{ maxWidth: "72ch" }}>
+          上の表は「何％の話に出たか」だけを見せている。ここでは<strong>散らばり</strong>を見る ——
+          文化圏ごとに、話の長さや文の長さがどれだけばらつくか。
+          指標はすべて<strong>数え上げ</strong>で、推定は混ぜていない。
+          {profiles.n_regions} 文化圏 / {profiles.n_stories.toLocaleString()} 話 / {profiles.n_books} 冊。
+        </p>
+        <p className="muted small" style={{ maxWidth: "72ch" }}>
+          <strong>{profiles.caveat}</strong>{" "}
+          その根拠は<a href="/gates/">測ったこと</a>の G-07(本内と本間の効果量)と、
+          <a href="/classic/">古い道具で測る</a>の Burrows の Delta(機能語だけで本を 7 割以上当てる)にある。
+        </p>
+        <BoxPlot profiles={profiles} />
+      </section>
 
       {sections.map(([label, key, kind, note]) => {
         const labels = [...new Set(order.flatMap((r) => Object.keys(regions[r][key])))];

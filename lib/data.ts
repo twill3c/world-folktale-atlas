@@ -342,6 +342,20 @@ export type RankVariants = {
   adopt: string | null;
 };
 
+export type RegionProfiles = {
+  note: string; caveat: string; small_sample_threshold: number;
+  n_stories: number; n_regions: number; n_books: number;
+  metrics: { key: string; label: string; unit: string; note: string }[];
+  regions: {
+    region: string; n_stories: number; books: string[]; small_sample: boolean;
+    metrics: Record<string, {
+      n: number; min: number; max: number; q1: number; median: number; q3: number;
+      whisker_low: number; whisker_high: number; outliers: number[];
+      mean: number; sd: number;
+    }>;
+  }[];
+};
+
 type AucRow = {
   label: string; n: number; positives: number; eligible: boolean;
   auc_nli: number | null; auc_baseline: number | null;
@@ -456,6 +470,7 @@ export const getAlignEval = (): AlignEval => read<AlignEval>("align_eval.json");
 export const getAlignDiagnosis = (): AlignDiagnosis => read<AlignDiagnosis>("align_diagnosis.json");
 export const getClassicEval = (): ClassicEval => read<ClassicEval>("classic_eval.json");
 export const getTopics = (): Topics => read<Topics>("topics.json");
+export const getRegionProfiles = (): RegionProfiles => read<RegionProfiles>("region_profiles.json");
 export const getRankVariants = (): RankVariants => read<RankVariants>("rank_variants.json");
 export const getNarrativeStates = (): NarrativeStates => read<NarrativeStates>("narrative_states.json");
 export const getRegions = (): Record<string, {
