@@ -29,6 +29,8 @@ TOC_HEAD = re.compile(
 TOC_STOP = re.compile(r"^\s*(LIST OF ILLUSTRATIONS|ILLUSTRATIONS|LIST OF PLATES)[.:]?\s*$", re.I)
 NOISE = {"PAGE", "SEITE", "PAGINA", "PAG", "CONTENTS", "INHALT"}
 LEAD_NUM = re.compile(r"^\s*(?:[IVXLCDM]+|\d+)\s*[.—–:)-]?\s+")
+#: 見出しの末尾に付く脚注番号(12814『Magbangal [117]』)。題名の一部ではない
+FOOTNOTE_TAIL = re.compile(r"\s*\[\d+\]\s*$")
 
 #: 既定で「話ではない」と見なす前付け・後付けの題名(正規形)
 DEFAULT_SKIP = {
@@ -143,7 +145,18 @@ def heading_positions(lines: list[str], exclude: list[tuple[int, int]]) -> dict[
         if joined.endswith((".", "!", "?")) and len(joined) > 60 and not joined.isupper():
             continue
         HEADING_SPAN[start] = start + len(group) - 1
-        for text in {joined, group[0].strip("\"“”«»'")}:
+        variants = {joined, group[0].strip("\"“”«»'")}
+        # 見出しの末尾に脚注番号が付く本がある(12814『The Sun and the Moon [160]』)。
+        # `norm` は括弧を落とすが数字は残すので、目次の『The Sun and the Moon』とは別の鍵になる。
+        # 長い題名は `_prefix_match` が拾うが、**同じ題名が複数ある本では拾えない** —
+        # 候補が 1 件以上あると前方一致に進まないので、3 つある同名の話の 3 番目だけが
+        # 索引から消え、位置が重複して**中身の無い話**になっていた(実測: 12814 で 61 題名 → 60 話)。
+        # 落とした形も併せて索引する。索引を増やすだけなので、この接尾辞を持たない本には影響しない。
+        for text in list(variants):
+            bare = FOOTNOTE_TAIL.sub("", text).strip()
+            if bare and bare != text:
+                variants.add(bare)
+        for text in variants:
             key = nkey(text)
             if key:
                 idx.setdefault(key, []).append(start)
@@ -259,16 +272,29 @@ _MACRON = dict(zip("AEIOUaeiou", "ĀĒĪŌŪāēīōū"))
 LETTER_FOOTNOTE = re.compile(r"\A\[[A-Z]\]\s")
 
 
-def _blocks_after(lines: list[str], k: int) -> tuple[list[str], int]:
-    """k 行目以降で最初の「空行で区切られた塊」と、その次の行番号を返す。"""
+#: 転記者が足した挿絵の印。本の文ではない(PG-54610 の転記者註が「挿絵に見出しを足した」と断る)
+ILLUSTRATION = re.compile(r"\A\[Illustration\b.*\]\Z", re.S)
+
+
+def _blocks_after(lines: list[str], k: int, skip_illustration: bool = False) -> tuple[list[str], int]:
+    """k 行目以降で最初の「空行で区切られた塊」と、その次の行番号を返す。
+
+    `skip_illustration` を立てると、挿絵の印だけの塊は読み飛ばす。
+    **題名を取るときにだけ使う。** PG-54610 の第 XI 章は番号と題名のあいだに
+    `[Illustration]` が挟まっており、飛ばさないとそれが題名になって、
+    本当の題名(`THE DEATH OF MAUI`)が本文の先頭に残る(実測 2026-09-22)。
+    """
     n = len(lines)
-    while k < n and not lines[k].strip():
-        k += 1
-    group = []
-    while k < n and lines[k].strip():
-        group.append(lines[k].strip())
-        k += 1
-    return group, k
+    while True:
+        while k < n and not lines[k].strip():
+            k += 1
+        group = []
+        while k < n and lines[k].strip():
+            group.append(lines[k].strip())
+            k += 1
+        if skip_illustration and group and ILLUSTRATION.match(" ".join(group)):
+            continue
+        return group, k
 
 
 def split_numbered(body: str, cfg: dict) -> tuple[list[Section], dict]:
@@ -344,7 +370,7 @@ def split_numbered(body: str, cfg: dict) -> tuple[list[Section], dict]:
             suffix = re.search(cfg["title_suffix"], rest) if cfg.get("title_suffix") else None
             title = main.rstrip(". ") + (f" {suffix.group(0)}" if suffix else "")
         if not title:
-            group, start = _blocks_after(lines, k + 1)
+            group, start = _blocks_after(lines, k + 1, cfg.get("skip_illustration", False))
             title = " ".join(group)
             if cfg.get("subtitle_caps"):
                 # 題名の下の副題(PG-18450『HAWAII THE ORIGINAL HOME OF THE BROWNIES』)
@@ -475,9 +501,19 @@ def split_book(body: str, cfg: dict | None = None) -> tuple[list[Section], dict]
 
     chosen.sort()
     bounds = [k for k, _ in chosen]
+    # **最後の話には「次の見出し」が無い**ので、止めないと巻末を丸ごと飲み込む(L1 の罠)。
+    # `numbered` 側には前からある `stop_at` を、目次方式にも効かせる。
+    # PG-12814 は最終話のあとに『Pronunciation of Philippine Names』(発音一覧 1,500 語)が
+    # 続き、それが第 61 話の末尾に入っていた(実測 2026-09-22、端の検査が捕まえた)
+    tail = len(lines)
+    if cfg.get("stop_at"):
+        rx_stop = re.compile(cfg["stop_at"])
+        after_first = bounds[0] if bounds else 0
+        tail = next((i for i in range(after_first + 1, len(lines))
+                     if rx_stop.match(lines[i].strip())), len(lines))
     sections, short = [], []
     for n, (k, title) in enumerate(chosen):
-        stop = bounds[n + 1] if n + 1 < len(bounds) else len(lines)
+        stop = bounds[n + 1] if n + 1 < len(bounds) else tail
         # **見出しの塊ごと飛ばす。** 1 行だけ飛ばすと、副題や折り返しの続きが
         # 本文の先頭に残る(『A STORY OF OLD JAPAN』『HOUSE TO DEATH』— 実測 20 話)
         text = "\n".join(lines[HEADING_SPAN.get(k, k) + 1:stop]).strip("\n")

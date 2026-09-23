@@ -97,11 +97,20 @@ def test_nli_model_reads_obvious_entailment_and_contradiction():
 # ------------------------------------------------ 正解集
 
 def test_gold_is_the_registered_sample_and_complete(stories):
-    """正解集の話は `ml/nli_gold.py` の選び方の出力そのもので、全項目に二人の答えがある。"""
+    """正解集の話は `ml/nli_gold.py` の選び方の出力そのもので、全項目に二人の答えがある。
+
+    **照合は登録時の 30 冊に絞って行う**(2026-09-22、L39 で 3 冊足したとき)。
+    選び方はコーパス全体に依存するので、本を足すと出力が変わる。だが正解集は
+    2026-09-17 に人手で付けて凍結したもので、あとから広げれば新しい話には正解が無い。
+    広げてから正解を付ければ、それは**事後に選んだ標本**になる。
+    守るべきは「登録した標本が選び方の出力そのものであること」なので、
+    登録時の本に絞って照合する(`registered_books` は nli_gold.json に記録した)。
+    """
     from ml.nli_gold import GOLD, select
     from ml.nli_labels import KEYS
     g = load(GOLD)
-    assert sorted(g["stories"]) == sorted(select(stories))
+    at_registration = [s for s in stories if s["book_id"] in set(g["registered_books"])]
+    assert sorted(g["stories"]) == sorted(select(at_registration))
     for sid, row in g["stories"].items():
         assert sorted(row) == sorted(KEYS), sid
         for k, v in row.items():

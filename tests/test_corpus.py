@@ -109,12 +109,25 @@ def test_story_ids_unique(stories):
 # ---------------------------------------------------------------- T-DATA-04
 
 def test_text_not_empty_and_long_enough(stories):
-    """本文が空でなく、最短語数(120)を下回らない。
+    """本文が空でなく、**その本に定めた**最短語数を下回らない。
 
     出所: books.json の split.min_words。分割の失敗は「短すぎる断片」として現れる。
+
+    **定数 120 で書いてはならない**(2026-09-22 実測)。min_words は本ごとの設定であり、
+    PG-12814 は 100 にしてある(101 語の話が 1 件あり、その本は題名 61 = 見出し 61 で
+    境界が独立に検証できているため下げた)。定数で書くと、台帳のほうが正しいのに
+    検査が落ちる —— 期待値は台帳から導く(HC-016)。
     """
+    import json as _json
+    from pathlib import Path as _Path
+
+    books = _json.loads((_Path(__file__).resolve().parent.parent
+                         / "data" / "metadata" / "books.json").read_text(encoding="utf-8"))
+    floor = {b["book_id"]: int(b["split"].get("min_words", 120)) for b in books["books"]}
     for s in stories:
-        assert s["word_count"] >= 120, f"{s['story_id']} が短すぎる({s['word_count']} 語)"
+        low = floor[s["book_id"]]
+        assert s["word_count"] >= low, \
+            f"{s['story_id']} が短すぎる({s['word_count']} 語 < {low})"
 
 
 # ---------------------------------------------------------------- T-DATA-05
@@ -282,6 +295,15 @@ def test_edge_report_stays_within_the_recorded_count(stories):
     10 話が斜体の教訓詩(`… bears sway._`)で終わる形になり、検査が斜体の閉じを知らず 32 件に増えた。
     検査を直すと、ペロー 10 件とイングランド本 2 件(同じ斜体の閉じ)が外れて 20 件になった。
     残る 20 件はいずれも以前に目で通したもの。
+
+    2026-09-22(L39、3 冊追加): 上限を 21 にした。**この検査が新しい本の欠陥を 2 件捕まえた。**
+    (a) PH-12814-061 が巻末の発音一覧 1,500 語を飲み込んでいた(目次方式に `stop_at` が
+    無かったため。分割器に足して解決)。(b) NZ-54610-011 の題名が `[Illustration]` になり、
+    本当の題名が本文の先頭に残っていた(`skip_illustration` を足して解決)。
+    直すと 23 → 21 件。増えた 1 件は **PH-12814-040** で、これは分割の失敗ではなく
+    **原本そのものが読点で終わっている**(1916 年版の本文が
+    『…who are the Mandaya still living along the Mayo River,』で切れ、次の話が始まる)。
+    目で通して認めた。
     """
     from etl.paragraphs import split_paragraphs
     from etl.report_edges import STRUCTURAL_HEAD, suspicious
@@ -294,7 +316,7 @@ def test_edge_report_stays_within_the_recorded_count(stories):
         head = [] if STRUCTURAL_HEAD.match(ps[0]) else suspicious(ps[0], is_last=False)
         if head or suspicious(ps[-1], is_last=True):
             flagged.append(s["story_id"])
-    assert len(flagged) <= 20, f"端が怪しい話が {len(flagged)} 件({flagged[:5]})"
+    assert len(flagged) <= 21, f"端が怪しい話が {len(flagged)} 件({flagged[:5]})"
 
 
 def test_no_story_ends_with_the_next_story_title(stories):

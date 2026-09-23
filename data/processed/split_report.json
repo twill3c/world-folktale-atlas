@@ -540,5 +540,65 @@
   "missing": [],
   "ambiguous": [],
   "oracle_match": true
+ },
+ {
+  "book_id": "PG-3833",
+  "gutenberg_id": 3833,
+  "toc_entries": 31,
+  "toc_titles": 31,
+  "skipped": [],
+  "expected_tales": 31,
+  "extracted": 31,
+  "short": [],
+  "missing": [],
+  "ambiguous": [],
+  "oracle_match": true
+ },
+ {
+  "book_id": "PG-12814",
+  "gutenberg_id": 12814,
+  "toc_entries": 75,
+  "toc_titles": 75,
+  "skipped": [
+   "Group I: Tinguian",
+   "Group II: Igorot",
+   "Group III: The Wild Tribes of Mindanao",
+   "_Bukidnon_",
+   "_Bagobo_",
+   "_Bilaan_",
+   "_Mandaya_",
+   "_Subanun_",
+   "Group IV: Moro",
+   "Group V: The Christianized Tribes",
+   "_Ilocano_",
+   "_Tagalog_",
+   "_Visayan_",
+   "Pronunciation of Philippine Names"
+  ],
+  "expected_tales": 61,
+  "extracted": 61,
+  "short": [],
+  "missing": [],
+  "ambiguous": [
+   "The Sun and the Moon",
+   "The Flood Story",
+   "The Flood Story",
+   "The Sun and the Moon",
+   "The Sun and the Moon"
+  ],
+  "oracle_match": true
+ },
+ {
+  "book_id": "PG-54610",
+  "gutenberg_id": 54610,
+  "toc_entries": 20,
+  "toc_titles": 20,
+  "skipped": [],
+  "expected_tales": 20,
+  "extracted": 20,
+  "short": [],
+  "missing": [],
+  "ambiguous": [],
+  "oracle_match": true
  }
 ]
