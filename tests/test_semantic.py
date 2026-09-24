@@ -365,3 +365,22 @@ def test_shipped_aggregation_matches_the_adopted_variant():
     meta = load(PUB / "windows.json")
     if r["adopt"] is None:
         assert meta["aggregation"] == "話のスコア = その話の窓の最大値"
+
+
+def test_state_ribbon_is_shown_only_when_all_three_gates_pass(states):
+    """状態の帯は三つとも通ったときだけ画面に出る(SPEC §3 H-13)。
+
+    出所: 2026-09-18 は H-13c 不成立で出さず、2026-09-25 に本が増えて成立し出した。
+    **帯は動かしていない。** 出す条件が三つの合否から導かれていることをここで固定する。
+    """
+    show = states["h13a_passed"] and states["h13b_passed"] and states["h13c"]["passed"]
+    assert states["show_on_site"] == show
+    if show:
+        ex = states["examples"]
+        assert len(ex) >= 6
+        pairs = [e for e in ex if e["pair"]]
+        assert len(pairs) >= 4 and len({e["language"] for e in pairs}) == 2, "独英の対を並べる"
+        assert all(0 < len(e["states"]) <= 48 for e in ex)
+    html = ROOT / "out" / "classic" / "index.html"
+    if html.exists():
+        assert ("状態の帯" in html.read_text(encoding="utf-8")) == show

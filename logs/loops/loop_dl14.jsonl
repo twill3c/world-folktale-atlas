@@ -1,0 +1,1 @@
+{"v": "1.2", "ts": "2026-09-25T07:20:19+09:00", "project": "world-folktale-atlas", "loop_id": "loop_dl14", "event": "loop_start", "data": {"goal": "3 冊追加後に回し直していなかった古い道具の測定(TF-IDF 比較・HMM)を更新し、結論が変わらないか確かめる", "spec_refs": ["H-11", "H-13"], "scaffold_version": "1.30.0", "agent": "claude-code", "model": "claude-opus-5"}}

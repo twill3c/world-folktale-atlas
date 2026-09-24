@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import type { NarrativeStates } from "@/lib/data";
+import StateRibbon from "./StateRibbon";
 
 const f3 = (v: number) => v.toFixed(3);
 
@@ -39,18 +40,33 @@ export default function StateSection({ h }: { h: NarrativeStates }) {
             </tr>
             <tr>
               <th>！ 対照</th>
-              <td>状態列を話ごとに<strong>並べ替えて</strong>から比べると {f3(h.control_shuffled_states.pair_similarity)} で、
-                並べ替える前({f3(c.pair_similarity)})より<strong>むしろ高い</strong></td>
+              <td>状態列を話ごとに<strong>並べ替えて</strong>から比べると {f3(h.control_shuffled_states.pair_similarity)}。
+                並べ替える前は {f3(c.pair_similarity)} で、
+                <strong>{h.control_shuffled_states.pair_similarity < c.pair_similarity
+                  ? "並べ替えると下がる(順番が効いている)"
+                  : "並べ替えてもむしろ高い(順番は効いていない)"}</strong></td>
             </tr>
           </tbody>
         </table>
       </div>
-      <p style={{ maxWidth: "72ch" }}>
-        <strong>順番は効いていない。</strong> 並べ替えても落ちないのだから、
-        この指標が見ているのは「どの状態がどれだけ出るか」であって「どの順に出るか」ではない。
-        H-05 の「筋の形」で分かったことと同じ形である。
-        <strong>登録どおり、状態の帯は画面に出さない。</strong>測った結果だけをここに残す。
-      </p>
+      {h.show_on_site ? (
+        <p style={{ maxWidth: "72ch" }}>
+          <strong>三つとも通ったので、登録どおり状態の帯を画面に出す。</strong>
+          並べ替えの対照も {f3(h.control_shuffled_states.pair_similarity)} で、
+          並べ替える前の {f3(c.pair_similarity)} より<strong>低い</strong> ——
+          順番を壊すと似かたが落ちる。
+          <strong>ただし 2026-09-18 の測定では、同じ帯で不成立だった</strong>
+          (対 0.626 / 対でない組 0.560・p = 0.062 で、並べ替えの対照はむしろ高かった)。
+          本が 30 冊から 33 冊に増え、学習に使った段落が 29,012 から {h.n_paragraphs.toLocaleString()} に増えて結果が変わった。
+          <strong>帯は一度も動かしていない。同じ主張を二度見たことは、この文が記録である。</strong>
+        </p>
+      ) : (
+        <p style={{ maxWidth: "72ch" }}>
+          <strong>順番は効いていない。</strong> 並べ替えても落ちないのだから、
+          この指標が見ているのは「どの状態がどれだけ出るか」であって「どの順に出るか」ではない。
+          <strong>登録どおり、状態の帯は画面に出さない。</strong>測った結果だけをここに残す。
+        </p>
+      )}
       <div className="tablewrap">
         <table>
           <thead>
@@ -78,6 +94,7 @@ export default function StateSection({ h }: { h: NarrativeStates }) {
         出来事の引き金語が多い状態は「事が起きる場面」と読めるが、
         <strong>その読みは測ったことではない</strong>。測れたのは上の三つだけである。
       </p>
+      {h.show_on_site && <StateRibbon h={h} />}
     </>
   );
 }

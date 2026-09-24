@@ -327,6 +327,11 @@ export type NarrativeStates = {
     self_transition: number; next: number;
   }[];
   show_on_site: boolean;
+  /** 画面に出す帯の例。独英の同じ話を隣り合わせにしてある */
+  examples: {
+    story_id: string; title: string; region: string; language: string;
+    pair: string | null; states: number[];
+  }[];
 };
 
 export type RankVariants = {

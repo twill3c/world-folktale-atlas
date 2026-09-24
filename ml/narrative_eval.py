@@ -133,6 +133,23 @@ def main() -> int:
     doc["show_on_site"] = bool(doc["h13a_passed"] and doc["h13b_passed"] and doc["h13c"]["passed"])
     doc["story_states"] = {stories[idx]["story_id"]: paths[j][:60]
                            for j, idx in enumerate(keep)}
+    # 画面に出す例。**独英の同じ話を隣り合わせにする**(言語をまたいで似ることが目で見える)
+    examples = []
+    for (a, b) in usable[:3]:
+        for idx in (a, b):
+            s_ = stories[idx]
+            examples.append({"story_id": s_["story_id"], "title": s_["title"],
+                             "region": s_["culture_region"], "language": s_["language"],
+                             "pair": stories[a]["story_id"],
+                             "states": paths[pos_of[idx]][:48]})
+    rng3 = np.random.default_rng(SEED)
+    others = [i for i in keep if stories[i]["language"] == "en"]
+    for idx in rng3.permutation(others)[:4]:
+        s_ = stories[int(idx)]
+        examples.append({"story_id": s_["story_id"], "title": s_["title"],
+                         "region": s_["culture_region"], "language": s_["language"],
+                         "pair": None, "states": paths[pos_of[int(idx)]][:48]})
+    doc["examples"] = examples
     OUT.write_text(json.dumps(doc, ensure_ascii=False, indent=1), encoding="utf-8")
     brief = {k_: v for k_, v in doc.items() if k_ not in ("story_states", "transition")}
     print(json.dumps(brief, ensure_ascii=False, indent=1))
