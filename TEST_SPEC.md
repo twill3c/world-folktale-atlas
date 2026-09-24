@@ -105,6 +105,7 @@
 | `test_hmm_features_do_not_include_position` | H-13a | 段落の位置を特徴に入れていない(入れれば状態は位置の言い換えになる) |
 | `test_hmm_learned_something_and_states_are_not_position_or_book` | H-13a/b | EM が尤度を上げ、NMI の合否が帯から導かれている |
 | `test_hmm_order_control_is_measured` | H-13c | 並べ替えの対照が測られ、画面へ出す条件が三つの合否から導かれている |
+| `test_state_ribbon_is_shown_only_when_all_three_gates_pass` | H-13 | 帯を画面に出す条件が三つの合否から導かれ、出すときは独英の対が 4 話以上・2 言語そろっていること(L-DL14。**判定が ✗ → ✓ に変わったので、出す側の検査を足した**) |
 | `test_about_page_lists_what_failed_as_well_as_what_passed` | SPEC §1 | 「このアトラスについて」に、通ったものと**通らなかったもの**が両方書いてある(L-DL11) |
 | `test_rank_variants_are_compared_and_none_adopted_without_quality` | H-14 | 四通りの集約の合否が登録した三条件から導かれている(L-DL12) |
 | `test_shipped_aggregation_matches_the_adopted_variant` | H-14 | 配っている集約が判定で採ったものと一致する(採らなければ現行のまま) |
