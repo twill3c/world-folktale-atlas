@@ -1,9 +1,9 @@
 {
- "translated": 1113,
- "total": 1113,
+ "translated": 1225,
+ "total": 1225,
  "fraction": 1.0,
- "translated_words": 1578386,
- "total_words": 1578386,
+ "translated_words": 1673965,
+ "total_words": 1673965,
  "word_fraction": 1.0,
  "translation_type": "AI_GENERATED",
  "model": "claude-opus-5",
@@ -23,6 +23,10 @@
   "ロシア": {
    "total": 72,
    "done": 72
+  },
+  "フィリピン": {
+   "total": 61,
+   "done": 61
   },
   "ノルウェー": {
    "total": 58,
@@ -64,6 +68,10 @@
    "total": 32,
    "done": 32
   },
+  "オーストラリア先住民": {
+   "total": 31,
+   "done": 31
+  },
   "ユダヤ(ディアスポラ)": {
    "total": 25,
    "done": 25
@@ -91,6 +99,10 @@
   "イベリア半島": {
    "total": 21,
    "done": 21
+  },
+  "ニュージーランド(マオリ)": {
+   "total": 20,
+   "done": 20
   },
   "ベーリング海峡(アラスカ)": {
    "total": 19,
