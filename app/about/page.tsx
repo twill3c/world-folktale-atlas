@@ -1,12 +1,13 @@
 import Link from "next/link";
 
-import { getBooks, getIndex } from "@/lib/data";
+import { getBooks, getIndex, getShapeEval } from "@/lib/data";
 
 export const metadata = { title: "このアトラスについて ｜ 世界民話AIアトラス" };
 
 export default function AboutPage() {
   const { books, license_policy } = getBooks();
   const index = getIndex();
+  const shapePool = getShapeEval().h05a["形だけ(コーパスの英語全話の中から)"].pool_size;
 
   return (
     <>
@@ -158,7 +159,7 @@ export default function AboutPage() {
           <thead><tr><th>試したこと</th><th>結果</th></tr></thead>
           <tbody>
             <tr><th>話を刻んで比べる(窓 150 語)</th>
-              <td>✓ 採用。独英の同じ話を英語 768 話から言い当てる。話をまるごと 1 本のベクトルにするより強い</td></tr>
+              <td>✓ 採用。独英の同じ話を英語 {shapePool} 話から言い当てる。話をまるごと 1 本のベクトルにするより強い</td></tr>
             <tr><th>問いの言語の効果を差し引く</th>
               <td>✓ 採用。日本語で問うと日本の話ばかり返る偏りが半分以下になった。<strong>学習なしの引き算で足りた</strong></td></tr>
             <tr><th>ブラウザの中だけで動く意味検索</th>

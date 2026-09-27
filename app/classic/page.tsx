@@ -119,7 +119,7 @@ export default function ClassicPage() {
         本 {c.correspondence_analysis.n_books} 冊 × 頻度上位 {c.correspondence_analysis.n_words} 語の分割表を、
         標準化残差の特異値分解で 2 次元にした。
       </p>
-      <CaMap panel={c.correspondence_analysis} title="本 × 語の対応分析(全 29 冊)" />
+      <CaMap panel={c.correspondence_analysis} title={`本 × 語の対応分析(全 ${c.correspondence_analysis.n_books} 冊)`} />
       <p style={{ maxWidth: "72ch" }}>
         第 1 軸(寄与 {pct(c.correspondence_analysis.inertia[0])})は、ほぼ
         <strong>ジャマイカのクレオール一冊と、それ以外</strong>を分けている。
@@ -128,7 +128,7 @@ export default function ClassicPage() {
         話の中身ではなく<strong>書き方</strong>の軸である。
       </p>
       <CaMap panel={c.correspondence_analysis_without_outlier}
-        title={`${c.correspondence_analysis_without_outlier.excluded.region}の一冊を抜いた地図(28 冊)`} />
+        title={`${c.correspondence_analysis_without_outlier.excluded.region}の一冊を抜いた地図(${c.correspondence_analysis_without_outlier.n_books} 冊)`} />
       <p style={{ maxWidth: "72ch" }}>
         一冊が軸を独占してしまうので、その本を抜いた図も並べる。
         抜くと寄与は {pct(c.correspondence_analysis_without_outlier.inertia[0])} まで下がり、
