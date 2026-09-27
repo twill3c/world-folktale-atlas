@@ -5,3 +5,6 @@
 {"v": "1.2", "ts": "2026-09-28T06:40:30+09:00", "project": "world-folktale-atlas", "loop_id": "loop_040", "event": "test_run", "data": {"command": "pytest", "passed": 104, "failed": 0}}
 {"v": "1.2", "ts": "2026-09-28T06:40:31+09:00", "project": "world-folktale-atlas", "loop_id": "loop_040", "event": "test_run", "data": {"command": "npx vitest run", "passed": 12, "failed": 0}}
 {"v": "1.2", "ts": "2026-09-28T06:40:31+09:00", "project": "world-folktale-atlas", "loop_id": "loop_040", "event": "test_run", "data": {"command": "node harness/smoke.mjs", "passed": 18, "failed": 0}}
+{"v": "1.2", "ts": "2026-09-28T06:42:08+09:00", "project": "world-folktale-atlas", "loop_id": "loop_040", "event": "commit", "data": {"sha": "d1420b9", "kind": "fix", "summary": "散文の矛盾 3 件を直し検査 3 件を追加"}}
+{"v": "1.2", "ts": "2026-09-28T06:45:57+09:00", "project": "world-folktale-atlas", "loop_id": "loop_040", "event": "stage_end", "data": {"stage": 4, "stage_name": "出荷と本番検品", "result": "pass", "production": "全 32 冊 / 31 冊 / 830 に切り替わったことを本番で確認", "polls": 2, "live_mjs": "18画面合格"}}
+{"v": "1.2", "ts": "2026-09-28T06:45:57+09:00", "project": "world-folktale-atlas", "loop_id": "loop_040", "event": "loop_end", "data": {"outcome": "success", "failure_count": 0, "summary": "画面の散文とデータの矛盾 3 件をデータ参照に直し、総数・分母の主張を検査で固定(陽性対照 2 本)。pytest 104 件・本番反映を確認"}}
