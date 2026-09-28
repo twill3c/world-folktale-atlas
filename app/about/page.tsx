@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { getBooks, getIndex, getShapeEval } from "@/lib/data";
+import { getBooks, getIndex, getNarrativeStates, getShapeEval } from "@/lib/data";
 
 export const metadata = { title: "このアトラスについて ｜ 世界民話AIアトラス" };
 
@@ -8,6 +8,9 @@ export default function AboutPage() {
   const { books, license_policy } = getBooks();
   const index = getIndex();
   const shapePool = getShapeEval().h05a["形だけ(コーパスの英語全話の中から)"].pool_size;
+  // **この表の文はデータから引く**(画面と測定がずれた前例: loop_040・L-DL14)
+  const hmm = getNarrativeStates();
+  const kept = 3 + (hmm.show_on_site ? 1 : 0);
 
   return (
     <>
@@ -167,9 +170,19 @@ export default function AboutPage() {
             <tr><th>出来事・モチーフを NLI で推定</th>
               <td>✗ 外した。小さいモデルは言い換えを読めず、話の半分で 21 個すべての札が立った</td></tr>
             <tr><th>和訳対から写像を学ぶ(回転・リッジ・2 層の非線形)</th>
-              <td>✗ 採らず。取り分けた文化圏では引き算に勝てない。<strong>上限に当たっていて学習の余地が小さい</strong></td></tr>
-            <tr><th>筋の形・語りの状態列(HMM)</th>
-              <td>✗ 出さず。<strong>順番が効いていることを示せなかった</strong>(並べ替えても落ちない)</td></tr>
+              <td>✗ 採らず。取り分けた文化圏では線形の写像が引き算に勝てない。
+                ただし<strong>2 層の非線形は帯を超えた</strong> ——
+                2026-09-18 に「余地が小さい」と書いたのは<strong>材料が壊れていたため</strong>で、
+                直して測り直すと結論が変わった(<Link href="/gates/">測ったこと</Link>)</td></tr>
+            <tr><th>語りの状態列(HMM)</th>
+              {hmm.show_on_site ? (
+                <td>✓ 掲載。独英の同じ話は<strong>状態の並びまで似る</strong>
+                  (対 {hmm.h13c.pair_similarity.toFixed(3)} ／ 対でない組 {hmm.h13c.shuffled_pairs_mean.toFixed(3)}
+                  ・p = {hmm.h13c.p.toFixed(4)})。
+                  <strong>2026-09-18 の測定では同じ帯で落ちていた</strong> —— 本が 3 冊増えて結果が変わった</td>
+              ) : (
+                <td>✗ 出さず。<strong>順番が効いていることを示せなかった</strong>(並べ替えても落ちない)</td>
+              )}</tr>
             <tr><th>深層以前の道具(TF-IDF・Delta・対応分析)</th>
               <td>✓ 掲載。同じ言語の中では TF-IDF が Embedding より当てる。本の効果は機能語に出る</td></tr>
             <tr><th>トピックモデル(LDA)</th>
@@ -178,8 +191,10 @@ export default function AboutPage() {
         </table>
       </div>
       <p style={{ maxWidth: "72ch" }}>
-        十通りのうち<strong>画面に残ったのは三つ</strong>である。
+        十通りのうち<strong>画面に残ったのは{["一", "二", "三", "四", "五"][kept - 1]}つ</strong>である。
         いちばん効いたのは学習ではなく、<strong>話を刻むことと、言語の平均を引くこと</strong>だった。
+        <strong>一度落ちた主張が、本を足したあとに通ることもある</strong>(語りの状態列)。
+        そのときも帯は動かさず、落ちた測定を履歴として残してある。
       </p>
 
       <h2>作り方</h2>

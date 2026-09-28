@@ -1,0 +1,251 @@
+{
+ "note": "材料より古い成果物を数える(SPEC §3 G-23)。古いこと自体は禁じない。黙って古いことを禁じる",
+ "inputs": {
+  "corpus": "2026-09-23",
+  "ja": "2026-09-26",
+  "queries": "手元で作り直した"
+ },
+ "artifacts": [
+  {
+   "artifact": "align_diagnosis.json",
+   "inputs": [
+    "corpus",
+    "ja"
+   ],
+   "measured_at": "手元で作り直した",
+   "stale_inputs": [],
+   "stale": false,
+   "disclosed": false
+  },
+  {
+   "artifact": "align_eval.json",
+   "inputs": [
+    "corpus",
+    "ja"
+   ],
+   "measured_at": "手元で作り直した",
+   "stale_inputs": [],
+   "stale": false,
+   "disclosed": false
+  },
+  {
+   "artifact": "align_map.json",
+   "inputs": [
+    "corpus",
+    "ja"
+   ],
+   "measured_at": "手元で作り直した",
+   "stale_inputs": [],
+   "stale": false,
+   "disclosed": false
+  },
+  {
+   "artifact": "classic_eval.json",
+   "inputs": [
+    "corpus"
+   ],
+   "measured_at": "2026-09-25",
+   "stale_inputs": [],
+   "stale": false,
+   "disclosed": false
+  },
+  {
+   "artifact": "clusters.json",
+   "inputs": [
+    "corpus"
+   ],
+   "measured_at": "2026-09-23",
+   "stale_inputs": [],
+   "stale": false,
+   "disclosed": false
+  },
+  {
+   "artifact": "debias_eval.json",
+   "inputs": [
+    "corpus",
+    "ja",
+    "queries"
+   ],
+   "measured_at": "手元で作り直した",
+   "stale_inputs": [],
+   "stale": false,
+   "disclosed": false
+  },
+  {
+   "artifact": "language_means.json",
+   "inputs": [
+    "corpus",
+    "ja",
+    "queries"
+   ],
+   "measured_at": "手元で作り直した",
+   "stale_inputs": [],
+   "stale": false,
+   "disclosed": false
+  },
+  {
+   "artifact": "narrative_states.json",
+   "inputs": [
+    "corpus"
+   ],
+   "measured_at": "2026-09-25",
+   "stale_inputs": [],
+   "stale": false,
+   "disclosed": false
+  },
+  {
+   "artifact": "neighbors.json",
+   "inputs": [
+    "corpus"
+   ],
+   "measured_at": "2026-09-23",
+   "stale_inputs": [],
+   "stale": false,
+   "disclosed": false
+  },
+  {
+   "artifact": "nli_eval.json",
+   "inputs": [
+    "corpus"
+   ],
+   "measured_at": "2026-09-17",
+   "stale_inputs": [
+    "corpus"
+   ],
+   "stale": true,
+   "disclosed": true,
+   "reason": "1,113 話(30 冊)のときの測定。全話に 21 ラベルを当てる推論が CPU で数時間かかるため、このループでは動かさなかった。判定は「不成立・画面に出さない」で、話を増やして通る種類の落ち方ではない(全ラベル付与率が 50.9% と飽和していた)。次にこの測定に触るときに測り直す"
+  },
+  {
+   "artifact": "nli_labels.json",
+   "inputs": [
+    "corpus"
+   ],
+   "measured_at": "2026-09-23",
+   "stale_inputs": [],
+   "stale": false,
+   "disclosed": false
+  },
+  {
+   "artifact": "rank_variants.json",
+   "inputs": [
+    "corpus",
+    "queries"
+   ],
+   "measured_at": "手元で作り直した",
+   "stale_inputs": [],
+   "stale": false,
+   "disclosed": false
+  },
+  {
+   "artifact": "region_profiles.json",
+   "inputs": [
+    "corpus",
+    "ja"
+   ],
+   "measured_at": "手元で作り直した",
+   "stale_inputs": [],
+   "stale": false,
+   "disclosed": false
+  },
+  {
+   "artifact": "semantic_browser.json",
+   "inputs": [
+    "corpus",
+    "ja",
+    "queries"
+   ],
+   "measured_at": "手元で作り直した",
+   "stale_inputs": [],
+   "stale": false,
+   "disclosed": false
+  },
+  {
+   "artifact": "semantic_eval.json",
+   "inputs": [
+    "corpus",
+    "ja",
+    "queries"
+   ],
+   "measured_at": "手元で作り直した",
+   "stale_inputs": [],
+   "stale": false,
+   "disclosed": false
+  },
+  {
+   "artifact": "semantic_queries.json",
+   "inputs": [
+    "corpus",
+    "ja"
+   ],
+   "measured_at": "手元で作り直した",
+   "stale_inputs": [],
+   "stale": false,
+   "disclosed": false
+  },
+  {
+   "artifact": "shape_eval.json",
+   "inputs": [
+    "corpus"
+   ],
+   "measured_at": "2026-09-24",
+   "stale_inputs": [],
+   "stale": false,
+   "disclosed": false
+  },
+  {
+   "artifact": "shape_neighbors.json",
+   "inputs": [
+    "corpus"
+   ],
+   "measured_at": "2026-09-24",
+   "stale_inputs": [],
+   "stale": false,
+   "disclosed": false
+  },
+  {
+   "artifact": "story_analysis.json",
+   "inputs": [
+    "corpus"
+   ],
+   "measured_at": "2026-09-23",
+   "stale_inputs": [],
+   "stale": false,
+   "disclosed": false
+  },
+  {
+   "artifact": "topics.json",
+   "inputs": [
+    "corpus"
+   ],
+   "measured_at": "2026-09-23",
+   "stale_inputs": [],
+   "stale": false,
+   "disclosed": false
+  },
+  {
+   "artifact": "umap.json",
+   "inputs": [
+    "corpus"
+   ],
+   "measured_at": "2026-09-23",
+   "stale_inputs": [],
+   "stale": false,
+   "disclosed": false
+  }
+ ],
+ "n_artifacts": 21,
+ "n_stale": 1,
+ "n_stale_disclosed": 1,
+ "all_stale_are_disclosed": true,
+ "stale": [
+  {
+   "artifact": "nli_eval.json",
+   "stale_inputs": [
+    "corpus"
+   ],
+   "measured_at": "2026-09-17",
+   "reason": "1,113 話(30 冊)のときの測定。全話に 21 ラベルを当てる推論が CPU で数時間かかるため、このループでは動かさなかった。判定は「不成立・画面に出さない」で、話を増やして通る種類の落ち方ではない(全ラベル付与率が 50.9% と飽和していた)。次にこの測定に触るときに測り直す"
+  }
+ ]
+}

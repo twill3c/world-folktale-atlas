@@ -97,12 +97,19 @@ def embed_pairs() -> None:
         print(f"  {region} {len(rows)} 対", flush=True)
 
 
-def load_region(region: str, expect: int | None = None) -> tuple[np.ndarray, np.ndarray]:
-    """キャッシュを読む。`expect` を渡すと、いまの対の数と食い違ったところで落とす。"""
+def load_region(region: str, expect: int) -> tuple[np.ndarray, np.ndarray]:
+    """キャッシュを読む。**いまの対の数と食い違えば落とす**(HC-323)。
+
+    以前は `expect=None` を既定にしていたが、**呼び出し側 3 箇所のどれも渡していなかった**。
+    その間、ジャマイカは 783 対に対して 7 対のキャッシュが黙って読まれていた。
+    任意にした安全確認は、渡されなければ無いのと同じである。**必須にする。**
+    """
     d = np.load(CACHE / f"{region_key(region)}.npz")
     ja, en = d["ja"], d["en"]
-    if expect is not None and len(ja) != expect:
-        raise AssertionError(f"{region}: キャッシュ {len(ja)} 対 / いまの対 {expect} 対。作り直すこと")
+    if len(ja) != expect:
+        raise AssertionError(
+            f"{region}: キャッシュ {len(ja)} 対 / いまの対 {expect} 対。"
+            f"`python -c \"from ml.align import embed_pairs; embed_pairs()\"` で作り直すこと")
     return ja, en
 
 
@@ -123,7 +130,7 @@ def build() -> dict:
     train, held = split_regions(list(by_region))
     Xs, Ys = [], []
     for r in train:
-        ja, en = load_region(r)
+        ja, en = load_region(r, len(by_region[r]))
         Xs.append(centre(ja, means["ja"]))
         Ys.append(centre(en, means["en"]))
     X, Y = np.concatenate(Xs), np.concatenate(Ys)

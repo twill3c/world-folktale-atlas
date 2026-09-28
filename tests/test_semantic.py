@@ -332,11 +332,14 @@ def test_about_page_lists_what_failed_as_well_as_what_passed():
         pytest.skip("out/ 未生成(npm run build)")
     text = html.read_text(encoding="utf-8")
     assert "機械に何ができて" in text
-    for phrase in ("採用", "外した", "採らず", "出さず"):
+    for phrase in ("採用", "外した", "採らず"):
         assert phrase in text, phrase
-    # 画面に残った数(三つ)を書いたら、その根拠も同じ頁にあること
-    assert "画面に残ったのは三つ" in text
-    assert "順番が効いていることを示せなかった" in text
+    # 落ちた主張が**いくつも**残っていること。個々の合否は測定で変わるので、
+    # 「どれが落ちたか」はここで固定しない(L-DL14 で HMM の判定が変わり、
+    # この検査が『出さず』を要求したまま落ちた)。判定との一致は
+    # tests/test_prose_counts.py がデータから照合する
+    assert text.count("✗") >= 3, "落ちた主張が画面から消えている"
+    assert "画面に残ったのは" in text
 
 
 # ------------------------------------------------ 集約の比較(L-DL12)

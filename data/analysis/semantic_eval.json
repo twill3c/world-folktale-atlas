@@ -4,14 +4,14 @@
  "model_id": "Xenova/multilingual-e5-small",
  "dtype": "q8",
  "browser": "Chromium 153.0.8010.12",
- "measured_at": "2026-09-23",
+ "measured_at": "2026-09-28",
  "load": {
-  "seconds": 13,
+  "seconds": 89,
   "external_mb": 5.3
  },
  "query_ms": {
-  "median": 81,
-  "max": 278
+  "median": 72,
+  "max": 124
  },
  "g17_two_implementations": {
   "n": 20,
@@ -20,7 +20,7 @@
   "note": "量子化した側と fp32 の差。同一性ではなく、ずれの大きさを測っている"
  },
  "g18_rank_preservation": {
-  "mean_overlap_at_10": 0.865,
+  "mean_overlap_at_10": 0.88,
   "top1_agreement": 0.75,
   "min_overlap_at_10": 0.7,
   "thresholds": {
@@ -31,11 +31,11 @@
  },
  "g19_cross_lingual_path": {
   "n": 30,
-  "p_at_1": 0.8,
-  "p_at_10": 0.8667,
+  "p_at_1": 0.7333,
+  "p_at_10": 0.8333,
   "whole_story_path": {
-   "p_at_1": 0.2667,
-   "p_at_10": 0.4333
+   "p_at_1": 0.2,
+   "p_at_10": 0.3333
   },
   "chance_p_at_1": 0.00082,
   "threshold": 0.5,
@@ -59,8 +59,8 @@
    "ニュージーランド(マオリ)",
    "ベーリング海峡(アラスカ)"
   ],
-  "max_score": 0.2973,
-  "written_max_score": 0.2651
+  "max_score": 0.2966,
+  "written_max_score": 0.2654
  },
  "g20_query_language_bias": {
   "corpus_share_japan": 0.018,
@@ -89,15 +89,15 @@
    "top10_japan": 12,
    "top1_regions": [
     [
-     "ベーリング海峡(アラスカ)",
-     3
-    ],
-    [
      "北米先住民",
      2
     ],
     [
      "アゾレス諸島",
+     2
+    ],
+    [
+     "ベーリング海峡(アラスカ)",
      2
     ]
    ]
@@ -113,32 +113,32 @@
   "note": "同じ意味の問いで「1 位が日本の話」になる率の差。L-DL4 で帯を登録した"
  },
  "g18_tie_diagnosis_post_hoc": {
-  "median_gap_top1_top2": 0.01057,
+  "median_gap_top1_top2": 0.0114,
   "disagreements": [
    {
     "query": "三人兄弟の末の子が知恵で王の難題を解く",
-    "gap_fp32": 0.00302,
+    "gap_fp32": 0.00618,
     "browser_top1_rank_here": 3
    },
    {
     "query": "約束を破って禁じられた部屋の扉を開けてしまう",
-    "gap_fp32": 0.00342,
-    "browser_top1_rank_here": 5
+    "gap_fp32": 0.00295,
+    "browser_top1_rank_here": 2
    },
    {
     "query": "死んだ母親が鳥になって子を見守る",
-    "gap_fp32": 0.01142,
+    "gap_fp32": 0.01103,
     "browser_top1_rank_here": 3
    },
    {
     "query": "欲張りな隣人が真似をして失敗する",
-    "gap_fp32": 0.00468,
+    "gap_fp32": 0.00057,
     "browser_top1_rank_here": 7
    },
    {
     "query": "村を襲う大蛇を若者が退治する",
-    "gap_fp32": 0.00398,
-    "browser_top1_rank_here": 4
+    "gap_fp32": 0.00279,
+    "browser_top1_rank_here": 3
    }
   ],
   "tie_max": 0.01,

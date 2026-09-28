@@ -1,9 +1,10 @@
 import Link from "next/link";
 
 import {
-  getAlignDiagnosis, getAlignEval, getRankVariants, getBooks, getClusters, getGates, getIndex, getNliEval, getSemanticEval, getShapeEval,
+  getAlignDiagnosis, getAlignEval, getFreshness, getRankVariants, getBooks, getClusters, getGates, getIndex, getNliEval, getSemanticEval, getShapeEval,
 } from "@/lib/data";
 import AlignSection from "./AlignSection";
+import FreshnessSection from "./FreshnessSection";
 import NliSection from "./NliSection";
 import RankVariantSection from "./RankVariantSection";
 import SemanticSection from "./SemanticSection";
@@ -251,6 +252,8 @@ export default function GatesPage() {
         <strong>{(c.silhouette ?? 0) < 0.15 ? "この値は「ほとんど分かれていない」" : ""}</strong>。
         群は探索の入口として使えるが、境目に意味を読み込んではいけない。
       </p>
+
+      <FreshnessSection f={getFreshness()} />
 
       <h2>このアトラスが言わないこと</h2>
       <ul style={{ maxWidth: "72ch" }}>

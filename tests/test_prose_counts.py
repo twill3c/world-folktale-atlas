@@ -83,6 +83,25 @@ def test_totals_and_denominators_match_the_data(truth):
     assert seen, "「全 N 冊」「N 冊中」の主張が画面に一つも無い。検査が空振りしていないか確かめる"
 
 
+def test_about_page_verdicts_agree_with_the_measurements():
+    """「このアトラスについて」の要約表が、いまの判定と食い違っていない。
+
+    L-DL14 で HMM の判定が ✗ → ✓ に変わったのに、この表だけ「✗ 出さず」のまま残っていた
+    (`/classic/` は帯を出しているのに、`/about/` は出していないと書いていた)。
+    **判定を散文に焼き込むと、測り直すたびに静かに嘘になる。** 数と同じ罠である。
+    """
+    html = OUT / "about" / "index.html"
+    if not html.exists():
+        pytest.skip("out/ 未生成(npm run build)")
+    # 書き出した HTML は、埋め込んだ値の前後にタグやコメントを挟む。文字だけにして照合する
+    text = re.sub(r"<[^>]+>", "", html.read_text(encoding="utf-8"))
+    hmm = load(ROOT / "data" / "analysis" / "narrative_states.json")
+    shown = "状態の並びまで似る" in text
+    assert shown == hmm["show_on_site"], "HMM の判定と about の書きぶりが食い違っている"
+    kept = 3 + (1 if hmm["show_on_site"] else 0)
+    assert f'画面に残ったのは{["一", "二", "三", "四", "五"][kept - 1]}つ' in text
+
+
 def test_correspondence_maps_state_their_own_book_count(truth):
     """対応分析の図の題が、その図が実際に使った冊数を書いている。"""
     html = OUT / "classic" / "index.html"

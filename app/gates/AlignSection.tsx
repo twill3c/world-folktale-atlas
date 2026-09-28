@@ -73,36 +73,71 @@ export default function AlignSection({ e, d }: { e: AlignEval; d: AlignDiagnosis
                 {" "}<strong>{pct(d.h10b_paragraph_to_paragraph["差し引きのみ"])}</strong> 当たる。
                 非線形でも {pct(d.h10b_paragraph_to_paragraph["非線形(段落対で学習)"])}
                 (+{pct(d.verdicts.gains["段落→段落(非線形 − 差し引き)"])})。
-                <strong>上限に当たっていて、学習で足せる余地が小さい</strong></td>
+                段落どうしの突き合わせでは<strong>登録した帯 5.0% に届かない</strong></td>
             </tr>
             <tr>
               <th>{d.verdicts.h10c_容量が足りない ? "✓" : "✗"} 容量</th>
               <td>2 層の非線形(隠れ 512・InfoNCE)を同じ材料で学び、段落 → 話 で
                 {" "}{pct(d.paragraph_to_story["差し引きのみ"].p_at_1)} →
                 {" "}<strong>{pct(d.paragraph_to_story["非線形(段落対で学習)"].p_at_1)}</strong>
-                (+{pct(d.verdicts.gains["段落→話(段落対で学習)"])})。登録した帯 5.0% に届かない</td>
+                ({d.verdicts.gains["段落→話(段落対で学習)"] >= 0 ? "+" : ""}
+                {pct(d.verdicts.gains["段落→話(段落対で学習)"])})。
+                {d.verdicts.h10c_容量が足りない
+                  ? <><strong>登録した帯 5.0% を超えた</strong> —— 線形では足りていない</>
+                  : "登録した帯 5.0% に届かない"}</td>
             </tr>
             <tr>
               <th>{d.verdicts.h10d_目的に合わせれば足りる ? "✓" : "✗"} 目的に合わせた学習</th>
-              <td>学習の対を「日本語の段落 → その話の窓」に替えても
-                {" "}{pct(d.paragraph_to_story["非線形(段落→窓で学習)"].p_at_1)}(±0.0%)で変わらない</td>
+              <td>学習の対を「日本語の段落 → その話の窓」に替えると
+                {" "}{pct(d.paragraph_to_story["非線形(段落→窓で学習)"].p_at_1)}
+                ({d.verdicts.gains["段落→話(段落→窓で学習)"] >= 0 ? "+" : ""}
+                {pct(d.verdicts.gains["段落→話(段落→窓で学習)"])})。
+                <strong>目的に寄せた学習のほうがむしろ悪い</strong></td>
             </tr>
           </tbody>
         </table>
       </div>
       <p style={{ maxWidth: "72ch" }}>
-        <strong>だから e5 本体の微調整には進まない。</strong>
-        進む条件は「容量が足りないと示せたとき」と先に決めてあり、それは示せなかった。
+        {d.colab_fine_tuning_warranted ? (
+          <>
+            <strong>登録した条件では、e5 本体の微調整(Colab)に進む材料がそろった。</strong>
+            進む条件は「容量が足りないと示せたとき」と先に決めてあり、
+            2 層の非線形が段落 → 話で差し引きを
+            {" "}{pct(d.verdicts.gains["段落→話(段落対で学習)"])} 上回った(帯 5.0%)。
+            <strong>ただし、これは 2026-09-28 に測り直して初めて出た結論である。</strong>
+            2026-09-18 の測定では同じ帯で +1.7% にとどまり「進まない」と判定していた。
+            変わった理由は本や和訳が増えたことではなく、
+            <strong>そのときの測定が壊れた材料の上で行われていた</strong>ことである
+            —— 段落対のキャッシュが古く、ノルウェーは 2,457 対のうち 33 対しか読まれていなかった。
+            <strong>帯は一度も動かしていない。動いたのは材料のほうである。</strong>
+          </>
+        ) : (
+          <>
+            <strong>だから e5 本体の微調整には進まない。</strong>
+            進む条件は「容量が足りないと示せたとき」と先に決めてあり、それは示せなかった。
+          </>
+        )}
+      </p>
+      <p style={{ maxWidth: "72ch" }}>
         残った誤り {d.remaining_failures_post_hoc.n_failures} 件のうち
         {" "}<strong>{pct(d.remaining_failures_post_hoc["1 位が同じ本だった割合"])}</strong> は、
         1 位が<strong>同じ本の別の話</strong>だった
         (例:「{d.remaining_failures_post_hoc.例[0]?.正解}」を探して「{d.remaining_failures_post_hoc.例[0]?.["1 位"]}」が出る)。
-        <strong>日本語と英語を近づけても、同じ本の中で書き出しが似ていることは直らない。</strong>
+        {d.remaining_failures_post_hoc["1 位が同じ本だった割合"] >= 0.3 ? (
+          <strong>日本語と英語を近づけても、同じ本の中で書き出しが似ていることは直らない。</strong>
+        ) : (
+          <>
+            材料を直す前の測定では<strong>これが 36.4%</strong> あり、
+            「誤りの正体は同じ本の中の似た書き出しだ」と書いていた。
+            材料を直すと<strong>その割合は下がった</strong> —— 当時の読みは、
+            壊れた材料の上での読みだったことになる。
+          </>
+        )}
       </p>
       <p className="muted small" style={{ maxWidth: "72ch" }}>
         最初の測定(和訳 620 話・9,212 対)では、独英グリムが三通りとも 88.5% と<strong>同じ値</strong>になった。
         検査が動いていないことを疑って対ごとに数えたところ、回転では 26 組中 4 組で当たり外れが入れ替わっており、
-        合計だけがたまたま一致していた。和訳が 656 話に増えて測り直したいまは
+        合計だけがたまたま一致していた。和訳を増やして測り直したいまは
         {" "}{pct(e.grimm_p_at_1["差し引きのみ"])} / {pct(e.grimm_p_at_1.procrustes)} / {pct(e.grimm_p_at_1.ridge)} と分かれている。
         <strong>同じ数が出たときは、まず検査が動いていないことを疑って数え直す。</strong>
         和訳は AI が作ったものなので、この材料で学ぶことは「AI の訳文に寄る」危険を含む。

@@ -85,9 +85,10 @@ def main() -> int:
     M_rot = np.array(doc["maps"]["procrustes"], dtype=np.float32)
 
     def region_pairs(regions: list[str]) -> tuple[np.ndarray, np.ndarray]:
+        counts = {k: len(v) for k, v in pairs_by_region().items()}
         Xs, Ys = [], []
         for r in regions:
-            ja, en = load_region(r)
+            ja, en = load_region(r, counts[r])
             Xs.append(centre(ja, means["ja"]))
             Ys.append(centre(en, means["en"]))
         return np.concatenate(Xs), np.concatenate(Ys)
@@ -151,7 +152,7 @@ def main() -> int:
         pos = {sid: i for i, sid in enumerate(ids)}
         Xs, Ys = [], []
         for r in regions:
-            ja, _ = load_region(r)
+            ja, _ = load_region(r, len(by_region[r]))
             ja = centre(ja, means["ja"])
             rows = by_region[r]
             for k, (sid, _, _) in enumerate(rows):

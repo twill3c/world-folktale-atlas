@@ -347,6 +347,15 @@ export type RankVariants = {
   adopt: string | null;
 };
 
+/** 材料より古い成果物の一覧(SPEC §3 G-23)。古いこと自体は禁じない。黙って古いことを禁じる。 */
+export type Freshness = {
+  note: string;
+  inputs: Record<string, string>;
+  n_artifacts: number; n_stale: number; n_stale_disclosed: number;
+  all_stale_are_disclosed: boolean;
+  stale: { artifact: string; stale_inputs: string[]; measured_at: string; reason: string }[];
+};
+
 export type RegionProfiles = {
   note: string; caveat: string; small_sample_threshold: number;
   n_stories: number; n_regions: number; n_books: number;
@@ -477,6 +486,7 @@ export const getClassicEval = (): ClassicEval => read<ClassicEval>("classic_eval
 export const getTopics = (): Topics => read<Topics>("topics.json");
 export const getRegionProfiles = (): RegionProfiles => read<RegionProfiles>("region_profiles.json");
 export const getRankVariants = (): RankVariants => read<RankVariants>("rank_variants.json");
+export const getFreshness = (): Freshness => read<Freshness>("freshness.json");
 export const getNarrativeStates = (): NarrativeStates => read<NarrativeStates>("narrative_states.json");
 export const getRegions = (): Record<string, {
   n_stories: number;

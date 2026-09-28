@@ -126,6 +126,19 @@ L-DL3 では「`vectors.bin` だけを許す」、L-DL4 で「`vectors.bin` と 
 | `test_page_states_that_regions_are_books` | H-16 | 「一冊が一つの文化圏」の注意が画面にある |
 | `test_profiles_are_shipped` | H-16 | 公開データに出ている |
 
+## 2.48 古い測定が黙って残らないこと(`tests/test_freshness.py` — L-DL15 で追加)
+
+材料(コーパス・和訳・問いの集合)より古い成果物を git の時刻から数える。
+**守るのは「古くないこと」ではなく「古いものが台帳と画面に出ていること」である。**
+
+| ケース | SPEC | 期待値の出所 |
+|---|---|---|
+| `test_every_stale_artifact_is_in_the_ledger` | G-23 | 古い成果物はすべて `docs/STALE.md` に理由つきで載る。**落ちたら、測り直すか理由を書くかのどちらか** |
+| `test_ledger_has_no_phantom_entries` | G-23 | 台帳に、古くもない・存在もしない名前を書き足していない(台帳が飾りになると意味を失う) |
+| `test_every_shipped_analysis_is_watched` | G-23 | 配っている分析がひとつ残らず監視表にある(**新しい測定を足して書き忘れると、それだけ静かに腐る**) |
+| `test_shipped_freshness_matches_a_fresh_count` | G-23 | 配っている `freshness.json` が、いま数え直したものと一致する |
+| `test_the_page_names_the_stale_measurements` | G-23 | 古い測定の名前と理由が `/gates/` に出ている(台帳だけに書いて終わりにしない) |
+
 ## 2.5 和訳の取り込み検査(`etl/build_translations.py` — 落ちたら取り込まない)
 
 | ID | 検査 | 期待値の出所 |
